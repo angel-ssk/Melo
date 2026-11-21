@@ -121,8 +121,11 @@ object VersionComparator {
             // Extract explicit build number (e.g. b-1200)
             val explicitBuildNumber = BUILD_REGEX.find(cleaned)?.groupValues?.get(1)?.toIntOrNull() ?: 0
 
-            // Extract numeric base: split by space, hyphen, underscore
-            val baseWithoutSuffix = cleaned
+            // Extract numeric base: prefer the first dotted version-like token
+            // anywhere in the string (release names such as
+            // "Melo 1.1 - Más bienestar..." put the version after a word).
+            val versionToken = Regex("""\d+(?:\.\d+){1,3}""").find(cleaned)?.value
+            val baseWithoutSuffix = (versionToken ?: cleaned)
                 .split(" ")[0]
                 .split("-")[0]
                 .split("_")[0]

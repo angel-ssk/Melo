@@ -592,8 +592,9 @@ class AppUpdaterViewModel(
             }
 
         return filteredReleases.maxWithOrNull { r1, r2 ->
-            val v1 = r1.name.ifEmpty { r1.tag_name }
-            val v2 = r2.name.ifEmpty { r2.tag_name }
+            // Prefer the tag (e.g. "v1.1"); fall back to the human name only if absent.
+            val v1 = r1.tag_name.ifEmpty { r1.name }
+            val v2 = r2.tag_name.ifEmpty { r2.name }
             VersionComparator.compare(v1, v2, isPreRelease1 = r1.prerelease, isPreRelease2 = r2.prerelease)
         }
     }
@@ -623,7 +624,9 @@ class AppUpdaterViewModel(
         val apkAsset = selectReleaseApkAsset(release)
         val downloadUrl = apkAsset?.browser_download_url ?: release.html_url
         val apkSize = apkAsset?.size ?: 0
-        val versionName = release.name.ifEmpty { release.tag_name }
+        // Report the semantic version from the tag; keep the decorated release
+        // name for display only via the changelog parser.
+        val versionName = release.tag_name.ifEmpty { release.name }
 
         return AppVersion(
             versionName = versionName,
