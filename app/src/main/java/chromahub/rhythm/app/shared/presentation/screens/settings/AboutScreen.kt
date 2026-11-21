@@ -405,6 +405,19 @@ fun AboutScreen(
                         context = context,
                         hapticFeedback = haptics,
                         item = SettingItem(
+                            icon = RhythmIcons.Download,
+                            title = context.getString(R.string.settings_about_check_updates),
+                            description = context.getString(R.string.updates_check_again),
+                            onClick = {
+                                appUpdaterViewModel.checkForUpdates(force = true)
+                                onNavigateToUpdates?.invoke()
+                            }
+                        )
+                    ),
+                    toMaterial3SettingsItem(
+                        context = context,
+                        hapticFeedback = haptics,
+                        item = SettingItem(
                             icon = RhythmIcons.Code,
                             title = stringResource(R.string.settings_about_view_source),
                             description = "github.com/angel-ssk/Melo",

@@ -869,9 +869,14 @@ fun LocalNavigation(
             onDismiss = { showUpdateBottomSheet = false },
             onUpdateClick = { immediate ->
                 showUpdateBottomSheet = false
-                // Navigate to update settings
-                navController.navigate(Screen.TunerUpdates.route) {
-                    launchSingleTop = true
+                // Download in place; don't kick the user out of the Home screen.
+                // Immediate installs still need the updater screen for progress.
+                if (immediate) {
+                    navController.navigate(Screen.TunerUpdates.route) {
+                        launchSingleTop = true
+                    }
+                } else {
+                    updaterViewModel.downloadUpdate()
                 }
             }
         )

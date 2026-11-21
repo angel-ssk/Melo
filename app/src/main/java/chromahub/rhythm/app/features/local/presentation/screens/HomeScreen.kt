@@ -587,6 +587,28 @@ fun HomeScreen(
                             val mix = songs.filter { it.id in ids }
                             if (mix.isNotEmpty()) {
                                 musicViewModel.createPlaylist("Melo Mix", mix)
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.home_melo_mix_created, mix.size),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                // No history yet: build a fresh mix of recent + random songs.
+                                val fallback = songs.sortedByDescending { it.dateAdded }.take(20)
+                                if (fallback.isNotEmpty()) {
+                                    musicViewModel.createPlaylist("Melo Mix", fallback)
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.home_melo_mix_created, fallback.size),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        R.string.home_melo_mix_empty,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
                         }
                     }

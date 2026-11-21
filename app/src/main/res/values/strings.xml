@@ -2867,4 +2867,6 @@
     <string name="sleep_action_pause">Pause</string>
     <string name="sleep_action_stop">Stop</string>
     <string name="widget_wellbeing_description">Melo Wellbeing: daily goal and listening days</string>
+    <string name="home_melo_mix_created">Melo Mix created with %1$d songs</string>
+    <string name="home_melo_mix_empty">Listen to something first to create your Melo Mix</string>
 </resources>

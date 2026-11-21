@@ -498,7 +498,9 @@ class AppUpdaterViewModel(
             isCandidatePreRelease = candidate.isPreRelease,
             isCurrentPreRelease = _currentVersion.value.isPreRelease,
         )
-        val hasVersionCodeDowngrade = candidate.versionCode > 0 && candidate.versionCode < BuildConfig.VERSION_CODE
+        val hasVersionCodeDowngrade = candidate.versionCode > 0 &&
+            candidate.versionCode < BuildConfig.VERSION_CODE &&
+            !VersionComparator.isNewer(candidate.versionName, _currentVersion.value.versionName)
         _isVersionCodeDowngrade.value = hasVersionCodeDowngrade
 
         Log.d(
@@ -538,20 +540,16 @@ class AppUpdaterViewModel(
         val cleaned = versionString.trim().removePrefix("v").removePrefix("V")
         val versionBase = cleaned.split(" ")[0].split("-")[0].split("_")[0]
         val versionParts = versionBase.split(".")
-        val codeString =
-            buildString {
-                append(versionParts.getOrNull(0)?.filter { it.isDigit() }?.takeIf { it.isNotEmpty() } ?: "0")
-                append(versionParts.getOrNull(1)?.filter { it.isDigit() }?.takeIf { it.isNotEmpty() } ?: "0")
-                append(versionParts.getOrNull(2)?.filter { it.isDigit() }?.takeIf { it.isNotEmpty() } ?: "0")
-                val buildPart = versionParts.getOrNull(3)?.filter { it.isDigit() }
-                if (!buildPart.isNullOrEmpty()) {
-                    append(buildPart)
-                } else {
-                    append(extractBuildNumber(cleaned, versionParts).toString())
-                }
-            }
+        fun part(index: Int) =
+            versionParts.getOrNull(index)?.filter { it.isDigit() }?.toIntOrNull() ?: 0
 
-        return codeString.toIntOrNull() ?: 0
+        val major = part(0)
+        val minor = part(1)
+        val patch = part(2)
+        val subpatch = part(3)
+        // Matches the APK versionCode scheme: 1.0 -> 1000000, 1.1 -> 1100000,
+        // 1.1.1 -> 1101000 (major * 1_000_000 + minor * 100_000 + patch * 1_000).
+        return major * 1_000_000 + minor * 100_000 + patch * 1_000 + subpatch * 10
     }
 
     /**
@@ -1649,7 +1647,8 @@ class AppUpdaterViewModel(
                         val matchFlavor =
                             when (flavor) {
                                 "fdroid" -> lowerName.contains("fdroidrelease") || lowerName.contains("-fdroid-")
-                                "github" -> lowerName.contains("githubrelease") || lowerName.contains("-github-")
+                                "github" -> lowerName.contains("githubrelease") || lowerName.contains("-github-") ||
+                                    lowerName.contains("melo-") && lowerName.contains("release")
                                 else -> true
                             }
                         if (matchFlavor && (isUniversalApkName(entry.name) || !hasAbiSuffix(entry.name))) {
@@ -1682,19 +1681,21 @@ class AppUpdaterViewModel(
                 val lowerName = asset.name.lowercase(Locale.ROOT)
                 when (flavor) {
                     "fdroid" -> lowerName.contains("fdroidrelease") || lowerName.contains("-fdroid-")
-                    "github" -> lowerName.contains("githubrelease") || lowerName.contains("-github-")
+                    "github" -> lowerName.contains("githubrelease") || lowerName.contains("-github-") ||
+                        // Melo's own releases use "Melo-X.Y.Z-Release-<abi>.apk"
+                        lowerName.contains("melo-") && lowerName.contains("release")
                     else -> false
                 }
             }
 
         if (flavorAssets.isEmpty()) {
-            Log.w(tag, "No APK asset matched current flavor '$flavor' for release ${release.tag_name}")
-            return null
+            Log.w(tag, "No APK asset matched flavor '$flavor' for ${release.tag_name}; using first APK")
         }
+        val candidates = if (flavorAssets.isNotEmpty()) flavorAssets else uploadedApks
 
-        return flavorAssets.firstOrNull { asset -> isUniversalApkName(asset.name) }
-            ?: flavorAssets.firstOrNull { asset -> !hasAbiSuffix(asset.name) }
-            ?: flavorAssets.firstOrNull()
+        return candidates.firstOrNull { asset -> isUniversalApkName(asset.name) }
+            ?: candidates.firstOrNull { asset -> !hasAbiSuffix(asset.name) }
+            ?: candidates.firstOrNull()
     }
 
     private fun resolveUpdateSourceFlavor(): String =
