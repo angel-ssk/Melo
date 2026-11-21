@@ -55,7 +55,7 @@ object CrashReporter {
             val release = android.os.Build.VERSION.RELEASE
 
             val builder = StringBuilder()
-            builder.append("=== Rhythm App Crash Report ===\n")
+            builder.append("=== Melo App Crash Report ===\n")
             builder.append("Time: ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", java.util.Locale.US).format(java.util.Date())}\n")
             builder.append("App Version: $appVersion\n")
             builder.append("Device: $manufacturer $model\n")

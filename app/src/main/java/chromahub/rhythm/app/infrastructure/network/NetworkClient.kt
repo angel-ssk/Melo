@@ -151,7 +151,7 @@ object NetworkClient {
         }
     }
 
-    private fun deezerHeadersInterceptor() = appHeadersInterceptor("RhythmApp/${BuildConfig.VERSION_NAME} (Android)")
+    private fun deezerHeadersInterceptor() = appHeadersInterceptor("MeloApp/${BuildConfig.VERSION_NAME} (Android)")
     
     private val deezerHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()

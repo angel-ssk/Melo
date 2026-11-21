@@ -318,7 +318,7 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
                     if (volumeOvershoot > 0.01f) {
                         val targetVolume = Math.round(activeThreshold * maxVolume).coerceIn(0, maxVolume)
                         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, 0)
-                        Log.d(TAG, "Rhythm Guard Auto: clamped system volume from $currentVolumeFraction to $activeThreshold")
+                        Log.d(TAG, "Melo Guard Auto: clamped system volume from $currentVolumeFraction to $activeThreshold")
                     }
                 }
             }
@@ -494,9 +494,9 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
         val currentPlaybackQuality: StateFlow<PlaybackQualityInfo?> = _currentPlaybackQuality.asStateFlow()
         private const val TAG = "MediaPlaybackService"
         private const val NOTIFICATION_ID = 1001
-        private const val CHANNEL_ID = "RhythmMediaPlayback"
+        private const val CHANNEL_ID = "MeloMediaPlayback"
         private const val SLEEP_TIMER_NOTIFICATION_ID = 1002
-        private const val SLEEP_TIMER_CHANNEL_ID = "RhythmSleepTimer"
+        private const val SLEEP_TIMER_CHANNEL_ID = "MeloSleepTimer"
         private const val EQ_TOGGLE_DUCK_FACTOR = 0.12f
         private const val EQ_TOGGLE_SETTLE_DELAY_MS = 45L
         private const val EQ_TOGGLE_RAMP_STEPS = 6
@@ -613,7 +613,7 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
             }
             isBassBoostAvailable = true
             appSettings.setBassBoostAvailable(true)
-            Log.d(TAG, "Rhythm audio processors initialized early with saved settings (mono=${appSettings.monoAudioEnabled.value}, bass=${appSettings.bassBoostEnabled.value}, spatial=${appSettings.virtualizerEnabled.value})")
+            Log.d(TAG, "Melo audio processors initialized early with saved settings (mono=${appSettings.monoAudioEnabled.value}, bass=${appSettings.bassBoostEnabled.value}, spatial=${appSettings.virtualizerEnabled.value})")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to initialize Rhythm processors", e)
             rhythmBassBoostProcessor = null
@@ -1964,7 +1964,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                 Log.d(TAG, "Received intent to set bass boost - enabled: $enabled, strength: $strength")
                 
                 if (rhythmBassBoostProcessor == null) {
-                    Log.d(TAG, "Rhythm bass boost processor is null, attempting initialization")
+                    Log.d(TAG, "Melo bass boost processor is null, attempting initialization")
                     initializeRhythmProcessors()
                 }
                 
@@ -1979,7 +1979,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                 Log.d(TAG, "Received intent to set virtualizer - enabled: $enabled, strength: $strength")
                 
                 if (rhythmSpatializationProcessor == null) {
-                    Log.d(TAG, "Rhythm spatialization processor is null, attempting initialization")
+                    Log.d(TAG, "Melo spatialization processor is null, attempting initialization")
                     initializeRhythmProcessors()
                 }
                 
@@ -1993,7 +1993,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                 Log.d(TAG, "Received intent to set mono audio - enabled: $enabled")
                 
                 if (rhythmMonoAudioProcessor == null) {
-                    Log.d(TAG, "Rhythm mono audio processor is null, attempting initialization")
+                    Log.d(TAG, "Melo mono audio processor is null, attempting initialization")
                     initializeRhythmProcessors()
                 }
                 
@@ -3401,7 +3401,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
     
     private fun initializeRhythmProcessors() {
         if (rhythmBassBoostProcessor == null) {
-            Log.w(TAG, "Rhythm bass boost processor is null, creating new instance")
+            Log.w(TAG, "Melo bass boost processor is null, creating new instance")
             try {
                 rhythmBassBoostProcessor = chromahub.rhythm.app.infrastructure.audio.RhythmBassBoostProcessor()
                 isBassBoostAvailable = true
@@ -3414,7 +3414,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         }
         
         if (rhythmSpatializationProcessor == null) {
-            Log.w(TAG, "Rhythm spatialization processor is null, creating new instance")
+            Log.w(TAG, "Melo spatialization processor is null, creating new instance")
             try {
                 rhythmSpatializationProcessor = chromahub.rhythm.app.infrastructure.audio.RhythmSpatializationProcessor()
             } catch (e: Exception) {
@@ -3423,7 +3423,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         }
         
         if (rhythmMonoAudioProcessor == null) {
-            Log.w(TAG, "Rhythm mono audio processor is null, creating new instance")
+            Log.w(TAG, "Melo mono audio processor is null, creating new instance")
             try {
                 rhythmMonoAudioProcessor = chromahub.rhythm.app.infrastructure.audio.RhythmMonoAudioProcessor()
             } catch (e: Exception) {
@@ -3578,7 +3578,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                 if (bassBoostShouldBeEnabled) {
                     rhythmBassBoostProcessor?.setStrength(appSettings.bassBoostStrength.value.toShort())
                 }
-                Log.d(TAG, "Rhythm bass boost loaded: enabled=$bassBoostShouldBeEnabled, strength=${rhythmBassBoostProcessor?.getStrength()}")
+                Log.d(TAG, "Melo bass boost loaded: enabled=$bassBoostShouldBeEnabled, strength=${rhythmBassBoostProcessor?.getStrength()}")
             } else {
                 Log.w(TAG, "Cannot load bass boost settings: Rhythm processor is null")
             }
@@ -3589,7 +3589,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
             if (rhythmSpatializationProcessor != null) {
                 rhythmSpatializationProcessor?.setEnabled(virtualizerEnabled)
                 rhythmSpatializationProcessor?.setStrength(virtualizerStrength)
-                Log.d(TAG, "Rhythm spatialization loaded: enabled=$virtualizerEnabled, strength=$virtualizerStrength")
+                Log.d(TAG, "Melo spatialization loaded: enabled=$virtualizerEnabled, strength=$virtualizerStrength")
             } else {
                 Log.d(TAG, "Cannot load spatialization settings: Rhythm processor is null")
             }
@@ -3598,7 +3598,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
             val monoAudioEnabled = appSettings.monoAudioEnabled.value
             if (rhythmMonoAudioProcessor != null) {
                 rhythmMonoAudioProcessor?.setEnabled(monoAudioEnabled)
-                Log.d(TAG, "Rhythm mono audio loaded: enabled=$monoAudioEnabled")
+                Log.d(TAG, "Melo mono audio loaded: enabled=$monoAudioEnabled")
             }
             
             Log.d(TAG, "Loaded saved audio effects - EQ: ${appSettings.equalizerEnabled.value}, Bass: ${appSettings.bassBoostEnabled.value}, Virtualizer: ${appSettings.virtualizerEnabled.value}, Mono: ${appSettings.monoAudioEnabled.value}")
@@ -3846,7 +3846,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         
         val actualEnabled = if (appSettings.audioRoutingMode.value == "app") false else enabled
         rhythmBassBoostProcessor?.setEnabled(actualEnabled)
-        Log.d(TAG, "Rhythm bass boost enabled: $actualEnabled (applies to next audio buffer)")
+        Log.d(TAG, "Melo bass boost enabled: $actualEnabled (applies to next audio buffer)")
         if (::rhythmPlayerEngine.isInitialized) {
             rhythmPlayerEngine.updateTrackSelectionParameters()
         }
@@ -3859,7 +3859,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                 return
             }
             rhythmBassBoostProcessor?.setStrength(strength)
-            Log.d(TAG, "Rhythm bass boost strength set to $strength (applies to next audio buffer)")
+            Log.d(TAG, "Melo bass boost strength set to $strength (applies to next audio buffer)")
         } catch (e: Exception) {
             Log.e(TAG, "Error setting bass boost strength", e)
         }
@@ -3871,14 +3871,14 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
     
     fun setVirtualizerEnabled(enabled: Boolean) {
         if (rhythmSpatializationProcessor == null) {
-            Log.w(TAG, "Rhythm spatialization processor is null, reinitializing")
+            Log.w(TAG, "Melo spatialization processor is null, reinitializing")
             initializeRhythmProcessors()
         }
         
         val actualEnabled = if (appSettings.audioRoutingMode.value == "app") false else enabled
         rhythmSpatializationProcessor?.setEnabled(actualEnabled)
         virtualizerStrength = if (actualEnabled) virtualizerStrength else 0
-        Log.d(TAG, "Rhythm spatialization enabled: $actualEnabled (applies to next audio buffer)")
+        Log.d(TAG, "Melo spatialization enabled: $actualEnabled (applies to next audio buffer)")
         if (::rhythmPlayerEngine.isInitialized) {
             rhythmPlayerEngine.updateTrackSelectionParameters()
         }
@@ -3888,7 +3888,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         try {
             virtualizerStrength = strength
             rhythmSpatializationProcessor?.setStrength(strength)
-            Log.d(TAG, "Rhythm spatialization strength set to $strength (applies to next audio buffer)")
+            Log.d(TAG, "Melo spatialization strength set to $strength (applies to next audio buffer)")
         } catch (e: Exception) {
             Log.e(TAG, "Error setting virtualizer strength", e)
         }
@@ -3919,7 +3919,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         
         val actualEnabled = if (appSettings.audioRoutingMode.value == "app") false else enabled
         rhythmMonoAudioProcessor?.setEnabled(actualEnabled)
-        Log.d(TAG, "Rhythm mono audio enabled: $actualEnabled (applies to next audio buffer)")
+        Log.d(TAG, "Melo mono audio enabled: $actualEnabled (applies to next audio buffer)")
         if (::rhythmPlayerEngine.isInitialized) {
             rhythmPlayerEngine.updateTrackSelectionParameters()
         }

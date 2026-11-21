@@ -4784,7 +4784,7 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
                 workRequest
             )
 
-            Log.d("AppSettings", "Rhythm tips worker scheduled: every $intervalHours hours")
+            Log.d("AppSettings", "Melo tips worker scheduled: every $intervalHours hours")
         } catch (e: Exception) {
             Log.e("AppSettings", "Failed to schedule Rhythm tips worker", e)
         }
@@ -4793,7 +4793,7 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
     private fun cancelRhythmPulseNotificationWorker() {
         try {
             WorkManager.getInstance(context).cancelUniqueWork(RhythmPulseNotificationWorker.WORK_NAME)
-            Log.d("AppSettings", "Rhythm tips worker cancelled")
+            Log.d("AppSettings", "Melo tips worker cancelled")
         } catch (e: Exception) {
             Log.e("AppSettings", "Failed to cancel Rhythm tips worker", e)
         }

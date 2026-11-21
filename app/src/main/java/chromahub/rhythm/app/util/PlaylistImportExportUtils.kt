@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 // Marker exception used to signal a Rhythm backup file was selected in the single-playlist import flow
-class RhythmBackupDetectedException(val backupJson: String) : Exception("Rhythm backup file detected")
+class RhythmBackupDetectedException(val backupJson: String) : Exception("Melo backup file detected")
 
 /**
  * Utility class for importing and exporting playlists in various formats
@@ -124,7 +124,7 @@ object PlaylistImportExportUtils {
         @SerializedName("dateModified") val dateModified: Long,
         @SerializedName("songs") val songs: List<PlaylistSongEntry>,
         @SerializedName("exportedAt") val exportedAt: Long = System.currentTimeMillis(),
-        @SerializedName("exportedBy") val exportedBy: String = "Rhythm Music Player"
+        @SerializedName("exportedBy") val exportedBy: String = "Melo Music Player"
     )
     
     data class PlaylistSongEntry(

@@ -6164,7 +6164,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         }
         mediaController?.let { controller ->
             if (controller.isPlaying) {
-                Log.d(TAG, "Rhythm Guard timeout active, forcing pause ($reason)")
+                Log.d(TAG, "Melo Guard timeout active, forcing pause ($reason)")
                 controller.pause()
             }
         }
@@ -7850,7 +7850,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 )
             } catch (e: RhythmBackupDetectedException) {
                 // The selected file is a full Rhythm app backup — import ALL playlists from it
-                Log.d(TAG, "Rhythm backup detected during playlist import; switching to batch import")
+                Log.d(TAG, "Melo backup detected during playlist import; switching to batch import")
                 try {
                     val batchResult = withContext(Dispatchers.IO) {
                         PlaylistImportExportUtils.importPlaylistsFromRhythmBackup(

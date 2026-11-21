@@ -112,7 +112,7 @@ class NearbyServerScanner(
         isScanning = true
 
         try {
-            multicastLock = wifiManager.createMulticastLock("RhythmGoDiscovery").apply {
+            multicastLock = wifiManager.createMulticastLock("MeloGoDiscovery").apply {
                 setReferenceCounted(true)
                 try {
                     acquire()

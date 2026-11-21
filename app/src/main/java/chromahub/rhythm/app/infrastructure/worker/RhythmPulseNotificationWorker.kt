@@ -47,7 +47,7 @@ class RhythmPulseNotificationWorker(
         return@withContext try {
             val appSettings = AppSettings.getInstance(applicationContext)
             if (!appSettings.rhythmPulseNotificationsEnabled.value) {
-                Log.d(TAG, "Rhythm tips notifications disabled, skipping")
+                Log.d(TAG, "Melo tips notifications disabled, skipping")
                 return@withContext Result.success()
             }
 
