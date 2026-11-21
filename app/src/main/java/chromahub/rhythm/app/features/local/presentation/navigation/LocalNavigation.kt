@@ -868,16 +868,16 @@ fun LocalNavigation(
             updaterViewModel = updaterViewModel,
             onDismiss = { showUpdateBottomSheet = false },
             onUpdateClick = { immediate ->
-                showUpdateBottomSheet = false
-                // Download in place; don't kick the user out of the Home screen.
-                // Immediate installs still need the updater screen for progress.
+                // Keep the sheet open: it shows the wavy progress bar and
+                // percentage while the APK is downloading.
                 if (immediate) {
+                    showUpdateBottomSheet = false
                     navController.navigate(Screen.TunerUpdates.route) {
                         launchSingleTop = true
                     }
-                } else {
-                    updaterViewModel.downloadUpdate()
                 }
+                // Normal download is started inside UpdateBottomSheet and the
+                // sheet stays mounted until the user dismisses it.
             }
         )
     }

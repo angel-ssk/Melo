@@ -63,7 +63,7 @@ fun UpdateBottomSheet(
     RhythmAdaptiveModalSheet(
         adaptiveType = SheetAdaptiveType.AUTO_DIALOG,
         modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth(),
-        onDismissRequest = onDismiss,
+        onDismissRequest = { if (!isDownloading) onDismiss() },
         sheetState = sheetState,
         dragHandle = {
             BottomSheetDefaults.DragHandle(
@@ -253,6 +253,46 @@ fun UpdateBottomSheet(
             color = MaterialTheme.colorScheme.surfaceContainer,
             tonalElevation = 3.dp
         ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+            // Wavy progress + percentage stay visible in this sheet while downloading.
+            if (isDownloading || downloadedFile != null) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 24.dp, end = 24.dp, top = 12.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.updates_downloading),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = if (downloadedFile != null)
+                                "100%"
+                            else
+                                "${downloadProgress.toInt()}%",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    androidx.compose.material3.LinearWavyProgressIndicator(
+                        progress = {
+                            if (downloadedFile != null) 1f else (downloadProgress / 100f).coerceIn(0f, 1f)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(10.dp)
+                    )
+                }
+            }
+
             RhythmGroupedButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -268,6 +308,7 @@ fun UpdateBottomSheet(
                     isFirst = true,
                     isLast = false,
                     type = RhythmButtonType.Tonal,
+                    enabled = !isDownloading,
                     icon = RhythmIcons.Close,
                     text = stringResource(R.string.bottomsheet_lyrics_later)
                 )
@@ -277,7 +318,6 @@ fun UpdateBottomSheet(
                         if (!isDownloading && downloadedFile == null) {
                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                             updaterViewModel.downloadUpdate()
-                            onUpdateClick(false)
                         } else if (downloadedFile != null) {
                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                             updaterViewModel.installDownloadedApk()
@@ -330,6 +370,7 @@ fun UpdateBottomSheet(
                         }
                     } else null
                 )
+            }
             }
         }
     }
