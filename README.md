@@ -20,9 +20,9 @@ Un reproductor de música de código abierto para Android, forks de **Rhythm**, 
 ## ✨ Qué incluye Melo
 
 - **Movimiento ultra fluido**: sistema de animaciones basado en springs con tokens optimizados para 120/144/165 Hz, `MotionScheme` propio y control de velocidad en Ajustes → Rendimiento.
-- **Perfil Bienestar Digital**: avatar y nombre editables, días escuchando música en vista Día / Semana / Mes / Año, mapa de calor de 12 meses, rachas y meta diaria.
-- **Rhythm estadísticas**: tiempo de escucha, canciones, artistas, sesiones y tendencias, ahora también con rango anual.
-- **Rhythm Wrap**: tarjeta mensual compartible generada directamente como imagen.
+- **Perfil**: avatar y nombre editables, días escuchando música en vista Día / Semana / Mes / Año, mapa de calor de 12 meses, rachas y meta diaria.
+- **Melo estadísticas**: tiempo de escucha, canciones, artistas, sesiones y tendencias, ahora también con rango anual.
+- **Melo Wrap**: tarjeta mensual compartible generada directamente como imagen.
 - **Material 3 Expressive**: tema dinámico, colores del álbum en reproducción, fuentes y formas personalizables.
 - **Audio**: Media3 ExoPlayer, crossfade, ecualizador de 10 bandas con AutoEQ, ReplayGain, reproducción sin pérdidas y modos de streaming.
 - **Actualizaciones OTA**: configurables desde Ajustes → Actualizaciones; apuntan a `angel-ssk/Melo` y no contactan ningún repositorio externo.
@@ -33,7 +33,7 @@ Melo es un fork de **[Rhythm](https://github.com/cromaguy/Rhythm)**, creado por 
 
 - La base del reproductor, el motor de audio, las estadísticas, los widgets y gran parte del diseño Material 3 provienen de Rhythm.
 - Se conserva el crédito al creador original en la pantalla «Acerca de» de Melo.
-- Melo es mantenido por **Dayner Cabarca ([@angel-ssk](https://github.com/angel-ssk))**.
+- Melo es mantenido por mí **Dayner Cabarca ([@angel-ssk](https://github.com/angel-ssk))**.
 
 Gracias también a la comunidad de Rhythm por las traducciones, pruebas y contribuciones que hicieron posible este proyecto.
 
