@@ -4,7 +4,7 @@
 
 **Your Music, Your Melo**
 
-Un reproductor de música de código abierto para Android, forks de **Rhythm**, optimizado para pantallas de alta tasa de refresco (120 Hz+) y con una interfaz inspirada en el Bienestar Digital de Google.
+Un reproductor de música de código abierto para Android, fork de **Rhythm**, optimizado para pantallas de alta tasa de refresco (120 Hz+) y con una interfaz inspirada en Material Expressive 3.
 
 [![Platform](https://img.shields.io/badge/Android-34A853?style=flat-square&logo=android&logoColor=white)](https://android.com)
 [![API Level](https://img.shields.io/badge/API-26%2B-4285f4?style=flat-square)](https://developer.android.com)
