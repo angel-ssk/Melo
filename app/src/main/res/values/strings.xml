@@ -2869,4 +2869,5 @@
     <string name="widget_wellbeing_description">Melo Wellbeing: daily goal and listening days</string>
     <string name="home_melo_mix_created">Melo Mix created with %1$d songs</string>
     <string name="home_melo_mix_empty">Listen to something first to create your Melo Mix</string>
+    <string name="profile_dev_crown_cd">Melo developer crown</string>
 </resources>

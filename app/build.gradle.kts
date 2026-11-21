@@ -41,6 +41,11 @@ android {
         val isNightly = project.findProperty("nightly")?.toString() == "true"
         buildConfigField("boolean", "IS_NIGHTLY", isNightly.toString())
 
+        // Developer build for Melo's creator. Enable with:
+        //   ./gradlew assembleGithubRelease -PdevBuild=true
+        val isDevBuild = project.findProperty("devBuild")?.toString() == "true"
+        buildConfigField("boolean", "IS_DEV_BUILD", isDevBuild.toString())
+
         // Apple Music: fallback token from environment variable (GitHub secrets), local.properties, or fallback
         val appleMusicToken = System.getenv("APPLE_MUSIC_FALLBACK_TOKEN")
             ?: localProperties.getProperty("APPLE_MUSIC_FALLBACK_TOKEN")

@@ -139,6 +139,15 @@ para emuladores como MuMuPlayer.
 - `PresetDefaultSeed` (esquema personalizado) pasa del morado de Rhythm al
   azul Melo `#1946B5`, el mismo del icono.
 
+### 13. Modo desarrollador (build flag)
+- `buildConfigField("boolean", "IS_DEV_BUILD", ...)` activable con
+  `./gradlew assembleGithubRelease -PdevBuild=true`.
+- En builds dev: perfil fijo **«Angel Dev»**, foto de GitHub (`dev_angel_avatar.jpg`,
+  sin editar) y una **corona vectorial propia** de 20 dp (no copiada de Google),
+  teñida con el color primary de Material 3, sobre el avatar del Inicio y del Perfil.
+- En modo dev no se puede cambiar nombre ni foto. Los builds normales no muestran
+  nada de esto.
+
 ## Verificación
 - `./gradlew compileGithubDebugKotlin` ✅
 - `./gradlew assembleGithubDebug` ✅

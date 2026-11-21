@@ -3030,4 +3030,5 @@
     <string name="widget_wellbeing_description">Melo Bienestar: meta diaria y días escuchando</string>
     <string name="home_melo_mix_created">Melo Mix creado con %1$d canciones</string>
     <string name="home_melo_mix_empty">Escucha algo primero para crear tu Melo Mix</string>
+    <string name="profile_dev_crown_cd">Corona de desarrollador de Melo</string>
 </resources>

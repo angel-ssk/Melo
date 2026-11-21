@@ -16,6 +16,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.clickable
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -130,8 +132,11 @@ fun ProfileScreen(
     val scope = rememberCoroutineScope()
     val statsRepository = remember { PlaybackStatsRepository.getInstance(context) }
 
-    val profileName by appSettings.profileName.collectAsState()
-    val photoPath by appSettings.profilePhotoPath.collectAsState()
+    val rawProfileName by appSettings.profileName.collectAsState()
+    val isDev = chromahub.rhythm.app.util.MeloDevMode.enabled
+    val profileName = if (isDev) chromahub.rhythm.app.util.MeloDevMode.NAME else rawProfileName
+    val storedPhotoPath by appSettings.profilePhotoPath.collectAsState()
+    val photoPath = if (isDev) null else storedPhotoPath
     val joinDate by appSettings.profileJoinDate.collectAsState()
     val dailyGoal by appSettings.profileDailyGoalMinutes.collectAsState()
     val wellbeingNotifications by appSettings.wellbeingNotifications.collectAsState()
@@ -217,10 +222,12 @@ fun ProfileScreen(
                 name = profileName,
                 photoPath = photoPath,
                 joinDate = joinDate,
-                onAvatarClick = { photoLauncher.launch("image/*") },
+                onAvatarClick = { if (!isDev) photoLauncher.launch("image/*") },
                 onNameClick = {
-                    draftName = profileName
-                    showNameDialog = true
+                    if (!isDev) {
+                        draftName = profileName
+                        showNameDialog = true
+                    }
                 }
             )
 
@@ -409,7 +416,9 @@ fun ProfileAvatar(
     name: String,
     size: Dp,
     onClick: (() -> Unit)?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    devAvatar: Boolean = false,
+    showCrown: Boolean = false
 ) {
     val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
@@ -427,8 +436,9 @@ fun ProfileAvatar(
         )
     } else Modifier
 
+    Box(modifier = modifier) {
     Box(
-        modifier = modifier
+        modifier = Modifier
             .size(size)
             .clip(CircleShape)
             .then(clickableModifier)
@@ -450,7 +460,14 @@ fun ProfileAvatar(
                     .build()
             }
         }
-        if (avatarFile != null && avatarFile.exists() && avatarRequest != null) {
+        if (devAvatar) {
+            Image(
+                painter = painterResource(id = chromahub.rhythm.app.util.MeloDevMode.AVATAR_RES),
+                contentDescription = stringResource(R.string.profile_avatar_cd),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else if (avatarFile != null && avatarFile.exists() && avatarRequest != null) {
             AsyncImage(
                 model = avatarRequest,
                 contentDescription = stringResource(R.string.profile_avatar_cd),
@@ -473,6 +490,27 @@ fun ProfileAvatar(
             }
         }
     }
+    if (showCrown) {
+        DevCrown(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .offset(y = (-9).dp)
+        )
+    }
+    }
+}
+
+/** Small custom three-point crown, tinted with the Material 3 primary color. */
+@Composable
+private fun DevCrown(modifier: Modifier = Modifier) {
+    Image(
+        painter = painterResource(id = chromahub.rhythm.app.util.MeloDevMode.CROWN_RES),
+        contentDescription = stringResource(R.string.profile_dev_crown_cd),
+        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+            MaterialTheme.colorScheme.primary
+        ),
+        modifier = modifier.size(20.dp)
+    )
 }
 
 @Composable
@@ -508,7 +546,9 @@ private fun ProfileIdentityHeader(
                 photoPath = photoPath,
                 name = name,
                 size = 104.dp,
-                onClick = onAvatarClick
+                onClick = onAvatarClick,
+                devAvatar = chromahub.rhythm.app.util.MeloDevMode.enabled,
+                showCrown = chromahub.rhythm.app.util.MeloDevMode.enabled
             )
             Box(
                 modifier = Modifier
@@ -1040,5 +1080,12 @@ private fun formatDuration(durationMs: Long): String {
 /** Small helper used by the Home top-left avatar to keep layout stable. */
 @Composable
 fun ProfileAvatarButton(photoPath: String?, name: String, onClick: () -> Unit) {
-    ProfileAvatar(photoPath = photoPath, name = name, size = 40.dp, onClick = onClick)
+    ProfileAvatar(
+        photoPath = photoPath,
+        name = name,
+        size = 40.dp,
+        onClick = onClick,
+        devAvatar = chromahub.rhythm.app.util.MeloDevMode.enabled,
+        showCrown = chromahub.rhythm.app.util.MeloDevMode.enabled
+    )
 }
