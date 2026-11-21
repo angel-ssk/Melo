@@ -112,7 +112,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.util.rememberOffMain
 import chromahub.rhythm.app.util.DevicePosture
@@ -292,6 +292,8 @@ sealed class Screen(val route: String) {
     // Stats Screen
     object RhythmStats : Screen("rhythm_stats")
     object Equalizer : Screen("equalizer")
+    // Rhythm fork: Wellbeing-style profile
+    object Profile : Screen("profile")
 }
 
 // Streaming detail/service routes hosted inside the unified navigation shell.
@@ -571,6 +573,7 @@ fun LocalNavigation(
                 pendingRoute == Screen.Player.route ||
                 pendingRoute == Screen.Settings.route ||
                 pendingRoute == Screen.RhythmStats.route ||
+                pendingRoute == Screen.Profile.route ||
                 pendingRoute.startsWith(Screen.Library.route.substringBefore("?")) ||
                 pendingRoute.startsWith("playlist/") ||
                 pendingRoute.startsWith("artist/") ||
@@ -2035,6 +2038,11 @@ private fun LocalNavigationContent(
                             onNavigateToRhythmGuard = {
                                 navController.navigate(Screen.TunerRhythmGuard.route)
                             },
+                            onNavigateToProfile = {
+                                navController.navigate(Screen.Profile.route) {
+                                    launchSingleTop = true
+                                }
+                            },
                             onNavigateToArtist = { artist ->
                                 navController.navigate(Screen.ArtistDetail.createRoute(artist.name))
                             },
@@ -2425,6 +2433,34 @@ private fun LocalNavigationContent(
                 ) {
                     SlideUpCornerWrapper {
                         RhythmStatsScreen(navController = navController, viewModel = viewModel)
+                    }
+                }
+
+                composable(
+                    route = Screen.Profile.route,
+                    enterTransition = {
+                        fadeIn(animationSpec = chromahub.rhythm.app.ui.theme.RhythmMotion.emphasis) +
+                            slideInVertically(
+                                initialOffsetY = { it / 10 },
+                                animationSpec = chromahub.rhythm.app.ui.theme.RhythmMotion.offset
+                            )
+                    },
+                    exitTransition = {
+                        fadeOut(animationSpec = chromahub.rhythm.app.ui.theme.RhythmMotion.emphasis)
+                    },
+                    popExitTransition = {
+                        fadeOut(animationSpec = chromahub.rhythm.app.ui.theme.RhythmMotion.emphasis) +
+                            slideOutVertically(
+                                targetOffsetY = { it / 10 },
+                                animationSpec = chromahub.rhythm.app.ui.theme.RhythmMotion.offset
+                            )
+                    }
+                ) {
+                    SlideUpCornerWrapper {
+                        chromahub.rhythm.app.shared.presentation.screens.ProfileScreen(
+                            onBack = { navController.popBackStack() },
+                            appSettings = appSettings
+                        )
                     }
                 }
 

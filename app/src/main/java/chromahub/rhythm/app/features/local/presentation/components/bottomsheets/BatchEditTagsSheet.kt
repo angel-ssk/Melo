@@ -94,7 +94,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
 import chromahub.rhythm.app.shared.presentation.components.bottomsheets.AdaptiveSheetScrollContainer
 import java.io.File
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.compose.ui.text.style.TextAlign

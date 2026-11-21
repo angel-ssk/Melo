@@ -36,7 +36,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -67,6 +67,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
@@ -96,7 +97,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.ViewModelStoreOwner
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
@@ -183,6 +184,8 @@ fun UpdatesSettingsScreen(onBackClick: () -> Unit) {
     // Collect state from ViewModel and AppSettings
     val updatesEnabled by appSettings.updatesEnabled.collectAsState()
     val autoCheckForUpdates by appSettings.autoCheckForUpdates.collectAsState()
+    var repoOwnerInput by rememberSaveable { mutableStateOf(appSettings.updateRepoOwner.value) }
+    var repoNameInput by rememberSaveable { mutableStateOf(appSettings.updateRepoName.value) }
     val updateChannel by appSettings.updateChannel.collectAsState()
     val updateSource by appSettings.updateSource.collectAsState()
     val updateCheckIntervalHours by appSettings.updateCheckIntervalHours.collectAsState()
@@ -221,7 +224,7 @@ fun UpdatesSettingsScreen(onBackClick: () -> Unit) {
             knownIssues = listOf(
                 "Simulated sandbox mode overrides actual remote check updates."
             ),
-            downloadUrl = "https://github.com/cromaguy/Rhythm/releases",
+            downloadUrl = "https://github.com/angel-ssk/Melo/releases",
             apkAssetName = "rhythm-v3.2.0-beta.apk",
             apkSize = 18454937, // ~17.6 MB
             releaseNotes = "Simulated update notes",
@@ -320,19 +323,27 @@ fun UpdatesSettingsScreen(onBackClick: () -> Unit) {
         activeDownloadedFile != null -> context.getString(R.string.updates_download_complete)
         activeUpdateAvailable -> context.getString(R.string.updates_available)
         !autoCheckForUpdates -> context.getString(R.string.updates_manual_check)
-        else -> context.getString(R.string.updates_up_to_date_message)
+        else -> context.getString(R.string.updates_up_to_date_title)
     }
+
+    val showUpToDateCookies = activeError == null && updatesEnabled &&
+        !activeIsCheckingForUpdates && !activeUpdateAvailable &&
+        activeDownloadedFile == null && autoCheckForUpdates
 
     val statusDescription = when {
         activeError != null -> activeError
         !updatesEnabled -> context.getString(R.string.updates_disabled_message)
         activeIsCheckingForUpdates -> context.getString(R.string.fetching_latest_version)
-        activeIsExtracting -> "Unzipping update file, please wait..."
+        activeIsExtracting -> context.getString(R.string.updates_unzipping)
         activeIsDownloading -> "${((activeLatestVersion?.apkSize ?: 0) * activeDownloadProgress / 100).toLong().let { updaterViewModel.getReadableFileSize(it) }} / ${activeLatestVersion?.let { updaterViewModel.getReadableFileSize(it.apkSize) } ?: ""}"
-        activeDownloadedFile != null -> "Version ${activeLatestVersion?.versionName ?: "?"} is ready to install"
-        activeUpdateAvailable -> "Version ${activeLatestVersion?.versionName ?: "?"} • ${activeLatestVersion?.let { updaterViewModel.getReadableFileSize(it.apkSize) } ?: ""}"
+        activeDownloadedFile != null -> context.getString(R.string.updates_ready_to_install, activeLatestVersion?.versionName ?: "?")
+        activeUpdateAvailable -> context.getString(
+            R.string.updates_available_format,
+            activeLatestVersion?.versionName ?: "?",
+            activeLatestVersion?.let { updaterViewModel.getReadableFileSize(it.apkSize) } ?: ""
+        )
         !autoCheckForUpdates -> context.getString(R.string.updates_auto_disabled)
-        else -> "Rhythm is up to date with the latest features and security updates"
+        else -> context.getString(R.string.updates_up_to_date_message)
     }
 
     val headerBlendHeight = 24.dp
@@ -446,16 +457,25 @@ fun UpdatesSettingsScreen(onBackClick: () -> Unit) {
                     }
 
                     // Status Title
-                    Text(
-                        text = statusTitle,
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = statusColor,
-                        textAlign = TextAlign.Start,
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 24.dp)
-                    )
+                    ) {
+                        Text(
+                            text = statusTitle,
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = statusColor,
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier.weight(1f, fill = false)
+                        )
+                        if (showUpToDateCookies) {
+                            Spacer(modifier = Modifier.width(6.dp))
+                            RotatingCookieEllipsis(color = statusColor)
+                        }
+                    }
 
                     // Linear Wavy Progress Bar between Title and Description (Onboarding style)
                     if (activeIsCheckingForUpdates) {
@@ -894,9 +914,9 @@ fun UpdatesSettingsScreen(onBackClick: () -> Unit) {
                             HapticUtils.performHapticFeedback(context, haptics, HapticType.HEAVY)
                             val tag = currentVersion.versionName
                             val releaseUrl = if (tag.startsWith("v", ignoreCase = true)) {
-                                "https://github.com/cromaguy/Rhythm/releases/tag/$displayVersionName"
+                                "https://github.com/angel-ssk/Melo/releases/tag/$displayVersionName"
                             } else {
-                                "https://github.com/cromaguy/Rhythm/releases/tag/v$displayVersionName"
+                                "https://github.com/angel-ssk/Melo/releases/tag/v$displayVersionName"
                             }
                             try {
                                 val intent = Intent(Intent.ACTION_VIEW, (releaseUrl).toUri())
@@ -1496,5 +1516,48 @@ fun UpdatesSettingsScreen(onBackClick: () -> Unit) {
                 }
             }
         )
+    }
+}
+
+/**
+ * Three tiny 12-piece cookies spinning continuously, used as the ellipsis
+ * after the "you're all set" headline. Drawn in one Canvas pass so it costs
+ * almost nothing on low-RAM devices.
+ */
+@Composable
+private fun RotatingCookieEllipsis(color: Color) {
+    val transition = rememberInfiniteTransition(label = "cookieEllipsis")
+    val rotation by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2400, easing = LinearEasing)
+        ),
+        label = "cookieRotation"
+    )
+    Canvas(modifier = Modifier.size(24.dp)) {
+        val radius = 3.5.dp.toPx()
+        repeat(3) { index ->
+            val cx = size.width * (0.2f + index * 0.3f)
+            val cy = size.height / 2f
+            rotate(rotation + index * 37f, pivot = Offset(cx, cy)) {
+                repeat(12) { piece ->
+                    val angle = Math.toRadians((piece * 30).toDouble())
+                    drawCircle(
+                        color = color,
+                        radius = radius * 0.26f,
+                        center = Offset(
+                            cx + (radius * 0.9f * kotlin.math.cos(angle)).toFloat(),
+                            cy + (radius * 0.9f * kotlin.math.sin(angle)).toFloat()
+                        )
+                    )
+                }
+                drawCircle(
+                    color = color.copy(alpha = 0.5f),
+                    radius = radius * 0.32f,
+                    center = Offset(cx, cy)
+                )
+            }
+        }
     }
 }

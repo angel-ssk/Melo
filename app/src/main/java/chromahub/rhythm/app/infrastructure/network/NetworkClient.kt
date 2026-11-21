@@ -6,7 +6,7 @@
 package chromahub.rhythm.app.network
 
 import android.util.Log
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -137,7 +137,7 @@ object NetworkClient {
         extraHeaders: Map<String, String> = emptyMap()
     ) = Interceptor { chain ->
         try {
-            val userAgent = customUserAgent ?: "Rhythm/${BuildConfig.VERSION_NAME} (https://github.com/cromaguy/Rhythm)"
+            val userAgent = customUserAgent ?: "Melo/${BuildConfig.VERSION_NAME} (https://github.com/cromaguy/Rhythm)"
             val requestBuilder = chain.request().newBuilder()
                 .header("User-Agent", userAgent)
                 .header("Accept", "application/json")
@@ -176,8 +176,8 @@ object NetworkClient {
     private val lrclibHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor(appHeadersInterceptor(
-                customUserAgent = "Rhythm/${BuildConfig.VERSION_NAME} (https://github.com/cromaguy/Rhythm)",
-                extraHeaders = mapOf("Lrclib-Client" to "Rhythm/${BuildConfig.VERSION_NAME} (https://github.com/cromaguy/Rhythm)")
+                customUserAgent = "Melo/${BuildConfig.VERSION_NAME} (https://github.com/cromaguy/Rhythm)",
+                extraHeaders = mapOf("Lrclib-Client" to "Melo/${BuildConfig.VERSION_NAME} (https://github.com/cromaguy/Rhythm)")
             ))
             .addInterceptor(loggingInterceptor)
             .addInterceptor(retryInterceptor)

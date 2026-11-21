@@ -133,7 +133,8 @@ val WarningDark = Color(0xFFFFB74D) // Light orange for dark theme
 // Material 3 Preset Theme Seeds
 // ============================================
 
-val PresetDefaultSeed = Color(0xFF6750A4)
+// Melo brand blue (taken from the app icon), used by the default custom scheme.
+val PresetDefaultSeed = Color(0xFF1946B5)
 val PresetWarmSeed = Color(0xFFFF6B35)
 val PresetCoolSeed = Color(0xFF1E88E5)
 val PresetForestSeed = Color(0xFF2E7D32)

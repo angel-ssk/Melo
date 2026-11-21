@@ -157,7 +157,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.PlaybackLocation
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
@@ -1768,8 +1768,8 @@ fun MaterialPlayerScreen(
                                             AsyncImage(
                                                 model = ImageRequest.Builder(context)
                                                     .data(song.artworkUri)
-                                                    .placeholder(chromahub.rhythm.app.R.drawable.rhythm_logo)
-                                                    .error(chromahub.rhythm.app.R.drawable.rhythm_logo)
+                                                    .placeholder(com.melo.app.R.drawable.rhythm_logo)
+                                                    .error(com.melo.app.R.drawable.rhythm_logo)
                                                     .build(),
                                                 contentDescription = stringResource(R.string.album_artwork_description, song.title),
                                                 contentScale = ContentScale.Crop,
@@ -1862,7 +1862,7 @@ fun MaterialPlayerScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Icon(
-                                                painter = painterResource(id = chromahub.rhythm.app.R.drawable.rhythm_logo),
+                                                painter = painterResource(id = com.melo.app.R.drawable.rhythm_logo),
                                                 contentDescription = stringResource(R.string.album_artwork_description, song.title),
                                                 tint = MaterialTheme.colorScheme.primary.copy(
                                                     alpha = 0.7f
@@ -1905,7 +1905,7 @@ fun MaterialPlayerScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        painter = painterResource(id = chromahub.rhythm.app.R.drawable.rhythm_logo),
+                                        painter = painterResource(id = com.melo.app.R.drawable.rhythm_logo),
                                         contentDescription = stringResource(R.string.cd_no_song_playing),
                                         tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                                         modifier = Modifier.size(120.dp)

@@ -6,7 +6,7 @@
 package chromahub.rhythm.app.network
 
 import android.content.Context
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.Request

@@ -12,7 +12,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.core.net.toUri
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.Song
 import chromahub.rhythm.app.util.MediaUtils
 import chromahub.rhythm.app.util.PendingLyricsWriteRequest

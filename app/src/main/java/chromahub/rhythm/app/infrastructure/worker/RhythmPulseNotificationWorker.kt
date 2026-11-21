@@ -15,7 +15,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.activities.MainActivity
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import kotlinx.coroutines.Dispatchers

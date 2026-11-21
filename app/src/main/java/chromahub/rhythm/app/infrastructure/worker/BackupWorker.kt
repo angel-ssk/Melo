@@ -29,7 +29,7 @@ class BackupWorker(
     companion object {
         const val TAG = "BackupWorker"
         const val WORK_NAME = "auto_backup_work"
-        private const val BACKUP_FOLDER = "RhythmBackups"
+        private const val BACKUP_FOLDER = "MeloBackups"
         private const val MAX_AUTO_BACKUPS = 4 // Keep last 4 weekly backups
         private const val MAX_BACKUP_AGE_DAYS = 30 // Delete backups older than 30 days
     }

@@ -1,15 +1,15 @@
-ï»¿# =============================================================================
-# Rhythm Baseline Profile â€” GENERATED on device (moto g67 power 5G, Android 16)
+# =============================================================================
+# Rhythm Baseline Profile — GENERATED on device (moto g67 power 5G, Android 16)
 # Source: BaselineProfileGenerator.kt via BaselineProfileRule (benchmark-macro-junit4:1.3.4)
 # Generated: 2026-06-17  Build: githubBenchmark (R8-minified)
 #
 # Contains 4 profiled journeys (see BaselineProfileGenerator.kt):
-#   1. Cold startup  â€” bindApplication â†’ activityIdle (~4.58s baseline)
-#   2. HomeScreen scroll â€” warms up LazyColumn composables (330ms worst frame)
-#   3. Library navigation â€” 304KB LibraryScreen Compose composition
-#   4. Nav back-stack â€” HomeScreen recomposition path
+#   1. Cold startup  — bindApplication ? activityIdle (~4.58s baseline)
+#   2. HomeScreen scroll — warms up LazyColumn composables (330ms worst frame)
+#   3. Library navigation — 304KB LibraryScreen Compose composition
+#   4. Nav back-stack — HomeScreen recomposition path
 #
-# Class names are post-R8 (obfuscated) â€” correct for release/benchmark builds.
+# Class names are post-R8 (obfuscated) — correct for release/benchmark builds.
 # DO NOT manually edit the class names below; regenerate via:
 #   .\gradlew :macrobenchmark:connectedGithubBenchmarkAndroidTest
 #     -Pandroid.testInstrumentationRunnerArguments.class=chromahub.rhythm.app.benchmark.BaselineProfileGenerator
@@ -21695,16 +21695,16 @@ SPLch0;-><init>(Landroidx/compose/ui/Modifier;Landroidx/compose/foundation/lazy/
 Lch1;
 SPLch1;-><init>(Ljava/lang/Object;Ljava/lang/Object;I)V
 SPLch1;->invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
-Lchromahub/rhythm/app/R$drawable;
-Lchromahub/rhythm/app/R$font;
-Lchromahub/rhythm/app/R$string;
-Lchromahub/rhythm/app/RhythmApplication;
-SPLchromahub/rhythm/app/RhythmApplication;-><clinit>()V
-SPLchromahub/rhythm/app/RhythmApplication;-><init>()V
-SPLchromahub/rhythm/app/RhythmApplication;->onCreate()V
-Lchromahub/rhythm/app/RhythmApplication$Companion;
-SPLchromahub/rhythm/app/RhythmApplication$Companion;-><init>()V
-SPLchromahub/rhythm/app/RhythmApplication$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+Lcom/melo/app/R$drawable;
+Lcom/melo/app/R$font;
+Lcom/melo/app/R$string;
+Lcom/melo/app/RhythmApplication;
+SPLcom/melo/app/RhythmApplication;-><clinit>()V
+SPLcom/melo/app/RhythmApplication;-><init>()V
+SPLcom/melo/app/RhythmApplication;->onCreate()V
+Lcom/melo/app/RhythmApplication$Companion;
+SPLcom/melo/app/RhythmApplication$Companion;-><init>()V
+SPLcom/melo/app/RhythmApplication$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 Lchromahub/rhythm/app/activities/MainActivity;
 SPLchromahub/rhythm/app/activities/MainActivity;-><clinit>()V
 SPLchromahub/rhythm/app/activities/MainActivity;-><init>()V

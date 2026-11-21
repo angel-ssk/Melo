@@ -37,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +46,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.presentation.components.Material3SettingsGroup
 import chromahub.rhythm.app.shared.presentation.components.Material3SettingsItem
@@ -190,14 +191,21 @@ fun CrossfadeSettingsScreen(
                                 Column(modifier = Modifier.fillMaxWidth()) {
                                     Text(stringResource(R.string.settings_crossfade_duration_help))
                                     Spacer(modifier = Modifier.height(8.dp))
-                                    val crossfadeSliderState = remember(crossfadeDuration) {
+                                    // Keep a single SliderState for the whole gesture.
+                                    // Recreating it keyed by crossfadeDuration used to
+                                    // cancel the drag on the first onValueChange.
+                                    val crossfadeSliderState = remember {
                                         SliderState(
                                             value = crossfadeDuration,
                                             steps = 22,
                                             trackRange = 0.5f..12f
                                         )
                                     }
-                                    crossfadeSliderState.value = crossfadeDuration
+                                    LaunchedEffect(crossfadeDuration) {
+                                        if (crossfadeSliderState.value != crossfadeDuration) {
+                                            crossfadeSliderState.value = crossfadeDuration
+                                        }
+                                    }
                                     Slider(
                                         state = crossfadeSliderState,
                                         onValueChange = {

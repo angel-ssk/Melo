@@ -128,8 +128,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.runtime.mutableIntStateOf
-import chromahub.rhythm.app.R
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.R
+import com.melo.app.BuildConfig
 import chromahub.rhythm.app.shared.presentation.components.common.CollapsibleHeaderScreen
 import chromahub.rhythm.app.ui.utils.LazyListStateSaver
 import chromahub.rhythm.app.ui.LocalMiniPlayerPadding

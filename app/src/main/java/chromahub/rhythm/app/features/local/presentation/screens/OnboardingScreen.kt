@@ -145,7 +145,7 @@ import java.io.File
 import chromahub.rhythm.app.util.StoragePathUtils
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.AlbumViewType
 import chromahub.rhythm.app.shared.data.model.ArtistViewType
 import chromahub.rhythm.app.shared.data.model.AppSettings
@@ -748,7 +748,8 @@ fun OnboardingScreen(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                            painter = painterResource(id = R.drawable.melo_mark),
+                            colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                             contentDescription = null,
                             modifier = Modifier.size(32.dp)
                         )
@@ -4616,7 +4617,8 @@ fun EnhancedFullTourPromptContent(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                        painter = painterResource(id = R.drawable.melo_mark),
+                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                         contentDescription = context.getString(R.string.updates_rhythm_logo_cd),
                         modifier = Modifier.size(64.dp)
                     )
@@ -4772,7 +4774,8 @@ fun EnhancedFullTourPromptContent(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                    painter = painterResource(id = R.drawable.melo_mark),
+                    colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                     contentDescription = context.getString(R.string.updates_rhythm_logo_cd),
                     modifier = Modifier.size(80.dp)
                 )
@@ -5068,7 +5071,7 @@ fun EnhancedUpdaterContent(
                                     onCheckedChange = { enabled ->
                                         scope.launch {
                                             if (enabled) {
-                                                if (chromahub.rhythm.app.BuildConfig.FLAVOR == "fdroid") {
+                                                if (com.melo.app.BuildConfig.FLAVOR == "fdroid") {
                                                     showFdroidWarningDialog = true
                                                 } else {
                                                     appSettings.setUpdatesEnabled(true)
@@ -5085,7 +5088,7 @@ fun EnhancedUpdaterContent(
                                 scope.launch {
                                     val target = !updatesEnabled
                                     if (target) {
-                                        if (chromahub.rhythm.app.BuildConfig.FLAVOR == "fdroid") {
+                                        if (com.melo.app.BuildConfig.FLAVOR == "fdroid") {
                                             showFdroidWarningDialog = true
                                         } else {
                                             appSettings.setUpdatesEnabled(true)
@@ -5320,7 +5323,7 @@ fun EnhancedUpdaterContent(
                                     onCheckedChange = { enabled ->
                                         scope.launch {
                                             if (enabled) {
-                                                if (chromahub.rhythm.app.BuildConfig.FLAVOR == "fdroid") {
+                                                if (com.melo.app.BuildConfig.FLAVOR == "fdroid") {
                                                     showFdroidWarningDialog = true
                                                 } else {
                                                     appSettings.setUpdatesEnabled(true)
@@ -5337,7 +5340,7 @@ fun EnhancedUpdaterContent(
                                 scope.launch {
                                     val target = !updatesEnabled
                                     if (target) {
-                                        if (chromahub.rhythm.app.BuildConfig.FLAVOR == "fdroid") {
+                                        if (com.melo.app.BuildConfig.FLAVOR == "fdroid") {
                                             showFdroidWarningDialog = true
                                         } else {
                                             appSettings.setUpdatesEnabled(true)
@@ -8963,7 +8966,7 @@ private fun IntegrationsSettingsCards(
                 onAppleCanvasConfigure
             )
         )
-        if (chromahub.rhythm.app.BuildConfig.ENABLE_DEEZER) {
+        if (com.melo.app.BuildConfig.ENABLE_DEEZER) {
             add(
                 onboardingToggleItem(
                     null,
@@ -8975,7 +8978,7 @@ private fun IntegrationsSettingsCards(
                 )
             )
         }
-        if (chromahub.rhythm.app.BuildConfig.ENABLE_BETTERLYRICS) {
+        if (com.melo.app.BuildConfig.ENABLE_BETTERLYRICS) {
             add(
                 onboardingToggleItem(
                     null,
@@ -8987,7 +8990,7 @@ private fun IntegrationsSettingsCards(
                 )
             )
         }
-        if (chromahub.rhythm.app.BuildConfig.ENABLE_LYRICALLY_API) {
+        if (com.melo.app.BuildConfig.ENABLE_LYRICALLY_API) {
             add(
                 onboardingToggleItem(
                     null,
@@ -8999,7 +9002,7 @@ private fun IntegrationsSettingsCards(
                 )
             )
         }
-        if (chromahub.rhythm.app.BuildConfig.ENABLE_LRCLIB) {
+        if (com.melo.app.BuildConfig.ENABLE_LRCLIB) {
             add(
                 onboardingToggleItem(
                     null,
@@ -9011,7 +9014,7 @@ private fun IntegrationsSettingsCards(
                 )
             )
         }
-        if (chromahub.rhythm.app.BuildConfig.ENABLE_YOUTUBE_MUSIC) {
+        if (com.melo.app.BuildConfig.ENABLE_YOUTUBE_MUSIC) {
             add(
                 onboardingToggleItem(
                     null,
@@ -9023,7 +9026,7 @@ private fun IntegrationsSettingsCards(
                 )
             )
         }
-        if (chromahub.rhythm.app.BuildConfig.ENABLE_WIKIPEDIA) {
+        if (com.melo.app.BuildConfig.ENABLE_WIKIPEDIA) {
             add(
                 onboardingToggleItem(
                     null,
@@ -9383,7 +9386,8 @@ private fun AppModeChoiceHeader(
     Layout(
         content = {
             Image(
-                painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                painter = painterResource(id = R.drawable.melo_mark),
+                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                 contentDescription = stringResource(R.string.updates_rhythm_logo_cd),
                 modifier = Modifier.size(logoSize)
             )

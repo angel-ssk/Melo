@@ -38,7 +38,7 @@ import kotlinx.coroutines.delay
 import android.net.Uri
 import chromahub.rhythm.app.shared.data.model.Song
 import chromahub.rhythm.app.features.local.presentation.viewmodel.MusicViewModel
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import android.util.Log
 import androidx.core.net.toUri
 import android.content.Context

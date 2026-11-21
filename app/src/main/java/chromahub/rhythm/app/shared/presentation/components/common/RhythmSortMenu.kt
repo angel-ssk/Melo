@@ -20,7 +20,7 @@ import chromahub.rhythm.app.shared.presentation.components.icons.MaterialSymbolI
 import chromahub.rhythm.app.shared.presentation.components.icons.RhythmIcons
 import chromahub.rhythm.app.shared.presentation.components.common.rememberExpressiveShape
 import androidx.compose.ui.platform.LocalContext
-import chromahub.rhythm.app.R
+import com.melo.app.R
 
 /**
  * Data class representing a sorting option in the custom sort menu.

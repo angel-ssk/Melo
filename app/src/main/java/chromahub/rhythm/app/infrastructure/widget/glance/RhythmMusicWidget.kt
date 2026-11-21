@@ -67,7 +67,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import chromahub.rhythm.app.activities.MainActivity
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.glance.appwidget.state.getAppWidgetState
 import androidx.core.net.toUri
 
@@ -189,7 +189,7 @@ class RhythmMusicWidget : GlanceAppWidget() {
             } catch (e: Exception) {
                 android.util.Log.e("RhythmMusicWidget", "Widget data error, using fallback", e)
                 WidgetData(
-                    songTitle = "Rhythm",
+                    songTitle = "Melo",
                     artistName = "",
                     albumName = "",
                     isPlaying = false,
@@ -1292,7 +1292,7 @@ class RhythmMusicWidget : GlanceAppWidget() {
     private fun getWidgetData(prefs: Preferences, appSettings: chromahub.rhythm.app.shared.data.model.AppSettings?): WidgetData {
         return try {
             WidgetData(
-                songTitle = prefs[stringPreferencesKey(KEY_SONG_TITLE)] ?: "Rhythm",
+                songTitle = prefs[stringPreferencesKey(KEY_SONG_TITLE)] ?: "Melo",
                 artistName = prefs[stringPreferencesKey(KEY_ARTIST_NAME)] ?: "",
                 albumName = prefs[stringPreferencesKey(KEY_ALBUM_NAME)] ?: "",
                 isPlaying = prefs[booleanPreferencesKey(KEY_IS_PLAYING)] ?: false,
@@ -1317,7 +1317,7 @@ class RhythmMusicWidget : GlanceAppWidget() {
             android.util.Log.e("RhythmMusicWidget", "Error getting widget data", e)
             // Return default data if anything fails
             WidgetData(
-                songTitle = "Rhythm",
+                songTitle = "Melo",
                 artistName = "",
                 albumName = "",
                 isPlaying = false,

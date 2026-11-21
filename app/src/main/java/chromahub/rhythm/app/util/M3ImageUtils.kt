@@ -32,7 +32,7 @@ import chromahub.rhythm.app.shared.presentation.components.common.TrackPlacehold
 import chromahub.rhythm.app.shared.presentation.components.common.ExpressiveShapeTarget
 import chromahub.rhythm.app.shared.presentation.components.common.rememberExpressiveShapeFor
 import androidx.compose.ui.res.stringResource
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.runtime.collectAsState
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.data.model.ArtistArtworkSource

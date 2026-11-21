@@ -38,7 +38,7 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.activities.MainActivity
 import chromahub.rhythm.app.activities.RhythmGuardTimeoutActivity
 import chromahub.rhythm.app.shared.data.model.Album

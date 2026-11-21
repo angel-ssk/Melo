@@ -56,7 +56,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlin.math.abs
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 
 private data class ScrollMetrics(

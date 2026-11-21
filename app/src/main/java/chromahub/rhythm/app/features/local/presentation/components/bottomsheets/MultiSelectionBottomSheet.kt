@@ -76,7 +76,7 @@ import chromahub.rhythm.app.shared.data.model.Song
 import chromahub.rhythm.app.util.HapticUtils
 import chromahub.rhythm.app.util.HapticType
 import chromahub.rhythm.app.util.M3ImageUtils
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.pluralStringResource
 

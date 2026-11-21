@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.features.streaming.presentation.model.StreamingServiceOptions
 
 /**
@@ -57,7 +57,8 @@ fun StreamingIntegrationScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                painter = painterResource(id = R.drawable.melo_mark),
+                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                 contentDescription = null,
                 modifier = Modifier.size(84.dp)
             )

@@ -8,7 +8,7 @@ package chromahub.rhythm.app.features.streaming.presentation.screens
 import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.features.streaming.domain.model.StreamingAlbum
 import chromahub.rhythm.app.features.streaming.domain.model.StreamingArtist
 import chromahub.rhythm.app.features.streaming.domain.model.StreamingPlaylist

@@ -255,7 +255,7 @@ object AutoEQImportExport {
     fun exportToJSON(profiles: List<AutoEQProfile>): String {
         return gson.toJson(mapOf(
             "version" to 1,
-            "source" to "Rhythm App Export",
+            "source" to "Melo App Export",
             "bandFrequencies" to BAND_FREQUENCIES,
             "profiles" to profiles
         ))

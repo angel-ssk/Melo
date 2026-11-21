@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import chromahub.rhythm.app.shared.presentation.components.common.CollapsibleHeaderScreen
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.ui.theme.festive.FestiveThemeType
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 
 @Composable
@@ -204,7 +204,8 @@ fun FestiveSettingsScreen(
                             
                             Spacer(modifier = Modifier.height(12.dp))
                             
-                            val festiveSliderState = remember(festiveIntensity) {
+                            val festiveSliderState = remember {
+
                                 SliderState(
                                     value = festiveIntensity,
                                     trackRange = 0.1f..1f

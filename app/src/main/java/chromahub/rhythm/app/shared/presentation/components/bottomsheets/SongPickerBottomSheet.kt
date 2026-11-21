@@ -47,7 +47,7 @@ import chromahub.rhythm.app.util.HapticUtils
 import chromahub.rhythm.app.util.HapticType
 import chromahub.rhythm.app.util.ImageUtils
 import chromahub.rhythm.app.shared.presentation.screens.settings.SettingsSearchBar
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import kotlinx.coroutines.delay
 import androidx.compose.ui.res.stringResource
 

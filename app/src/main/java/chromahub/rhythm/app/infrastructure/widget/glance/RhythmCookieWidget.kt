@@ -50,7 +50,7 @@ import coil.size.Size
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import chromahub.rhythm.app.activities.MainActivity
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.core.net.toUri
 
 /**
@@ -291,7 +291,7 @@ class RhythmCookieWidget : GlanceAppWidget() {
     private fun getWidgetData(prefs: Preferences, appSettings: chromahub.rhythm.app.shared.data.model.AppSettings?): WidgetData {
         return try {
             WidgetData(
-                songTitle = prefs[stringPreferencesKey(RhythmMusicWidget.KEY_SONG_TITLE)] ?: "Rhythm",
+                songTitle = prefs[stringPreferencesKey(RhythmMusicWidget.KEY_SONG_TITLE)] ?: "Melo",
                 artistName = prefs[stringPreferencesKey(RhythmMusicWidget.KEY_ARTIST_NAME)] ?: "",
                 albumName = prefs[stringPreferencesKey(RhythmMusicWidget.KEY_ALBUM_NAME)] ?: "",
                 isPlaying = prefs[booleanPreferencesKey(RhythmMusicWidget.KEY_IS_PLAYING)] ?: false,
@@ -318,7 +318,7 @@ class RhythmCookieWidget : GlanceAppWidget() {
             )
         } catch (e: Exception) {
             WidgetData(
-                songTitle = "Rhythm",
+                songTitle = "Melo",
                 artistName = "",
                 albumName = "",
                 isPlaying = false,

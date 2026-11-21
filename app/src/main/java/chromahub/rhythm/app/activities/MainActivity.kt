@@ -70,7 +70,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.presentation.components.icons.RhythmIcons
 import chromahub.rhythm.app.shared.presentation.navigation.RhythmNavigation
 import chromahub.rhythm.app.ui.theme.RhythmTheme
@@ -215,6 +215,10 @@ class MainActivity : AppCompatActivity() {
             val extractedAlbumColors by appSettings.extractedAlbumColors.collectAsState()
             val expressiveColors by appSettings.expressiveColors.collectAsState()
             val themeIntensity by appSettings.themeIntensity.collectAsState()
+            val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
+            val motionSpeed by appSettings.motionSpeed.collectAsState()
+            val adaptiveMotion by appSettings.adaptiveMotion.collectAsState()
+            val refreshHz = chromahub.rhythm.app.util.rememberDisplayRefreshRate()
             val appMode by appSettings.appMode.collectAsState()
             
             // Determine the theme based on settings
@@ -238,7 +242,11 @@ class MainActivity : AppCompatActivity() {
                 colorSource = colorSource,
                 extractedAlbumColorsJson = extractedAlbumColors,
                 expressiveColors = expressiveColors,
-                themeIntensity = themeIntensity
+                themeIntensity = themeIntensity,
+                highRefreshMotion = highRefreshMotion,
+                motionSpeed = motionSpeed,
+                adaptiveMotion = adaptiveMotion,
+                refreshHz = refreshHz
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -404,9 +412,10 @@ class MainActivity : AppCompatActivity() {
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                                     ) {
                                         Image(
-                                            painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                                            painter = painterResource(id = R.drawable.melo_mark),
+                                            colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                                             contentDescription = stringResource(R.string.cd_rhythm_logo),
-                                            modifier = Modifier.size(56.dp)
+                                            modifier = Modifier.size(40.dp)
                                         )
                                         Text(
                                             text = stringResource(
@@ -1220,7 +1229,7 @@ class MainActivity : AppCompatActivity() {
             OnboardingStep.STREAMING_SERVICE_CHOICE -> "Streaming Service Choice"
             OnboardingStep.STREAMING_SETUP -> "Streaming Setup"
             OnboardingStep.PERMISSIONS -> "Permissions"
-            OnboardingStep.RHYTHM_GUARD -> "Rhythm Guard"
+            OnboardingStep.RHYTHM_GUARD -> "Melo Guard"
             OnboardingStep.UPDATER -> "Updates"
             OnboardingStep.FULL_TOUR_PROMPT -> "Full Tour Choice"
             OnboardingStep.NOTIFICATIONS -> "Notifications"
@@ -1233,7 +1242,7 @@ class MainActivity : AppCompatActivity() {
             OnboardingStep.MEDIA_SCAN -> "Media Scan"
             OnboardingStep.WIDGETS -> "Widgets"
             OnboardingStep.INTEGRATIONS -> "Integrations"
-            OnboardingStep.RHYTHM_STATS -> "Rhythm Stats"
+            OnboardingStep.RHYTHM_STATS -> "Melo Stats"
             OnboardingStep.SETUP_FINISHED -> "Setup Finished"
             OnboardingStep.COMPLETE -> "Complete"
         }

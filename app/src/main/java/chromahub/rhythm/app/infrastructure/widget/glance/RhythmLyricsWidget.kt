@@ -59,7 +59,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.activities.MainActivity
 import coil.request.ImageRequest
 import coil.size.Size

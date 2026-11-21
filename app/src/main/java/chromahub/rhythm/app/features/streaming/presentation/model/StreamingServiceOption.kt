@@ -6,7 +6,7 @@
 package chromahub.rhythm.app.features.streaming.presentation.model
 
 import androidx.annotation.StringRes
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.features.streaming.domain.model.StreamingServiceId
 
 data class StreamingServiceOption(

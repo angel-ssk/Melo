@@ -34,7 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.presentation.viewmodel.AppUpdaterViewModel
 import chromahub.rhythm.app.shared.presentation.viewmodel.AppVersion
 import chromahub.rhythm.app.util.HapticUtils
@@ -111,9 +111,10 @@ fun UpdateBottomSheet(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.rhythm_logo),
+                                painter = painterResource(id = R.drawable.melo_mark),
+                                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                                 contentDescription = context.getString(R.string.cd_rhythm_logo),
-                                modifier = Modifier.size(45.dp)
+                                modifier = Modifier.size(36.dp)
                             )
                             
                             Spacer(modifier = Modifier.width(0.dp))

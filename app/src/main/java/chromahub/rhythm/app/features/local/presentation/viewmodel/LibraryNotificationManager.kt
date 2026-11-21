@@ -14,7 +14,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.activities.MainActivity
 import chromahub.rhythm.app.features.local.data.repository.MusicRepository
 import chromahub.rhythm.app.shared.data.model.ScanPhase

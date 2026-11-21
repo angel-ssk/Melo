@@ -55,7 +55,7 @@ import chromahub.rhythm.app.util.HapticUtils
 import chromahub.rhythm.app.util.HapticType
 import chromahub.rhythm.app.infrastructure.widget.glance.GlanceWidgetUpdater
 import chromahub.rhythm.app.infrastructure.widget.glance.RhythmWidgetReceiver
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -725,7 +725,8 @@ fun WidgetCornerRadiusSheet(
                 .padding(horizontal = 24.dp)
                 .padding(bottom = 24.dp)
         ) {
-            val tempRadiusSliderState = remember(tempRadius) {
+            val tempRadiusSliderState = remember {
+
                 SliderState(
                     value = tempRadius.toFloat(),
                     steps = 59,

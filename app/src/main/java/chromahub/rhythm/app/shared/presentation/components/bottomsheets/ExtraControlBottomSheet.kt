@@ -64,7 +64,7 @@ import chromahub.rhythm.app.util.HapticUtils
 import chromahub.rhythm.app.util.HapticType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 
 private data class ControlAction(

@@ -33,7 +33,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -91,7 +91,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
@@ -170,6 +170,10 @@ fun PerformanceSettingsScreen(onBackClick: () -> Unit) {
 
     // Collect settings states
     val batterySaverEnabled by appSettings.batterySaverEnabled.collectAsState()
+    val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
+    val motionSpeed by appSettings.motionSpeed.collectAsState()
+    val adaptiveMotion by appSettings.adaptiveMotion.collectAsState()
+    val refreshHz = chromahub.rhythm.app.util.rememberDisplayRefreshRate()
     val batterySaverMode by appSettings.batterySaverMode.collectAsState()
     
     val batterySaverDisableHaptics by appSettings.batterySaverDisableHaptics.collectAsState()
@@ -257,6 +261,95 @@ fun PerformanceSettingsScreen(onBackClick: () -> Unit) {
                 .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Rhythm fork: high-refresh motion toggle
+            item(key = "high_refresh_motion") {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp, vertical = 16.dp)
+                    ) {
+                        Icon(
+                            imageVector = MaterialSymbolIcon("motion_sensor_active"),
+                            contentDescription = null,
+                            tint = if (highRefreshMotion) MaterialTheme.colorScheme.primary
+                            else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(32.dp)
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.settings_high_refresh_motion_title),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = stringResource(R.string.settings_high_refresh_motion_desc),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        TunerAnimatedSwitch(
+                            checked = highRefreshMotion,
+                            onCheckedChange = { appSettings.setHighRefreshMotion(it) }
+                        )
+                    }
+
+                    AnimatedVisibility(visible = highRefreshMotion) {
+                        Column(
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp)
+                        ) {
+                            HorizontalDivider()
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = stringResource(
+                                    R.string.settings_detected_refresh_rate,
+                                    chromahub.rhythm.app.util.formatRefreshRate(refreshHz)
+                                ),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = stringResource(R.string.settings_adaptive_motion),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                TunerAnimatedSwitch(
+                                    checked = adaptiveMotion,
+                                    onCheckedChange = { appSettings.setAdaptiveMotion(it) }
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = stringResource(
+                                    R.string.settings_motion_speed,
+                                    String.format(java.util.Locale.getDefault(), "%.2f", motionSpeed)
+                                ),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Slider(
+                                value = motionSpeed,
+                                valueRange = 0.75f..1.75f,
+                                steps = 9,
+                                onValueChange = { appSettings.setMotionSpeed(it) },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
+            }
+
             item(key = "options_section") {
                 AnimatedVisibility(
                     visible = batterySaverEnabled,

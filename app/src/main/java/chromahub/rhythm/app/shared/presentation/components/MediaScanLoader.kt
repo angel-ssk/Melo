@@ -70,7 +70,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material3.LinearWavyProgressIndicator
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.presentation.components.common.MediaScanningLoader
 import chromahub.rhythm.app.shared.presentation.components.icons.RhythmIcons
 import chromahub.rhythm.app.features.local.presentation.viewmodel.MusicViewModel
@@ -261,7 +261,8 @@ fun MediaScanLoader(
                         // .scale(breathingScale)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                        painter = painterResource(id = R.drawable.melo_mark),
+                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                         contentDescription = null,
                         modifier = Modifier.size(76.dp)
                     )

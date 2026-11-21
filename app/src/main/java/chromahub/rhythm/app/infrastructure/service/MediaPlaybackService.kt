@@ -364,7 +364,7 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
         }
 
         val notification = NotificationCompat.Builder(this, "rhythm_guard_alerts")
-            .setSmallIcon(chromahub.rhythm.app.R.drawable.ic_notification)
+            .setSmallIcon(com.melo.app.R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
@@ -399,12 +399,12 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
         )
 
         val notification = NotificationCompat.Builder(this, "rhythm_guard_timers")
-            .setSmallIcon(chromahub.rhythm.app.R.drawable.ic_notification)
+            .setSmallIcon(com.melo.app.R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(
                 NotificationCompat.BigTextStyle().bigText(
-                    "$text\n${getString(chromahub.rhythm.app.R.string.settings_rhythm_guard_notification_tap_open)}"
+                    "$text\n${getString(com.melo.app.R.string.settings_rhythm_guard_notification_tap_open)}"
                 )
             )
             .setProgress(safeTotal, completed, false)
@@ -423,19 +423,19 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
 
         val alertChannel = NotificationChannel(
             "rhythm_guard_alerts",
-            getString(chromahub.rhythm.app.R.string.service_rhythm_guard_alerts),
+            getString(com.melo.app.R.string.service_rhythm_guard_alerts),
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = getString(chromahub.rhythm.app.R.string.service_rhythm_guard_alerts_desc)
+            description = getString(com.melo.app.R.string.service_rhythm_guard_alerts_desc)
             enableVibration(true)
         }
 
         val timerChannel = NotificationChannel(
             "rhythm_guard_timers",
-            getString(chromahub.rhythm.app.R.string.service_rhythm_guard_timers),
+            getString(com.melo.app.R.string.service_rhythm_guard_timers),
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = getString(chromahub.rhythm.app.R.string.service_rhythm_guard_timers_desc)
+            description = getString(com.melo.app.R.string.service_rhythm_guard_timers_desc)
             enableVibration(false)
             setShowBadge(false)
         }
@@ -585,7 +585,7 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
 
         setMediaNotificationProvider(
             androidx.media3.session.DefaultMediaNotificationProvider(this).apply {
-                setSmallIcon(chromahub.rhythm.app.R.drawable.ic_notification)
+                setSmallIcon(com.melo.app.R.drawable.ic_notification)
             }
         )
 
@@ -777,7 +777,7 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
                                         val formattedToday = rhythmGuardFormatDurationFromMinutes(currentMinutes)
                                         val formattedLimit = rhythmGuardFormatDurationFromMinutes(effectiveLimitMinutes)
                                         val timeoutReason = getString(
-                                            chromahub.rhythm.app.R.string.settings_rhythm_guard_timeout_reason_auto,
+                                            com.melo.app.R.string.settings_rhythm_guard_timeout_reason_auto,
                                             formattedToday,
                                             formattedLimit
                                         )
@@ -790,7 +790,7 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
 
                                         if (appSettings.rhythmGuardAlertNotificationsEnabled.value) {
                                             showRhythmGuardAlertNotification(
-                                                title = getString(chromahub.rhythm.app.R.string.settings_rhythm_guard_notification_alert_title),
+                                                title = getString(com.melo.app.R.string.settings_rhythm_guard_notification_alert_title),
                                                 text = timeoutReason,
                                                 riskLevel = "HIGH"
                                             )
@@ -798,9 +798,9 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
 
                                         if (appSettings.rhythmGuardTimerNotificationsEnabled.value) {
                                             showRhythmGuardTimerNotification(
-                                                title = getString(chromahub.rhythm.app.R.string.settings_rhythm_guard_notification_timer_active_title),
+                                                title = getString(com.melo.app.R.string.settings_rhythm_guard_notification_timer_active_title),
                                                 text = getString(
-                                                    chromahub.rhythm.app.R.string.settings_rhythm_guard_notification_timer_active_text,
+                                                    com.melo.app.R.string.settings_rhythm_guard_notification_timer_active_text,
                                                     rhythmGuardFormatDurationFromMinutes(breakResumeMinutes)
                                                 ),
                                                 remainingSeconds = breakResumeMinutes.toLong() * 60L,
@@ -837,16 +837,16 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
             }
 
             updateForegroundNotification(
-                getString(chromahub.rhythm.app.R.string.service_rhythm_music),
-                getString(chromahub.rhythm.app.R.string.service_ready)
+                getString(com.melo.app.R.string.service_rhythm_music),
+                getString(com.melo.app.R.string.service_ready)
             )
 
             Log.d(TAG, "Service initialized successfully")
         } catch (e: Exception) {
             Log.e(TAG, "Error initializing service", e)
             updateForegroundNotification(
-                getString(chromahub.rhythm.app.R.string.service_rhythm_music),
-                getString(chromahub.rhythm.app.R.string.service_init_failed)
+                getString(com.melo.app.R.string.service_rhythm_music),
+                getString(com.melo.app.R.string.service_init_failed)
             )
         }
     }
@@ -854,19 +854,19 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
     private fun createNotificationChannel() {
 val channel = NotificationChannel(
     CHANNEL_ID,
-    getString(chromahub.rhythm.app.R.string.media3_notification_channel_name),
+    getString(com.melo.app.R.string.media3_notification_channel_name),
     NotificationManager.IMPORTANCE_LOW
 ).apply {
-    description = getString(chromahub.rhythm.app.R.string.media3_notification_channel_description)
+    description = getString(com.melo.app.R.string.media3_notification_channel_description)
     setShowBadge(false)
 }
 
 val sleepTimerChannel = NotificationChannel(
     SLEEP_TIMER_CHANNEL_ID,
-    getString(chromahub.rhythm.app.R.string.notification_sleep_timer_channel_name),
+    getString(com.melo.app.R.string.notification_sleep_timer_channel_name),
     NotificationManager.IMPORTANCE_DEFAULT
 ).apply {
-    description = getString(chromahub.rhythm.app.R.string.notification_sleep_timer_channel_desc)
+    description = getString(com.melo.app.R.string.notification_sleep_timer_channel_desc)
     setShowBadge(false)
     enableVibration(false)
 }
@@ -876,11 +876,11 @@ notificationManager.createNotificationChannel(channel)
 notificationManager.createNotificationChannel(sleepTimerChannel)
     }
     
-    private fun startForegroundWithNotification(title: String = "Rhythm Music", content: String = "Rhythm is starting.") {
+    private fun startForegroundWithNotification(title: String = "Melo Music", content: String = "Melo is starting.") {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(content)
-            .setSmallIcon(chromahub.rhythm.app.R.drawable.ic_notification)
+            .setSmallIcon(com.melo.app.R.drawable.ic_notification)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .build()
@@ -935,7 +935,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(content)
-            .setSmallIcon(chromahub.rhythm.app.R.drawable.ic_notification)
+            .setSmallIcon(com.melo.app.R.drawable.ic_notification)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .build()
@@ -1515,12 +1515,12 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
             createCustomIconButton(
                 "Add to favorites",
                 FAVORITE_ON,
-                chromahub.rhythm.app.R.drawable.ic_favorite_border
+                com.melo.app.R.drawable.ic_favorite_border
             ),
             createCustomIconButton(
                 "Remove from favorites",
                 FAVORITE_OFF,
-                chromahub.rhythm.app.R.drawable.ic_favorite_filled
+                com.melo.app.R.drawable.ic_favorite_filled
             )
         )
     }
@@ -1624,7 +1624,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                     val prefs = getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
                     Song(
                         id = songId,
-                        title = prefs.getString("song_title", "Rhythm") ?: "Rhythm",
+                        title = prefs.getString("song_title", "Melo") ?: "Melo",
                         artist = prefs.getString("artist_name", "") ?: "",
                         album = prefs.getString("album_name", "") ?: "",
                         uri = Uri.EMPTY,
@@ -2073,7 +2073,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                         
                         val song = Song(
                             id = songId,
-                            title = prefs.getString("song_title", "Rhythm") ?: "Rhythm",
+                            title = prefs.getString("song_title", "Melo") ?: "Melo",
                             artist = prefs.getString("artist_name", "") ?: "",
                             album = prefs.getString("album_name", "") ?: "",
                             uri = Uri.EMPTY,
@@ -2138,8 +2138,8 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                 ACTION_TOGGLE_FAVORITE, ACTION_TOGGLE_SHUFFLE, ACTION_TOGGLE_REPEAT -> {
                     try {
                         startForegroundWithNotification(
-                            getString(chromahub.rhythm.app.R.string.service_rhythm_music),
-                            getString(chromahub.rhythm.app.R.string.service_ready)
+                            getString(com.melo.app.R.string.service_rhythm_music),
+                            getString(com.melo.app.R.string.service_ready)
                         )
                         androidx.core.app.ServiceCompat.stopForeground(this, androidx.core.app.ServiceCompat.STOP_FOREGROUND_REMOVE)
                     } catch (e: Exception) {
@@ -2715,7 +2715,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                 .setMediaId("root")
                 .setMediaMetadata(
                     MediaMetadata.Builder()
-                        .setTitle("Rhythm Music Library")
+                        .setTitle("Melo Music Library")
                         .setMediaType(MediaMetadata.MEDIA_TYPE_FOLDER_MIXED)
                         .setIsPlayable(false)
                         .setIsBrowsable(true)
@@ -3335,16 +3335,16 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val title = getString(chromahub.rhythm.app.R.string.notification_sleep_timer_title)
+        val title = getString(com.melo.app.R.string.notification_sleep_timer_title)
         val timeText = formatSleepTimerDuration(remainingMs)
         val content = if (pauseOnly) {
-            getString(chromahub.rhythm.app.R.string.notification_sleep_timer_pause_in, timeText)
+            getString(com.melo.app.R.string.notification_sleep_timer_pause_in, timeText)
         } else {
-            getString(chromahub.rhythm.app.R.string.notification_sleep_timer_stop_in, timeText)
+            getString(com.melo.app.R.string.notification_sleep_timer_stop_in, timeText)
         }
 
         val notification = NotificationCompat.Builder(this, SLEEP_TIMER_CHANNEL_ID)
-            .setSmallIcon(chromahub.rhythm.app.R.drawable.ic_notification)
+            .setSmallIcon(com.melo.app.R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(content)
             .setStyle(NotificationCompat.BigTextStyle().bigText(content))

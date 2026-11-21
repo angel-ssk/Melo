@@ -90,7 +90,7 @@ import chromahub.rhythm.app.shared.data.model.LyricsData
 import chromahub.rhythm.app.shared.data.model.PlaybackLocation
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers

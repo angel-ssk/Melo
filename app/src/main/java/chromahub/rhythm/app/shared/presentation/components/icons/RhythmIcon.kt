@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import java.util.concurrent.ConcurrentHashMap
 
 private const val MaterialSymbolGlyphScale = 0.875f

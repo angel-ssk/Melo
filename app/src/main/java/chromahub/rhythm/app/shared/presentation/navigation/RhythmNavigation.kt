@@ -96,7 +96,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import chromahub.rhythm.app.activities.MainActivity
 import chromahub.rhythm.app.activities.RhythmGuardTimeoutActivity
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.core.domain.model.AppMode
 import chromahub.rhythm.app.features.local.presentation.navigation.LocalNavigation
 import chromahub.rhythm.app.shared.data.repository.UserPreferencesRepository
@@ -121,6 +121,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.WindowInsetsSides
 import chromahub.rhythm.app.ui.LocalMiniPlayerPadding
+import chromahub.rhythm.app.ui.theme.RhythmMotion
 import java.util.Locale
 
 
@@ -175,13 +176,13 @@ fun RhythmNavigation(
             startDestination = "main",
             modifier = Modifier.fillMaxSize(),
             predictivePopEnterTransition = {
-                fadeIn(animationSpec = tween(300))
+                fadeIn(animationSpec = RhythmMotion.emphasis)
             },
             predictivePopExitTransition = {
-                fadeOut(animationSpec = tween(300)) +
+                fadeOut(animationSpec = RhythmMotion.emphasis) +
                     slideOutVertically(
                         targetOffsetY = { it / 4 },
-                        animationSpec = tween(350, easing = EaseInOutQuart)
+                        animationSpec = RhythmMotion.offset
                     )
             }
         ) {
@@ -191,15 +192,15 @@ fun RhythmNavigation(
                     modifier = Modifier.fillMaxSize(),
                     transitionSpec = {
                         fadeIn(
-                            animationSpec = tween(400)
+                            animationSpec = RhythmMotion.emphasis
                         ) + slideInHorizontally(
                             initialOffsetX = { if (targetState == "STREAMING") it else -it },
-                            animationSpec = tween(500, easing = EaseInOutQuart)
+                            animationSpec = RhythmMotion.offset
                         ) togetherWith fadeOut(
-                            animationSpec = tween(400)
+                            animationSpec = RhythmMotion.emphasis
                         ) + slideOutHorizontally(
                             targetOffsetX = { if (targetState == "STREAMING") -it else it },
-                            animationSpec = tween(500, easing = EaseInOutQuart)
+                            animationSpec = RhythmMotion.offset
                         )
                     },
                     label = "appModeTransition"
@@ -232,20 +233,20 @@ fun RhythmNavigation(
             composable(
                 route = "settings",
                 enterTransition = {
-                    fadeIn(animationSpec = tween(300)) +
+                    fadeIn(animationSpec = RhythmMotion.emphasis) +
                         slideInVertically(
                             initialOffsetY = { it / 4 },
-                            animationSpec = tween(350, easing = EaseInOutQuart)
+                            animationSpec = RhythmMotion.offset
                         )
                 },
                 exitTransition = {
-                    fadeOut(animationSpec = tween(300))
+                    fadeOut(animationSpec = RhythmMotion.emphasis)
                 },
                 popExitTransition = {
-                    fadeOut(animationSpec = tween(300)) +
+                    fadeOut(animationSpec = RhythmMotion.emphasis) +
                         slideOutVertically(
                             targetOffsetY = { it / 4 },
-                            animationSpec = tween(350, easing = EaseInOutQuart)
+                            animationSpec = RhythmMotion.offset
                         )
                 }
             ) {

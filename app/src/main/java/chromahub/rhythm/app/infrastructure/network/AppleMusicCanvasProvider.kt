@@ -54,7 +54,7 @@ object AppleMusicCanvasProvider {
 
     // Fallback/Default public JWT token — loaded from local.properties via BuildConfig (not hardcoded)
     private val APPLE_MUSIC_TOKEN: String
-        get() = chromahub.rhythm.app.BuildConfig.APPLE_MUSIC_FALLBACK_TOKEN
+        get() = com.melo.app.BuildConfig.APPLE_MUSIC_FALLBACK_TOKEN
 
     private var cachedToken: String? = null
     private var tokenExpiryMs: Long = 0L

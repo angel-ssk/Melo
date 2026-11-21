@@ -102,7 +102,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.delay
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.PlaybackLocation
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.util.HapticUtils
@@ -956,7 +956,8 @@ private fun PlaybackQuickSettingsCard(
                                 color = MaterialTheme.colorScheme.primary
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            val crossfadeSliderState = remember(crossfadeDuration) {
+                            val crossfadeSliderState = remember {
+
                                 SliderState(
                                     value = crossfadeDuration,
                                     steps = 8,
@@ -1211,7 +1212,8 @@ private fun PlaybackPitchCard(
                 
                 Spacer(modifier = Modifier.height(8.dp))
                 
-                val pitchSliderState = remember(selectedPitch) {
+                val pitchSliderState = remember {
+
                     SliderState(
                         value = selectedPitch,
                         steps = 54,
@@ -1391,7 +1393,8 @@ private fun AudioEffectsCard(
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary
                             )
-                            val bassBoostSliderState = remember(bassBoostStrength) {
+                            val bassBoostSliderState = remember {
+
                                 SliderState(
                                     value = bassBoostStrength.toFloat(),
                                     trackRange = 0f..1000f
@@ -1455,7 +1458,8 @@ private fun AudioEffectsCard(
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary
                             )
-                            val virtualizerSliderState = remember(virtualizerStrength) {
+                            val virtualizerSliderState = remember {
+
                                 SliderState(
                                     value = virtualizerStrength.toFloat(),
                                     trackRange = 0f..1000f
@@ -1559,8 +1563,8 @@ private fun QualitySelectionBottomSheet(
         modifier = Modifier.widthIn(max = 640.dp).fillMaxWidth()
     ) {
         StandardBottomSheetHeader(
-            title = stringResource(id = chromahub.rhythm.app.R.string.streaming_settings_quality),
-            subtitle = stringResource(id = chromahub.rhythm.app.R.string.streaming_settings_quality_sheet_desc),
+            title = stringResource(id = com.melo.app.R.string.streaming_settings_quality),
+            subtitle = stringResource(id = com.melo.app.R.string.streaming_settings_quality_sheet_desc),
             visible = true
         )
         AdaptiveSheetScrollContainer(

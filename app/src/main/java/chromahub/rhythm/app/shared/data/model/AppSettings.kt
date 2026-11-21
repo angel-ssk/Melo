@@ -11,7 +11,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ import chromahub.rhythm.app.util.StoragePathUtils
 import chromahub.rhythm.app.worker.BackupWorker
 import chromahub.rhythm.app.worker.RhythmPulseNotificationWorker
 import chromahub.rhythm.app.worker.UpdateNotificationWorker
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import java.io.File
 import java.util.Date // Import Date for timestamp
 import java.util.concurrent.TimeUnit
@@ -279,6 +279,17 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_UNIQUE_ARTISTS = "unique_artists"
         private const val KEY_GENRE_PREFERENCES = "genre_preferences"
         private const val KEY_TIME_BASED_PREFERENCES = "time_based_preferences"
+
+        // Profile (Rhythm Wellbeing)
+        private const val KEY_PROFILE_NAME = "profile_name"
+        private const val KEY_PROFILE_PHOTO_PATH = "profile_photo_path"
+        private const val KEY_PROFILE_JOIN_DATE = "profile_join_date"
+        private const val KEY_PROFILE_DAILY_GOAL_MINUTES = "profile_daily_goal_minutes"
+        private const val KEY_HIGH_REFRESH_MOTION = "high_refresh_motion"
+        private const val KEY_MOTION_SPEED = "motion_speed"
+        private const val KEY_ADAPTIVE_MOTION = "adaptive_motion"
+        private const val KEY_UPDATE_REPO_OWNER = "update_repo_owner"
+        private const val KEY_UPDATE_REPO_NAME = "update_repo_name"
 
         // Rhythm Guard (listening health)
         private const val KEY_RHYTHM_GUARD_MODE = "rhythm_guard_mode"
@@ -1479,6 +1490,48 @@ class AppSettings private constructor(context: Context) {
     private val _songsPlayed = MutableStateFlow(prefs.getInt(KEY_SONGS_PLAYED, 0))
     val songsPlayed: StateFlow<Int> = _songsPlayed.asStateFlow()
 
+    // Profile (Rhythm Wellbeing). The join date is stamped once on first run.
+    private val _profileName = MutableStateFlow(
+        prefs.getString(KEY_PROFILE_NAME, null)?.takeIf { it.isNotBlank() } ?: "Melo Listener"
+    )
+    val profileName: StateFlow<String> = _profileName.asStateFlow()
+
+    private val _profilePhotoPath = MutableStateFlow(prefs.getString(KEY_PROFILE_PHOTO_PATH, null))
+    val profilePhotoPath: StateFlow<String?> = _profilePhotoPath.asStateFlow()
+
+    private val _profileJoinDate = MutableStateFlow(
+        prefs.getString(KEY_PROFILE_JOIN_DATE, null) ?: java.time.LocalDate.now().toString().also {
+            prefs.edit { putString(KEY_PROFILE_JOIN_DATE, it) }
+        }
+    )
+    val profileJoinDate: StateFlow<String> = _profileJoinDate.asStateFlow()
+
+    private val _profileDailyGoalMinutes = MutableStateFlow(
+        prefs.getInt(KEY_PROFILE_DAILY_GOAL_MINUTES, 60).coerceIn(5, 480)
+    )
+    val profileDailyGoalMinutes: StateFlow<Int> = _profileDailyGoalMinutes.asStateFlow()
+
+    /** Enables spring-based, high-refresh (120 Hz+) motion across the whole app. */
+    private val _highRefreshMotion = MutableStateFlow(prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true))
+    val highRefreshMotion: StateFlow<Boolean> = _highRefreshMotion.asStateFlow()
+
+    /** User-facing animation speed multiplier (0.75x .. 1.75x). */
+    private val _motionSpeed = MutableStateFlow(
+        prefs.getFloat(KEY_MOTION_SPEED, 1.0f).coerceIn(0.75f, 1.75f)
+    )
+    val motionSpeed: StateFlow<Float> = _motionSpeed.asStateFlow()
+
+    /** Scale motion automatically with the detected panel refresh rate. */
+    private val _adaptiveMotion = MutableStateFlow(prefs.getBoolean(KEY_ADAPTIVE_MOTION, true))
+    val adaptiveMotion: StateFlow<Boolean> = _adaptiveMotion.asStateFlow()
+
+    /** GitHub owner/name for Melo's OTA updates. Empty = checks are skipped. */
+    private val _updateRepoOwner = MutableStateFlow(prefs.getString(KEY_UPDATE_REPO_OWNER, "angel-ssk") ?: "angel-ssk")
+    val updateRepoOwner: StateFlow<String> = _updateRepoOwner.asStateFlow()
+
+    private val _updateRepoName = MutableStateFlow(prefs.getString(KEY_UPDATE_REPO_NAME, "Melo") ?: "Melo")
+    val updateRepoName: StateFlow<String> = _updateRepoName.asStateFlow()
+    
     private val _rhythmAuraMode = MutableStateFlow(
         sanitizeRhythmGuardMode(
             prefs.getString(
@@ -2254,8 +2307,8 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
             if (prefs.getBoolean(KEY_AUTO_BACKUP_ENABLED, false)) {
                 scheduleAutoBackup()
             }
-            if (prefs.getBoolean(KEY_UPDATES_ENABLED, false) &&
-                prefs.getBoolean(KEY_AUTO_CHECK_FOR_UPDATES, false) &&
+            if (prefs.getBoolean(KEY_UPDATES_ENABLED, BuildConfig.FLAVOR != "fdroid") &&
+                prefs.getBoolean(KEY_AUTO_CHECK_FOR_UPDATES, BuildConfig.FLAVOR != "fdroid") &&
                 (
                     prefs.getBoolean(KEY_UPDATE_NOTIFICATIONS_ENABLED, false) ||
                         prefs.getBoolean(KEY_UPDATE_STATUS_NOTIFICATIONS_ENABLED, false)
@@ -3533,6 +3586,54 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _songsPlayed.value = count
     }
 
+    // Profile methods
+    fun setProfileName(name: String) {
+        val trimmed = name.trim().take(40)
+        if (trimmed.isBlank()) return
+        prefs.edit { putString(KEY_PROFILE_NAME, trimmed) }
+        _profileName.value = trimmed
+    }
+
+    fun setProfilePhotoPath(path: String?) {
+        prefs.edit {
+            if (path == null) remove(KEY_PROFILE_PHOTO_PATH) else putString(KEY_PROFILE_PHOTO_PATH, path)
+        }
+        _profilePhotoPath.value = path
+    }
+
+    fun setProfileDailyGoalMinutes(minutes: Int) {
+        val safe = minutes.coerceIn(5, 480)
+        prefs.edit { putInt(KEY_PROFILE_DAILY_GOAL_MINUTES, safe) }
+        _profileDailyGoalMinutes.value = safe
+    }
+
+    fun setHighRefreshMotion(enabled: Boolean) {
+        prefs.edit { putBoolean(KEY_HIGH_REFRESH_MOTION, enabled) }
+        _highRefreshMotion.value = enabled
+    }
+
+    fun setMotionSpeed(speed: Float) {
+        val safe = speed.coerceIn(0.75f, 1.75f)
+        prefs.edit { putFloat(KEY_MOTION_SPEED, safe) }
+        _motionSpeed.value = safe
+    }
+
+    fun setAdaptiveMotion(enabled: Boolean) {
+        prefs.edit { putBoolean(KEY_ADAPTIVE_MOTION, enabled) }
+        _adaptiveMotion.value = enabled
+    }
+
+    fun setUpdateRepository(owner: String, repo: String) {
+        val safeOwner = owner.trim()
+        val safeRepo = repo.trim()
+        prefs.edit {
+            putString(KEY_UPDATE_REPO_OWNER, safeOwner)
+            putString(KEY_UPDATE_REPO_NAME, safeRepo)
+        }
+        _updateRepoOwner.value = safeOwner
+        _updateRepoName.value = safeRepo
+    }
+
     fun setRhythmGuardMode(mode: String) {
         val normalizedMode = sanitizeRhythmGuardMode(mode)
         prefs.edit {
@@ -4766,6 +4867,10 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
             key == KEY_LISTENING_TIME ||
             key == KEY_SONGS_PLAYED ||
             key == KEY_UNIQUE_ARTISTS ||
+            key == KEY_PROFILE_NAME ||
+            key == KEY_PROFILE_PHOTO_PATH ||
+            key == KEY_PROFILE_JOIN_DATE ||
+            key == KEY_PROFILE_DAILY_GOAL_MINUTES ||
             key == KEY_GENRE_PREFERENCES ||
             key == KEY_FAVORITE_GENRES ||
             key == KEY_DAILY_LISTENING_STATS ||
@@ -5532,6 +5637,19 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _listeningTime.value = safeLong(KEY_LISTENING_TIME, 0L)
         _songsPlayed.value = prefs.getInt(KEY_SONGS_PLAYED, 0)
         _uniqueArtists.value = prefs.getInt(KEY_UNIQUE_ARTISTS, 0)
+
+        // Profile
+        _profileName.value = prefs.getString(KEY_PROFILE_NAME, null)?.takeIf { it.isNotBlank() }
+            ?: "Melo Listener"
+        _profilePhotoPath.value = prefs.getString(KEY_PROFILE_PHOTO_PATH, null)
+        _profileJoinDate.value = prefs.getString(KEY_PROFILE_JOIN_DATE, null)
+            ?: java.time.LocalDate.now().toString()
+        _profileDailyGoalMinutes.value = prefs.getInt(KEY_PROFILE_DAILY_GOAL_MINUTES, 60).coerceIn(5, 480)
+        _highRefreshMotion.value = prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true)
+        _motionSpeed.value = prefs.getFloat(KEY_MOTION_SPEED, 1.0f).coerceIn(0.75f, 1.75f)
+        _adaptiveMotion.value = prefs.getBoolean(KEY_ADAPTIVE_MOTION, true)
+        _updateRepoOwner.value = prefs.getString(KEY_UPDATE_REPO_OWNER, "angel-ssk") ?: "angel-ssk"
+        _updateRepoName.value = prefs.getString(KEY_UPDATE_REPO_NAME, "Melo") ?: "Melo"
         _rhythmAuraMode.value = sanitizeRhythmGuardMode(
             prefs.getString(KEY_RHYTHM_GUARD_MODE, prefs.getString(KEY_RHYTHM_AURA_MODE, RHYTHM_GUARD_MODE_OFF))
         )

@@ -37,7 +37,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -97,7 +97,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
@@ -239,7 +239,7 @@ fun PlayerCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                     Spacer(modifier = Modifier.height(12.dp))
                                     ExpressiveButtonGroup(
                                         items = listOf(
-                                            "Rhythm",
+                                            "Melo",
                                             "Expressive"
                                         ),
                                         selectedIndex = if (playerThemeId == "MATERIAL") 0 else 1,
@@ -724,7 +724,8 @@ fun PlayerCustomizationSettingsScreen(onBackClick: () -> Unit) {
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp)
             ) {
-                val radiusSliderState = remember(tempRadius) {
+                val radiusSliderState = remember {
+
                     SliderState(
                         value = tempRadius.toFloat(),
                         steps = 39,
@@ -807,7 +808,8 @@ fun PlayerCustomizationSettingsScreen(onBackClick: () -> Unit) {
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp)
             ) {
-                val intensitySliderState = remember(tempIntensity) {
+                val intensitySliderState = remember {
+
                     SliderState(
                         value = tempIntensity,
                         steps = 39,

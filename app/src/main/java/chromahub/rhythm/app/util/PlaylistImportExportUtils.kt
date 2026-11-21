@@ -191,7 +191,7 @@ object PlaylistImportExportUtils {
         userSelectedDirectoryUri: Uri? = null
     ): Result<File> {
         return try {
-            val fileName = "RhythmPlaylists_${getCurrentTimestamp()}.zip"
+            val fileName = "MeloPlaylists_${getCurrentTimestamp()}.zip"
             
             // Use user-selected directory if provided, otherwise use default
             val zipFile = if (userSelectedDirectoryUri != null) {

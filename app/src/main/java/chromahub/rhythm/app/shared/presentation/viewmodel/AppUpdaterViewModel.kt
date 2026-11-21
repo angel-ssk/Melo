@@ -24,8 +24,8 @@ import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import chromahub.rhythm.app.BuildConfig
-import chromahub.rhythm.app.R
+import com.melo.app.BuildConfig
+import com.melo.app.R
 import chromahub.rhythm.app.activities.MainActivity
 import chromahub.rhythm.app.network.GitHubAsset
 import chromahub.rhythm.app.network.GitHubRelease
@@ -117,9 +117,16 @@ class AppUpdaterViewModel(
     private val updateDownloadNotificationId = 1401
     private val updateDownloadCompletionAutoDismissMs = 7000L
 
-    // GitHub repository information
-    private val githubOwner = "cromaguy"
-    private val githubRepo = "Rhythm"
+    // GitHub repository information. Empty by default so the app never
+    // contacts the old upstream repo; configurable from Settings → Updates.
+    private val githubOwner: String
+        get() = _appSettings.updateRepoOwner.value
+    private val githubRepo: String
+        get() = _appSettings.updateRepoName.value
+
+    private val meloRepoUrl: String
+        get() = if (githubOwner.isBlank() || githubRepo.isBlank()) "" else
+            "https://github.com/$githubOwner/$githubRepo"
 
     // Update check interval (6 hours)
     private val updateCheckInterval = TimeUnit.HOURS.toMillis(6)
@@ -355,6 +362,14 @@ class AppUpdaterViewModel(
      * Check for updates by fetching the latest release from GitHub
      */
     fun checkForUpdates(force: Boolean = false) {
+        // Never contact the old upstream repository. OTA becomes active as
+        // soon as the user configures Melo's own repo in Settings → Updates.
+        if (meloRepoUrl.isBlank()) {
+            Log.d(tag, "Skipping update check - Melo repository not configured yet.")
+            _isCheckingForUpdates.value = false
+            _error.value = null
+            return
+        }
         viewModelScope.launch {
             val updatesEnabled = _appSettings.updatesEnabled.first()
             val autoCheckEnabled = _appSettings.autoCheckForUpdates.first()
@@ -401,7 +416,7 @@ class AppUpdaterViewModel(
                                 val artifactsResponse = gitHubApiService.getRunArtifacts(githubOwner, githubRepo, latestRun.id)
                                 if (artifactsResponse.isSuccessful) {
                                     apkSize = artifactsResponse.body()?.artifacts?.firstOrNull {
-                                        it.name == "Rhythm-Nightly-Artifacts"
+                                        it.name == "Melo-Nightly-Artifacts"
                                     }?.size_in_bytes ?: 0
                                 }
                             } catch (e: Exception) {
@@ -436,7 +451,7 @@ class AppUpdaterViewModel(
                     }
 
                     if (candidate == null) {
-                        _error.value = "No builds or releases found on GitHub"
+                        _updateAvailable.value = false
                         _isCheckingForUpdates.value = false
                         return@launch
                     }
@@ -445,14 +460,14 @@ class AppUpdaterViewModel(
                     if (releasesResponse.isSuccessful) {
                         val allReleases = releasesResponse.body()
                         if (allReleases.isNullOrEmpty()) {
-                            _error.value = "No releases found on GitHub"
+                            _updateAvailable.value = false
                             _isCheckingForUpdates.value = false
                             return@launch
                         }
 
                         val latestSuitableRelease = findLatestSuitableRelease(allReleases, currentChannel)
                         if (latestSuitableRelease == null) {
-                            _error.value = "No suitable release found for channel '$currentChannel'"
+                            _updateAvailable.value = false
                             _isCheckingForUpdates.value = false
                             return@launch
                         }
@@ -655,7 +670,7 @@ class AppUpdaterViewModel(
                 .replace(Regex("-nightly-r\\d+-[0-9a-f]+", RegexOption.IGNORE_CASE), "")
         val versionName = "$cleanedBaseName-nightly-r${run.run_number}-$shortSha"
 
-        val downloadUrl = "https://nightly.link/cromaguy/Rhythm/workflows/nightly.yml/main/Rhythm-Nightly-Artifacts.zip"
+        val downloadUrl = meloRepoUrl
 
         val commitMessage = run.head_commit?.message ?: "New features and performance updates"
         val changelogItems = ChangelogFilter.filterLines(commitMessage.lines())
@@ -667,7 +682,7 @@ class AppUpdaterViewModel(
             whatsNew = changelogItems,
             knownIssues = emptyList(),
             downloadUrl = downloadUrl,
-            apkAssetName = "Rhythm-Nightly-Artifacts.zip",
+            apkAssetName = "Melo-Nightly-Artifacts.zip",
             apkSize = apkSize,
             releaseNotes = commitMessage,
             isPreRelease = true,
@@ -699,13 +714,20 @@ class AppUpdaterViewModel(
             val trimmedLine = line.trim()
 
             when {
-                trimmedLine.startsWith("**What's New:**") -> {
+                trimmedLine.startsWith("**What's New:**") ||
+                    trimmedLine.startsWith("**Novedades:**") ||
+                    trimmedLine.startsWith("**Novedades**") ||
+                    trimmedLine.startsWith("## Novedades") ||
+                    trimmedLine.startsWith("Novedades:") -> {
                     currentState = ParsingState.WHATS_NEW
                 }
-                trimmedLine.startsWith("**Known Issues") -> { // Matches "Known Issues (Will be fixed on a later build):"
+                trimmedLine.startsWith("**Known Issues") ||
+                    trimmedLine.startsWith("**Problemas conocidos") ||
+                    trimmedLine.startsWith("## Problemas conocidos") -> {
                     currentState = ParsingState.KNOWN_ISSUES
                 }
-                trimmedLine.startsWith("**Build Information:**") -> {
+                trimmedLine.startsWith("**Build Information:**") ||
+                    trimmedLine.startsWith("**Información de compilación") -> {
                     currentState = ParsingState.NONE // Stop parsing for these sections
                 }
                 // If we are in a section and encounter another heading, stop parsing the current section
@@ -751,6 +773,19 @@ class AppUpdaterViewModel(
                 }
             }
         }
+        // Fallback: if the release body does not use one of the recognised
+        // headings, still show its bullet points as "Novedades" so the user
+        // always sees what changed in the new version.
+        if (whatsNew.isEmpty()) {
+            body.lines()
+                .map { it.trim() }
+                .filter { it.matches(Regex("^[-*]\\s+\\S.*")) || it.matches(Regex("^\\d+\\.\\s+\\S.*")) }
+                .map { it.replace(Regex("^[*-]\\s*|\\d+\\.\\s*"), "") }
+                .filter { !ChangelogFilter.isJunkReleaseBullet(it) }
+                .take(12)
+                .forEach { whatsNew.add(it) }
+        }
+
         return ReleaseContent(whatsNew, knownIssues)
     }
 
@@ -782,7 +817,7 @@ class AppUpdaterViewModel(
                             "Bug fixes and optimizations",
                         ),
                     knownIssues = emptyList(),
-                    downloadUrl = "https://github.com/cromaguy/Rhythm/releases",
+                    downloadUrl = meloRepoUrl,
                     apkAssetName = "rhythm-release.apk",
                     apkSize = 0,
                     releaseNotes = "Test update",
@@ -1019,7 +1054,7 @@ class AppUpdaterViewModel(
                     Request
                         .Builder()
                         .url(downloadUrl)
-                        .header("User-Agent", "Rhythm-App/${BuildConfig.VERSION_NAME} (Android)")
+                        .header("User-Agent", "Melo-App/${BuildConfig.VERSION_NAME} (Android)")
 
                 // Add range header if resuming
                 if (existingLength > 0 && activeDownload != null) {
@@ -1335,7 +1370,7 @@ class AppUpdaterViewModel(
                     clearDownloadState()
                     cancelDownloadNotification()
                     _error.value = "Failed to extract APK from ZIP. Opening GitHub releases instead."
-                    openInBrowser("https://github.com/$githubOwner/$githubRepo/releases")
+                    if (meloRepoUrl.isNotBlank()) openInBrowser(meloRepoUrl)
                     return
                 }
             } else {
@@ -1414,7 +1449,7 @@ class AppUpdaterViewModel(
             _downloadState.value = null
             clearDownloadState()
             cancelDownloadNotification()
-            openInBrowser("https://github.com/$githubOwner/$githubRepo/releases")
+            if (meloRepoUrl.isNotBlank()) openInBrowser(meloRepoUrl)
         }
     }
 

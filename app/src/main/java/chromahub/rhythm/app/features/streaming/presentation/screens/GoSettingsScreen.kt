@@ -67,7 +67,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.ui.LocalMiniPlayerPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -293,7 +293,7 @@ fun GoSettingsScreen(
             },
             title = {
                 Text(
-                    text = stringResource(id = chromahub.rhythm.app.R.string.streaming_settings_switch_provider_confirm_title),
+                    text = stringResource(id = com.melo.app.R.string.streaming_settings_switch_provider_confirm_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -302,7 +302,7 @@ fun GoSettingsScreen(
                 val currentLabel = selectedServiceLabel(selectedService, context)
                 val pendingLabel = selectedServiceLabel(pendingId, context)
                 Text(
-                    text = stringResource(id = chromahub.rhythm.app.R.string.streaming_settings_switch_provider_confirm_desc, currentLabel, pendingLabel),
+                    text = stringResource(id = com.melo.app.R.string.streaming_settings_switch_provider_confirm_desc, currentLabel, pendingLabel),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -316,12 +316,12 @@ fun GoSettingsScreen(
                     pendingServiceSelection = null
                     showServiceSheet = false
                 }) {
-                    Text(text = stringResource(id = chromahub.rhythm.app.R.string.action_switch))
+                    Text(text = stringResource(id = com.melo.app.R.string.action_switch))
                 }
             },
             dismissButton = {
                 OutlinedButton(onClick = { pendingServiceSelection = null }) {
-                    Text(text = stringResource(id = chromahub.rhythm.app.R.string.action_cancel))
+                    Text(text = stringResource(id = com.melo.app.R.string.action_cancel))
                 }
             }
         )
@@ -349,9 +349,9 @@ private fun StreamingStatusCard(
     serverUrl: String
 ) {
     val badgeText = when {
-        isLoading -> stringResource(id = chromahub.rhythm.app.R.string.streaming_status_badge_refreshing)
-        isConnected -> stringResource(id = chromahub.rhythm.app.R.string.streaming_status_badge_connected)
-        else -> stringResource(id = chromahub.rhythm.app.R.string.streaming_status_badge_pending)
+        isLoading -> stringResource(id = com.melo.app.R.string.streaming_status_badge_refreshing)
+        isConnected -> stringResource(id = com.melo.app.R.string.streaming_status_badge_connected)
+        else -> stringResource(id = com.melo.app.R.string.streaming_status_badge_pending)
     }
 
     val badgeContainerColor = when {
@@ -448,7 +448,7 @@ private fun StreamingStatusCard(
                 )
             } else {
                 Text(
-                    text = stringResource(id = chromahub.rhythm.app.R.string.streaming_status_connect_hint),
+                    text = stringResource(id = com.melo.app.R.string.streaming_status_connect_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
                 )
@@ -689,5 +689,5 @@ private fun QualitySelectionBottomSheet(
 
 private fun selectedServiceLabel(selectedService: String, context: Context): String {
     val matching = StreamingServiceOptions.defaults.firstOrNull { it.id == selectedService }
-    return matching?.let { context.getString(it.nameRes) } ?: context.getString(chromahub.rhythm.app.R.string.streaming_not_selected)
+    return matching?.let { context.getString(it.nameRes) } ?: context.getString(com.melo.app.R.string.streaming_not_selected)
 }

@@ -62,7 +62,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.presentation.components.common.ButtonGroupStyle
 import chromahub.rhythm.app.shared.presentation.components.common.RhythmGroupedButton
@@ -134,7 +134,7 @@ fun HomeSectionOrderBottomSheet(
             "NEW_RELEASES" -> Pair("New Releases", MaterialSymbolIcon("new_releases"))
             "RECENTLY_ADDED" -> Pair("Recently Added", RhythmIcons.Music.Album)
             "RECOMMENDED" -> Pair("Recommended", MaterialSymbolIcon("recommend"))
-            "RHYTHM_GUARD" -> Pair("Rhythm Guard", RhythmIcons.Security)
+            "RHYTHM_GUARD" -> Pair("Melo Guard", RhythmIcons.Security)
             "STATS" -> Pair("Listening Stats", MaterialSymbolIcon("insert_chart"))
             else -> Pair(sectionId, RhythmIcons.Music.Song)
         }

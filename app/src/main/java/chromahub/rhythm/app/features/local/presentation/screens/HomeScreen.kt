@@ -190,7 +190,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import chromahub.rhythm.app.util.PerformIfEnabled
 import chromahub.rhythm.app.util.HapticUtils
 import chromahub.rhythm.app.util.HapticType
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.Album
 import chromahub.rhythm.app.shared.data.model.Artist
 import chromahub.rhythm.app.shared.data.model.Song
@@ -272,6 +272,7 @@ fun HomeScreen(
     onNavigateToStats: () -> Unit = {},
     onNavigateToRhythmGuard: () -> Unit = {},
     onNavigateToArtist: (Artist) -> Unit = {},
+    onNavigateToProfile: () -> Unit = {},
     isStreamingMode: Boolean = false,
     streamingViewModel: chromahub.rhythm.app.features.streaming.presentation.viewmodel.StreamingMusicViewModel? = null,
     streamingSongs: List<Song> = emptyList(),
@@ -298,6 +299,8 @@ fun HomeScreen(
     val isTablet = windowScreenWidthDp() >= 600
     val isLandscapeTablet = isTablet && windowScreenWidthDp() > windowScreenHeightDp()
     val appSettings = remember { AppSettings.getInstance(context) }
+    val profileName by appSettings.profileName.collectAsState()
+    val profilePhotoPath by appSettings.profilePhotoPath.collectAsState()
 
     // Home header customization
     val headerDisplayMode by appSettings.homeHeaderDisplayMode.collectAsState()
@@ -563,6 +566,13 @@ fun HomeScreen(
         alwaysCollapsed = false,
         showAppIcon = showAppIcon,
         iconVisibilityMode = iconVisibilityMode,
+        profileAvatar = {
+            chromahub.rhythm.app.shared.presentation.screens.ProfileAvatarButton(
+                photoPath = profilePhotoPath,
+                name = profileName,
+                onClick = onNavigateToProfile
+            )
+        },
         headerActions = buildList {
             val showReorder = !isLandscapeTablet
             val showSettings = !isTablet && floatingNavigationBar
@@ -1228,7 +1238,8 @@ private fun StreamingHomeWelcomeContent(
                     horizontalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                        painter = painterResource(id = R.drawable.melo_mark),
+                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                         contentDescription = stringResource(R.string.updates_rhythm_logo_cd),
                         modifier = Modifier.size(100.dp)
                     )

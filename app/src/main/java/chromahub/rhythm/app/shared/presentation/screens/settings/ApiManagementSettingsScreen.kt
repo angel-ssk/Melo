@@ -34,7 +34,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -92,7 +92,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
@@ -259,7 +259,7 @@ fun ApiManagementSettingsScreen(onBackClick: () -> Unit) {
                     modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
                 )
                 val apiServiceItems = buildList {
-                    if (chromahub.rhythm.app.BuildConfig.ENABLE_DEEZER) {
+                    if (com.melo.app.BuildConfig.ENABLE_DEEZER) {
                         add(
                             toMaterial3SettingsItem(
                                 context = context,
@@ -276,7 +276,7 @@ fun ApiManagementSettingsScreen(onBackClick: () -> Unit) {
                         )
                     }
 
-                    if (chromahub.rhythm.app.BuildConfig.ENABLE_LRCLIB) {
+                    if (com.melo.app.BuildConfig.ENABLE_LRCLIB) {
                         add(
                             toMaterial3SettingsItem(
                                 context = context,
@@ -293,7 +293,7 @@ fun ApiManagementSettingsScreen(onBackClick: () -> Unit) {
                         )
                     }
 
-                    if (chromahub.rhythm.app.BuildConfig.ENABLE_BETTERLYRICS) {
+                    if (com.melo.app.BuildConfig.ENABLE_BETTERLYRICS) {
                         add(
                             toMaterial3SettingsItem(
                                 context = context,
@@ -310,7 +310,7 @@ fun ApiManagementSettingsScreen(onBackClick: () -> Unit) {
                         )
                     }
 
-                    if (chromahub.rhythm.app.BuildConfig.ENABLE_LYRICALLY_API) {
+                    if (com.melo.app.BuildConfig.ENABLE_LYRICALLY_API) {
                         add(
                             toMaterial3SettingsItem(
                                 context = context,
@@ -354,7 +354,7 @@ fun ApiManagementSettingsScreen(onBackClick: () -> Unit) {
                         )
                     )
 
-                    if (chromahub.rhythm.app.BuildConfig.ENABLE_YOUTUBE_MUSIC) {
+                    if (com.melo.app.BuildConfig.ENABLE_YOUTUBE_MUSIC) {
                         add(
                             toMaterial3SettingsItem(
                                 context = context,
@@ -371,7 +371,7 @@ fun ApiManagementSettingsScreen(onBackClick: () -> Unit) {
                         )
                     }
 
-                    if (chromahub.rhythm.app.BuildConfig.ENABLE_WIKIPEDIA) {
+                    if (com.melo.app.BuildConfig.ENABLE_WIKIPEDIA) {
                         add(
                             toMaterial3SettingsItem(
                                 context = context,

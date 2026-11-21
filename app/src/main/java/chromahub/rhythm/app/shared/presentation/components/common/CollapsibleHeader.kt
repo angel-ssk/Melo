@@ -68,8 +68,9 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.ui.graphics.graphicsLayer
 import kotlinx.coroutines.delay
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
+import chromahub.rhythm.app.ui.theme.RhythmMotion
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,6 +89,7 @@ fun CollapsibleHeaderScreen(
     headerDisplayMode: Int = 1, // 0=Icon Only, 1=Name Only, 2=Both
     alwaysCollapsed: Boolean = false, // Whether to start with header collapsed (override for specific screens)
     containerColor: Color = Color.Transparent, // Custom container color for header
+    profileAvatar: (@Composable () -> Unit)? = null, // Rhythm fork: leading avatar (top-left)
     content: @Composable (Modifier) -> Unit
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
@@ -120,13 +122,13 @@ fun CollapsibleHeaderScreen(
     
     val contentAlpha by animateFloatAsState(
         targetValue = if (showContent) 1f else 0f,
-        animationSpec = tween(durationMillis = 400),
+        animationSpec = RhythmMotion.emphasis,
         label = "contentAlpha"
     )
     
     val contentOffset by animateFloatAsState(
         targetValue = if (showContent) 0f else 30f,
-        animationSpec = tween(durationMillis = 450),
+        animationSpec = RhythmMotion.surface,
         label = "contentOffset"
     )
 
@@ -213,8 +215,14 @@ fun CollapsibleHeaderScreen(
                             
                             if (shouldShowIcon) {
                                 androidx.compose.foundation.Image(
-                                    painter = androidx.compose.ui.res.painterResource(id = chromahub.rhythm.app.R.drawable.rhythm_splash_logo),
-                                    contentDescription = stringResource(R.string.collapsibleheader_app_icon),
+                                    painter = androidx.compose.ui.res.painterResource(id = com.melo.app.R.drawable.melo_mark),
+                                    contentDescription = stringResource(R.string.cd_melo_logo),
+                                    // The supplied artwork is never edited: its alpha mask is
+                                    // simply tinted with the current dynamic/album/app colour.
+                                    colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+                                        MaterialTheme.colorScheme.primary,
+                                        androidx.compose.ui.graphics.BlendMode.SrcIn
+                                    ),
                                     modifier = Modifier.size((48 + (36 - 28) * (1 - collapsedFraction)).dp)
                                 )
                             }
@@ -232,7 +240,11 @@ fun CollapsibleHeaderScreen(
                         }
                     },
                     navigationIcon = {
-                        if (showBackButton) {
+                        if (profileAvatar != null) {
+                            Box(modifier = Modifier.padding(start = 12.dp)) {
+                                profileAvatar()
+                            }
+                        } else if (showBackButton) {
                             IconButton(
                                 onClick = onBackClick,
                                 modifier = Modifier.padding(start = 12.dp) // Add padding to the back button
@@ -274,6 +286,8 @@ fun CollapsibleHeaderScreen(
                     Spacer(modifier = Modifier.height(headerContentSpacing))
                     headerContent()
                 }
+                // Keep the gradient blend: it is what makes the header transition
+                // into the content look smooth instead of leaving a hard edge.
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -376,13 +390,13 @@ fun ArtistCollapsibleHeaderScreen(
 
     val contentAlpha by animateFloatAsState(
         targetValue = if (showContent) 1f else 0f,
-        animationSpec = tween(durationMillis = 400),
+        animationSpec = RhythmMotion.emphasis,
         label = "contentAlpha"
     )
 
     val contentOffset by animateFloatAsState(
         targetValue = if (showContent) 0f else 30f,
-        animationSpec = tween(durationMillis = 450),
+        animationSpec = RhythmMotion.surface,
         label = "contentOffset"
     )
 
@@ -653,13 +667,13 @@ fun FixedHeaderScreen(
     
     val contentAlpha by animateFloatAsState(
         targetValue = if (showContent) 1f else 0f,
-        animationSpec = tween(durationMillis = 400),
+        animationSpec = RhythmMotion.emphasis,
         label = "contentAlpha"
     )
     
     val contentOffset by animateFloatAsState(
         targetValue = if (showContent) 0f else 30f,
-        animationSpec = tween(durationMillis = 450),
+        animationSpec = RhythmMotion.surface,
         label = "contentOffset"
     )
 

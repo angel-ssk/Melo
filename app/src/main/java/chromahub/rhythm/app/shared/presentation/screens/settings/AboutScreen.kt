@@ -34,7 +34,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -94,7 +94,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
 import chromahub.rhythm.app.shared.data.repository.PlaybackStatsRepository
@@ -137,6 +137,7 @@ import chromahub.rhythm.app.ui.theme.parseCustomColorScheme
 import androidx.compose.ui.viewinterop.AndroidView
 import android.widget.TextView
 import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.text.HtmlCompat
@@ -233,14 +234,14 @@ fun AboutScreen(
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Image(
-                                painter = painterResource(id = chromahub.rhythm.app.R.drawable.rhythm_splash_logo),
+                                painter = painterResource(id = com.melo.app.R.drawable.rhythm_splash_logo),
                                 contentDescription = context.getString(R.string.updates_rhythm_logo_cd),
-                                modifier = Modifier.size(82.dp)
+                                modifier = Modifier.size(52.dp)
                             )
                             Spacer(modifier = Modifier.width(2.dp))
                             Text(
                                 text = context.getString(R.string.app_name),
-                                style = MaterialTheme.typography.displaySmall,
+                                style = MaterialTheme.typography.headlineMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onBackground
                             )
@@ -349,8 +350,8 @@ fun AboutScreen(
                         shape = RoundedCornerShape(topStart = 6.dp, topEnd = 6.dp, bottomStart = 20.dp, bottomEnd = 20.dp),
                         onClick = {
                             val allInfo = buildString {
-                                appendLine("=== Rhythm System Information ===")
-                                appendLine("App: Rhythm")
+                                appendLine("=== Melo System Information ===")
+                                appendLine("App: Melo")
                                 appendLine("Version: ${BuildConfig.VERSION_NAME}")
                                 appendLine("Build: ${BuildConfig.VERSION_CODE} ($buildVariant)")
                                 appendLine("Target SDK: ${appInfo.targetSdkVersion}")
@@ -382,109 +383,17 @@ fun AboutScreen(
                     githubUsername = "cromaguy",
                     avatarUrl = "https://github.com/cromaguy.png",
                     supportUrl = "https://ko-fi.com/anjishnunandi",
-                    teamTitle = context.getString(R.string.settings_about_team_chromahub),
+                    teamTitle = context.getString(R.string.about_creator_rhythm),
                     teamDescription = context.getString(R.string.settings_about_team_desc),
                     openUrl = openUrl
                 )
             }
 
             item {
-                val maintainerItems = remember(context, haptics) {
-                    listOf(
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Izzy",
-                            role = "Manages updates on IzzyOnDroid",
-                            githubUsername = "IzzySoft",
-                            avatarUrl = "https://github.com/IzzySoft.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "linsui",
-                            role = "Manages updates on F-Droid",
-                            githubUsername = "linsui",
-                            avatarUrl = "https://github.com/linsui.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Licaon_Kter",
-                            role = "Manages updates on F-Droid",
-                            githubUsername = "licaon-kter",
-                            avatarUrl = "https://github.com/licaon-kter.png"
-                        )
-                    )
-                }
-                Material3SettingsGroup(
-                    title = context.getString(R.string.about_community_group_maintainers),
-                    items = maintainerItems,
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                val collaboratorItems = remember(context, haptics) {
-                    listOf(
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "theovilardo",
-                            role = "Guide & PixelPlayer's Lead Dev",
-                            githubUsername = "theovilardo",
-                            avatarUrl = "https://github.com/theovilardo.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Nick",
-                            role = "Guide & Gramophone's Maintainer",
-                            githubUsername = "nift4",
-                            avatarUrl = "https://github.com/nift4.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "vivi",
-                            role = "Guide & Vivi Music's Lead Dev",
-                            githubUsername = "vivizzz007",
-                            avatarUrl = "https://github.com/vivizzz007.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Alex",
-                            role = "Lyrically API's Lead Dev",
-                            githubUsername = "Paxsenix0",
-                            avatarUrl = "https://github.com/Paxsenix0.png"
-                        )
-                    )
-                }
-                Material3SettingsGroup(
-                    title = context.getString(R.string.about_community_group_collaborators),
-                    items = collaboratorItems,
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                val designTestingItems = remember(context, haptics) {
-                    listOf(
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "itzKane",
-                            role = "UI Concept Designer",
-                            githubUsername = "soykane",
-                            avatarUrl = "https://github.com/soykane.png"
-                        )
-                    )
-                }
-                Material3SettingsGroup(
-                    title = context.getString(R.string.about_community_group_design_testing),
-                    items = designTestingItems,
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
+                MeloCreatorCard(
+                    name = "Dayner Cabarca",
+                    role = context.getString(R.string.about_creator_melo),
+                    avatarRes = R.drawable.dayner_avatar
                 )
             }
 
@@ -496,23 +405,10 @@ fun AboutScreen(
                         context = context,
                         hapticFeedback = haptics,
                         item = SettingItem(
-                            icon = RhythmIcons.Download,
-                            title = context.getString(R.string.settings_about_check_updates),
-                            description = context.getString(R.string.updates_check_again),
-                            onClick = {
-                                appUpdaterViewModel.checkForUpdates(force = true)
-                                onNavigateToUpdates?.invoke()
-                            }
-                        )
-                    ),
-                    toMaterial3SettingsItem(
-                        context = context,
-                        hapticFeedback = haptics,
-                        item = SettingItem(
-                            icon = RhythmIcons.BugReport,
-                            title = context.getString(R.string.settings_about_report_bug),
-                            description = "github.com/cromaguy/Rhythm/issues",
-                            onClick = { openUrl("https://github.com/cromaguy/Rhythm/issues") }
+                            icon = RhythmIcons.Code,
+                            title = stringResource(R.string.settings_about_view_source),
+                            description = "github.com/angel-ssk/Melo",
+                            onClick = { openUrl("https://github.com/angel-ssk/Melo") }
                         )
                     ),
                     toMaterial3SettingsItem(
@@ -523,26 +419,6 @@ fun AboutScreen(
                             title = context.getString(R.string.settings_about_open_source_libs),
                             description = context.getString(R.string.settings_about_view_dependencies),
                             onClick = { showLicensesSheet = true }
-                        )
-                    ),
-                    toMaterial3SettingsItem(
-                        context = context,
-                        hapticFeedback = haptics,
-                        item = SettingItem(
-                            icon = MaterialSymbolIcon("chat", filled = true),
-                            title = stringResource(R.string.aboutscreen_discord_community),
-                            description = "discord.gg/XjPyUYPQYc",
-                            onClick = { openUrl("https://discord.gg/XjPyUYPQYc") }
-                        )
-                    ),
-                    toMaterial3SettingsItem(
-                        context = context,
-                        hapticFeedback = haptics,
-                        item = SettingItem(
-                            icon = MaterialSymbolIcon("send", filled = true),
-                            title = stringResource(R.string.cd_telegram_support),
-                            description = "t.me/RhythmSupport",
-                            onClick = { openUrl("https://t.me/RhythmSupport") }
                         )
                     ),
                     toMaterial3SettingsItem(
@@ -631,85 +507,7 @@ fun DeveloperCard(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(18.dp))
-
-                ExpressiveButtonGroup(
-                    style = ButtonGroupStyle.Tonal,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    ExpressiveGroupButton(
-                        onClick = {
-                            HapticUtils.performHapticFeedback(context, haptics, HapticType.LIGHT)
-                            openUrl("https://rhythmweb.vercel.app/")
-                        },
-                        isStart = true,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Icon(
-                            imageVector = RhythmIcons.Language,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            text = context.getString(R.string.settings_about_visit_website),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    ExpressiveGroupButton(
-                        onClick = {
-                            HapticUtils.performHapticFeedback(context, haptics, HapticType.LIGHT)
-                            openUrl("https://github.com/$githubUsername")
-                        },
-                        isEnd = true,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Icon(
-                            imageVector = RhythmIcons.Code,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            text = context.getString(R.string.settings_about_view_github),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Button(
-                    onClick = {
-                        HapticUtils.performHapticFeedback(context, haptics, HapticType.HEAVY)
-                        openUrl(supportUrl)
-                    },
-                    shape = ExpressiveShapes.Full,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    ),
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(vertical = 12.dp)
-                ) {
-                    Icon(
-                        imageVector = MaterialSymbolIcon("local_cafe", filled = true),
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(R.string.aboutscreen_support_development),
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
 
@@ -743,6 +541,54 @@ fun DeveloperCard(
                     textAlign = TextAlign.Center
                 )
             }
+        }
+    }
+}
+
+/** Melo's creator card. Uses the supplied portrait as-is (no image edits). */
+@Composable
+private fun MeloCreatorCard(
+    name: String,
+    role: String,
+    avatarRes: Int
+) {
+    val cookieShape = rememberExpressiveShape("COOKIE_12")
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(28.dp),
+        color = MaterialTheme.colorScheme.surfaceContainer
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            Image(
+                painter = painterResource(id = avatarRes),
+                contentDescription = name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(96.dp)
+                    .clip(cookieShape)
+                    .background(MaterialTheme.colorScheme.surface)
+            )
+            Spacer(modifier = Modifier.height(14.dp))
+            Text(
+                text = name,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.ExtraBold,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = role,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }

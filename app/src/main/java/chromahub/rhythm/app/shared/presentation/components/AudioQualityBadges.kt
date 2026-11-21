@@ -37,7 +37,7 @@ import chromahub.rhythm.app.util.AudioFormatDetector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.painterResource
 

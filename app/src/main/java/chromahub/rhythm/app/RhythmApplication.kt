@@ -5,6 +5,7 @@
 
 package chromahub.rhythm.app
 
+import com.melo.app.BuildConfig
 import android.app.Application
 import android.content.ComponentCallbacks2
 import android.os.Build

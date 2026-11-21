@@ -6,7 +6,7 @@
 package chromahub.rhythm.app.shared.data.model
 
 import android.os.Parcelable
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.util.AudioQualityDetector
 import kotlinx.parcelize.Parcelize
 import java.util.Locale

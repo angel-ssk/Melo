@@ -75,7 +75,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import kotlinx.coroutines.launch
 
@@ -354,7 +354,8 @@ private fun RhythmGuardTimeoutScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                                    painter = painterResource(id = R.drawable.melo_mark),
+                                    colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                                     contentDescription = stringResource(R.string.updates_rhythm_logo_cd),
                                     modifier = Modifier.size(48.dp)
                                 )
@@ -668,7 +669,8 @@ private fun RhythmGuardTimeoutScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                                    painter = painterResource(id = R.drawable.melo_mark),
+                                    colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                                     contentDescription = stringResource(R.string.updates_rhythm_logo_cd),
                                     modifier = Modifier.size(80.dp)
                                 )

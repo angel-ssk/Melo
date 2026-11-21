@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.util.PlaylistImportExportUtils
 import androidx.compose.animation.core.*
 import androidx.compose.animation.core.VectorConverter

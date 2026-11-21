@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import chromahub.rhythm.app.shared.presentation.components.icons.MaterialSymbolIcon
 import chromahub.rhythm.app.shared.presentation.components.icons.RhythmIcons
 import chromahub.rhythm.app.shared.data.model.Song
-import chromahub.rhythm.app.R
+import com.melo.app.R
 
 private data class SongMenuItem(
     val title: String,

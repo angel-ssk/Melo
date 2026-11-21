@@ -22,18 +22,18 @@ plugins {
 }
 
 android {
-    namespace = "chromahub.rhythm.app"
+    namespace = "com.melo.app"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "chromahub.rhythm.app"
+        applicationId = "com.melo.app"
         minSdk = 26
         targetSdk = 37
         
         val overrideVersionCode = project.findProperty("versionCodeOverride")?.toString()?.toIntOrNull()
         val overrideVersionName = project.findProperty("versionNameOverride")?.toString()
-        versionCode = overrideVersionCode ?: 555001306
-        versionName = overrideVersionName ?: "5.5.500.1306 Beta"
+        versionCode = overrideVersionCode ?: 1000000
+        versionName = overrideVersionName ?: "1.0"
 
         val overrideReleaseDate = project.findProperty("releaseDateOverride")?.toString()
         buildConfigField("String", "RELEASE_DATE", "\"${overrideReleaseDate ?: "2026-10-17"}\"")
@@ -60,7 +60,7 @@ android {
     productFlavors {
         create("fdroid") {
             dimension = "distribution"
-            applicationId = "chromahub.rhythm.app"
+            applicationId = "com.melo.app"
             
             // F-Droid build: Enable all features (FOSS ethos)
             buildConfigField("boolean", "ENABLE_YOUTUBE_MUSIC", "true")
@@ -71,13 +71,11 @@ android {
             buildConfigField("boolean", "ENABLE_SPOTIFY_SEARCH", "true")
             buildConfigField("boolean", "ENABLE_WIKIPEDIA", "true")
             buildConfigField("String", "FLAVOR", "\"fdroid\"")
-            
-            versionNameSuffix = "-fdroid"
         }
         
         create("github") {
             dimension = "distribution"
-            applicationId = "chromahub.rhythm.app"
+            applicationId = "com.melo.app"
             
             // GitHub releases: Enable all features (same as F-Droid)
             buildConfigField("boolean", "ENABLE_YOUTUBE_MUSIC", "true")
@@ -88,8 +86,6 @@ android {
             buildConfigField("boolean", "ENABLE_SPOTIFY_SEARCH", "true")
             buildConfigField("boolean", "ENABLE_WIKIPEDIA", "true")
             buildConfigField("String", "FLAVOR", "\"github\"")
-            
-            versionNameSuffix = "-gh"
         }
     }
 
@@ -191,6 +187,9 @@ android {
     }
 
     lint {
+        // AGP 9.4.1 + Kotlin 2.4 lint analyzer crashes with
+        // "No fir element was found for KtProperty" on some Kotlin files.
+        checkReleaseBuilds = false
         abortOnError = true
         disable.addAll(
             listOf(
@@ -216,7 +215,7 @@ androidComponents {
                 ?: ""
 
             output.outputFileName.set(
-                "Rhythm-${android.defaultConfig.versionName}-${variant.name}${abiSuffix}.apk"
+                "Melo-${android.defaultConfig.versionName}-${variant.name}${abiSuffix}.apk"
             )
         }
     }

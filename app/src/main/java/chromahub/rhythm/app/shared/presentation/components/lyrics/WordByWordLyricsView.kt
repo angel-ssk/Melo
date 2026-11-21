@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.util.RhythmLyricsParser
 import chromahub.rhythm.app.util.WordByWordLyricLine
 import chromahub.rhythm.app.shared.data.model.AppSettings

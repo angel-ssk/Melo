@@ -58,7 +58,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.core.domain.model.StreamingQuality
 import chromahub.rhythm.app.core.utils.NetworkUtils
 import chromahub.rhythm.app.shared.presentation.screens.settings.TunerAnimatedSwitch

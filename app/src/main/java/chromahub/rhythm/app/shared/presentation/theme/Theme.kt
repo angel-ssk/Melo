@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.utils.FontLoader
 import chromahub.rhythm.app.util.ColorExtractor
 import chromahub.rhythm.app.util.ExtractedColors
@@ -251,6 +251,10 @@ fun RhythmTheme(
     extractedAlbumColorsJson: String? = null,
     expressiveColors: Boolean = true,
     themeIntensity: String = "STANDARD",
+    highRefreshMotion: Boolean = true,
+    motionSpeed: Float = 1f,
+    adaptiveMotion: Boolean = true,
+    refreshHz: Float = 60f,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -338,6 +342,14 @@ fun RhythmTheme(
         }
     }
     
+    val effectiveMotionSpeed = motionSpeed * if (adaptiveMotion) {
+        chromahub.rhythm.app.util.adaptiveMotionFactor(refreshHz)
+    } else 1f
+
+    SideEffect {
+        RhythmMotion.setSpeed(effectiveMotionSpeed)
+    }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -351,7 +363,11 @@ fun RhythmTheme(
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
     MaterialTheme(
         colorScheme = colorScheme,
-        motionScheme = MotionScheme.expressive(),
+        // Spring-based expressive motion interpolates on every vsync tick, so it
+        // scales naturally to 120/144/165 Hz panels. Standard motion is kept as
+        // a battery-friendly fallback via settings.
+        motionScheme = if (highRefreshMotion) RhythmMotionScheme(effectiveMotionSpeed)
+        else MotionScheme.standard(),
         typography = typography,
         shapes = Shapes,
         content = content

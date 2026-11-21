@@ -54,7 +54,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.features.local.presentation.viewmodel.MusicViewModel
 import chromahub.rhythm.app.shared.data.model.Artist
 import chromahub.rhythm.app.shared.data.repository.PlaybackStatsRepository
@@ -174,6 +174,7 @@ private fun StatsPageContent(
             StatsTimeRange.TODAY -> now - 24L * 60L * 60L * 1000L
             StatsTimeRange.WEEK -> now - 7L * 24L * 60L * 60L * 1000L
             StatsTimeRange.MONTH -> now - 30L * 24L * 60L * 60L * 1000L
+            StatsTimeRange.YEAR -> now - 365L * 24L * 60L * 60L * 1000L
             StatsTimeRange.ALL_TIME -> now
         }
         previousSummary = if (range != StatsTimeRange.ALL_TIME) {
@@ -315,6 +316,7 @@ private fun RhythmTimeRangeTabs(
         StatsTimeRange.TODAY to context.getString(R.string.stats_today),
         StatsTimeRange.WEEK to context.getString(R.string.stats_this_week),
         StatsTimeRange.MONTH to context.getString(R.string.stats_this_month),
+        StatsTimeRange.YEAR to context.getString(R.string.stats_this_year),
         StatsTimeRange.ALL_TIME to context.getString(R.string.stats_all_time)
     )
 
@@ -388,6 +390,7 @@ private fun ListeningOverviewCard(
                 StatsTimeRange.TODAY -> "yesterday"
                 StatsTimeRange.WEEK -> "last week"
                 StatsTimeRange.MONTH -> "last month"
+                StatsTimeRange.YEAR -> "last year"
                 StatsTimeRange.ALL_TIME -> ""
             }
             

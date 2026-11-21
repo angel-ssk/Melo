@@ -10,7 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -383,7 +383,11 @@ fun ExternalPlaybackBottomSheet(
                     )
 
                     Image(
-                        painter = painterResource(R.drawable.rhythm_splash_logo),
+                        painter = painterResource(R.drawable.melo_mark),
+                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+                            androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                            androidx.compose.ui.graphics.BlendMode.SrcIn
+                        ),
                         contentDescription = stringResource(R.string.updates_rhythm_logo_cd),
                         modifier = Modifier
                             .size(50.dp)

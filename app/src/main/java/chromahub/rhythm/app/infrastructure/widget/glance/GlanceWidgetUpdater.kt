@@ -69,7 +69,7 @@ object GlanceWidgetUpdater {
                 putString(RhythmMusicWidget.KEY_ARTWORK_URI, song.artworkUri?.toString())
             } else {
                 putString(RhythmMusicWidget.KEY_SONG_ID, "")
-                putString(RhythmMusicWidget.KEY_SONG_TITLE, "Rhythm")
+                putString(RhythmMusicWidget.KEY_SONG_TITLE, "Melo")
                 putString(RhythmMusicWidget.KEY_ARTIST_NAME, "")
                 putString(RhythmMusicWidget.KEY_ALBUM_NAME, "")
                 remove(RhythmMusicWidget.KEY_ARTWORK_URI)
@@ -120,7 +120,7 @@ object GlanceWidgetUpdater {
                         }
                     } else {
                         mutablePrefs.remove(stringPreferencesKey(RhythmMusicWidget.KEY_SONG_ID))
-                        mutablePrefs[stringPreferencesKey(RhythmMusicWidget.KEY_SONG_TITLE)] = "Rhythm"
+                        mutablePrefs[stringPreferencesKey(RhythmMusicWidget.KEY_SONG_TITLE)] = "Melo"
                         mutablePrefs[stringPreferencesKey(RhythmMusicWidget.KEY_ARTIST_NAME)] = ""
                         mutablePrefs[stringPreferencesKey(RhythmMusicWidget.KEY_ALBUM_NAME)] = ""
                         mutablePrefs.remove(stringPreferencesKey(RhythmMusicWidget.KEY_ARTWORK_URI))
@@ -156,7 +156,7 @@ object GlanceWidgetUpdater {
                                 prefs[stringPreferencesKey(RhythmLyricsWidget.KEY_ARTWORK_URI)] = it.toString()
                             } ?: prefs.remove(stringPreferencesKey(RhythmLyricsWidget.KEY_ARTWORK_URI))
                         } else {
-                            prefs[stringPreferencesKey(RhythmLyricsWidget.KEY_SONG_TITLE)] = "Rhythm"
+                            prefs[stringPreferencesKey(RhythmLyricsWidget.KEY_SONG_TITLE)] = "Melo"
                             prefs[stringPreferencesKey(RhythmLyricsWidget.KEY_ARTIST_NAME)] = ""
                             prefs[stringPreferencesKey(RhythmLyricsWidget.KEY_LYRIC_LINES)] = ""
                             prefs[intPreferencesKey(RhythmLyricsWidget.KEY_ACTIVE_INDEX)] = -1
@@ -270,7 +270,7 @@ try {
                 val playPauseShortcut = android.content.pm.ShortcutInfo.Builder(context, "shortcut_play_pause")
                     .setShortLabel(if (isPlaying) "Pause" else "Play")
                     .setLongLabel(if (isPlaying) "Pause Music" else "Play Music")
-                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, if (isPlaying) chromahub.rhythm.app.R.drawable.ic_pause_shortcut else chromahub.rhythm.app.R.drawable.ic_play_shortcut))
+                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, if (isPlaying) com.melo.app.R.drawable.ic_pause_shortcut else com.melo.app.R.drawable.ic_play_shortcut))
                     .setIntent(Intent(context, chromahub.rhythm.app.activities.MainActivity::class.java).apply {
                         action = "chromahub.rhythm.app.action.SHORTCUT_PLAY_PAUSE"
                     })
@@ -279,7 +279,7 @@ try {
                 val nextShortcut = android.content.pm.ShortcutInfo.Builder(context, "shortcut_next")
                     .setShortLabel("Next")
                     .setLongLabel("Next Track")
-                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, chromahub.rhythm.app.R.drawable.ic_skip_next_shortcut))
+                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, com.melo.app.R.drawable.ic_skip_next_shortcut))
                     .setIntent(Intent(context, chromahub.rhythm.app.activities.MainActivity::class.java).apply {
                         action = "chromahub.rhythm.app.action.SHORTCUT_SKIP_NEXT"
                     })
@@ -288,7 +288,7 @@ try {
                 val prevShortcut = android.content.pm.ShortcutInfo.Builder(context, "shortcut_previous")
                     .setShortLabel("Previous")
                     .setLongLabel("Previous Track")
-                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, chromahub.rhythm.app.R.drawable.ic_skip_previous_shortcut))
+                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, com.melo.app.R.drawable.ic_skip_previous_shortcut))
                     .setIntent(Intent(context, chromahub.rhythm.app.activities.MainActivity::class.java).apply {
                         action = "chromahub.rhythm.app.action.SHORTCUT_SKIP_PREVIOUS"
                     })
@@ -297,7 +297,7 @@ try {
                 val openPlayerShortcut = android.content.pm.ShortcutInfo.Builder(context, "shortcut_open_player")
                     .setShortLabel("Open Player")
                     .setLongLabel("Open Music Player")
-                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, chromahub.rhythm.app.R.drawable.rhythm_icon_small))
+                    .setIcon(android.graphics.drawable.Icon.createWithResource(context, com.melo.app.R.drawable.rhythm_icon_small))
                     .setIntent(Intent(context, chromahub.rhythm.app.activities.MainActivity::class.java).apply {
                         action = Intent.ACTION_MAIN
                         putExtra("OPEN_PLAYER", true)

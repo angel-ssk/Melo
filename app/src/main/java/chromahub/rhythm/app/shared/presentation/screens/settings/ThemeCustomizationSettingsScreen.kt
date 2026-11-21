@@ -39,7 +39,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -100,7 +100,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import chromahub.rhythm.app.BuildConfig
+import com.melo.app.BuildConfig
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.shared.data.model.Playlist
 import chromahub.rhythm.app.shared.data.model.Song
@@ -1008,7 +1008,8 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            val festiveThemeIntensitySliderState = remember(festiveThemeIntensity) {
+                            val festiveThemeIntensitySliderState = remember {
+
                                 SliderState(
                                     value = festiveThemeIntensity,
                                     trackRange = 0.1f..1f
@@ -1045,7 +1046,8 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            val festiveSnowflakeSizeSliderState = remember(festiveSnowflakeSize) {
+                            val festiveSnowflakeSizeSliderState = remember {
+
                                 SliderState(
                                     value = festiveSnowflakeSize,
                                     trackRange = 0.5f..2.0f

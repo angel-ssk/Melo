@@ -20,7 +20,7 @@ import coil.compose.AsyncImagePainter
 import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.presentation.components.common.M3PlaceholderType
 import java.io.File
 import java.io.FileOutputStream

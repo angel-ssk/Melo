@@ -44,7 +44,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.animation.AnimatedVisibility
@@ -204,7 +204,8 @@ class CrashActivity : AppCompatActivity() {
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                                        painter = painterResource(id = R.drawable.melo_mark),
+                                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                                         contentDescription = stringResource(R.string.updates_rhythm_logo_cd),
                                         modifier = Modifier.size(48.dp)
                                     )
@@ -239,7 +240,7 @@ class CrashActivity : AppCompatActivity() {
                                         }
                                         val shareIntent = Intent().apply {
                                             action = Intent.ACTION_SEND
-                                            putExtra(Intent.EXTRA_TEXT, "Rhythm App Crash Log:\n\n$crashLog")
+                                            putExtra(Intent.EXTRA_TEXT, "Melo App Crash Log:\n\n$crashLog")
                                             type = "text/plain"
                                         }
                                         context.startActivity(Intent.createChooser(shareIntent, "Share Crash Log"))
@@ -414,7 +415,8 @@ class CrashActivity : AppCompatActivity() {
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.rhythm_splash_logo),
+                                        painter = painterResource(id = R.drawable.melo_mark),
+                                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.primary, androidx.compose.ui.graphics.BlendMode.SrcIn),
                                         contentDescription = stringResource(R.string.updates_rhythm_logo_cd),
                                         modifier = Modifier.size(80.dp)
                                     )
@@ -477,7 +479,7 @@ class CrashActivity : AppCompatActivity() {
                                     }
                                     val shareIntent = Intent().apply {
                                         action = Intent.ACTION_SEND
-                                        putExtra(Intent.EXTRA_TEXT, "Rhythm App Crash Log:\n\n$crashLog")
+                                        putExtra(Intent.EXTRA_TEXT, "Melo App Crash Log:\n\n$crashLog")
                                         type = "text/plain"
                                     }
                                     context.startActivity(Intent.createChooser(shareIntent, "Share Crash Log"))

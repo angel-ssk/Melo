@@ -68,7 +68,7 @@ import chromahub.rhythm.app.util.SemanticLyrics
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.luminance
 import kotlinx.coroutines.delay
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import androidx.compose.ui.res.stringResource
 import java.util.Locale
 import chromahub.rhythm.app.util.windowScreenWidthDp

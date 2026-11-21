@@ -34,7 +34,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import chromahub.rhythm.app.R
+import com.melo.app.R
 import chromahub.rhythm.app.shared.data.model.AppSettings
 import chromahub.rhythm.app.util.HapticUtils
 import chromahub.rhythm.app.util.HapticType
@@ -209,7 +209,8 @@ fun ReplayGainSettingsScreen(
                                 Column(modifier = Modifier.fillMaxWidth()) {
                                     Text(stringResource(R.string.replay_gain_preamp_tagged_desc))
                                     Spacer(modifier = Modifier.height(8.dp))
-                                    val preampSliderState = remember(replayGainPreamp) {
+                                    val preampSliderState = remember {
+
                                         SliderState(
                                             value = replayGainPreamp,
                                             steps = 30,
@@ -247,7 +248,8 @@ fun ReplayGainSettingsScreen(
                                 Column(modifier = Modifier.fillMaxWidth()) {
                                     Text(stringResource(R.string.replay_gain_preamp_untagged_desc))
                                     Spacer(modifier = Modifier.height(8.dp))
-                                    val untaggedPreampSliderState = remember(replayGainPreampUntagged) {
+                                    val untaggedPreampSliderState = remember {
+
                                         SliderState(
                                             value = replayGainPreampUntagged,
                                             steps = 30,
