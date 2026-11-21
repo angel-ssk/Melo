@@ -15,8 +15,11 @@ import com.melo.app.R
  */
 object MeloDevMode {
     const val NAME = "Angel Dev"
-    const val AVATAR_RES = R.drawable.dev_angel_avatar
-    const val CROWN_RES = R.drawable.ic_dev_crown
+    // Must be getters, not const val: const values are inlined as raw ints,
+    // so the resource shrinker cannot see the R reference and strips the
+    // drawables, leaving id 0x0 at runtime.
+    val AVATAR_RES: Int get() = R.drawable.dev_angel_avatar
+    val CROWN_RES: Int get() = R.drawable.ic_dev_crown
 
     fun isDevName(name: String?): Boolean =
         name?.trim()?.equals(NAME, ignoreCase = true) == true
