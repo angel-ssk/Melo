@@ -33,7 +33,7 @@ Melo es un fork de **[Rhythm](https://github.com/cromaguy/Rhythm)**, creado por 
 
 - La base del reproductor, el motor de audio, las estadísticas, los widgets y gran parte del diseño Material 3 provienen de Rhythm.
 - Se conserva el crédito al creador original en la pantalla «Acerca de» de Melo.
-- Melo es mantenido por mí **Dayner Cabarca ([@angel-ssk](https://github.com/angel-ssk))**.
+- Melo es mantenido por mí **Angel ([@angel-ssk](https://github.com/angel-ssk))**.
 
 Gracias también a la comunidad de Rhythm por las traducciones, pruebas y contribuciones que hicieron posible este proyecto.
 
