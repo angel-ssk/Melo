@@ -101,9 +101,9 @@ fun SleepTimerBottomSheetNew(
     )
 
     val actionOptions = listOf(
-        Triple(SleepAction.FADE_OUT, "Fade Out", RhythmIcons.VolumeDown),
-        Triple(SleepAction.PAUSE, "Pause", RhythmIcons.Pause),
-        Triple(SleepAction.STOP, "Stop", RhythmIcons.Stop)
+        Triple(SleepAction.FADE_OUT, androidx.compose.ui.res.stringResource(com.melo.app.R.string.sleep_action_fade_out), RhythmIcons.VolumeDown),
+        Triple(SleepAction.PAUSE, androidx.compose.ui.res.stringResource(com.melo.app.R.string.sleep_action_pause), RhythmIcons.Pause),
+        Triple(SleepAction.STOP, androidx.compose.ui.res.stringResource(com.melo.app.R.string.sleep_action_stop), RhythmIcons.Stop)
     )
 
     fun startTimer(minutes: Int) {

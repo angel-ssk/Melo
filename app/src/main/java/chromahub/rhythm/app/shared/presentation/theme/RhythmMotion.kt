@@ -25,6 +25,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.material3.MotionScheme
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -52,9 +53,21 @@ object RhythmMotion {
     const val TARGET_REFRESH_HZ = 120
 
     private val speedState = mutableFloatStateOf(1f)
+    private val reducedState = mutableStateOf(false)
 
     /** Current speed multiplier (written once per composition by the theme). */
     val speed: Float get() = speedState.floatValue
+
+    /** True when the system/user asked for reduced motion. */
+    val reducedMotion: Boolean get() = reducedState.value
+
+    fun setReducedMotion(reduced: Boolean) {
+        if (reducedState.value != reduced) reducedState.value = reduced
+    }
+
+    /** Near-instant spec used when motion is reduced for accessibility or battery. */
+    private fun <T> instant(visibilityThreshold: T? = null): SpringSpec<T> =
+        spring<T>(dampingRatio = 1f, stiffness = 100_000f, visibilityThreshold = visibilityThreshold)
 
     fun setSpeed(value: Float) {
         val safe = value.coerceIn(0.6f, 2.5f)
@@ -63,7 +76,7 @@ object RhythmMotion {
 
     /** Fast opacity/emphasis spring. */
     val emphasis: SpringSpec<Float>
-        get() = spring(
+        get() = if (reducedState.value) instant(0.002f) else spring(
             dampingRatio = 1f,
             stiffness = 900f * speed,
             visibilityThreshold = 0.002f
@@ -71,7 +84,7 @@ object RhythmMotion {
 
     /** Spatial spring for size and weight changes. */
     val spatial: SpringSpec<Float>
-        get() = spring(
+        get() = if (reducedState.value) instant(0.002f) else spring(
             dampingRatio = 0.96f,
             stiffness = 800f * speed,
             visibilityThreshold = 0.002f
@@ -79,7 +92,7 @@ object RhythmMotion {
 
     /** Spring for large surfaces (sheets, hero cards). */
     val surface: SpringSpec<Float>
-        get() = spring(
+        get() = if (reducedState.value) instant(0.002f) else spring(
             dampingRatio = 1f,
             stiffness = 650f * speed,
             visibilityThreshold = 0.002f
@@ -87,7 +100,7 @@ object RhythmMotion {
 
     /** Slowest spring, used only for the big listening ring. */
     val hero: SpringSpec<Float>
-        get() = spring(
+        get() = if (reducedState.value) instant(0.003f) else spring(
             dampingRatio = 1f,
             stiffness = 550f * speed,
             visibilityThreshold = 0.003f
@@ -95,20 +108,20 @@ object RhythmMotion {
 
     /** Slide transitions animate IntOffset (pixels), so they need their own spec. */
     val offset: SpringSpec<IntOffset>
-        get() = spring<IntOffset>(
+        get() = if (reducedState.value) instant(IntOffset(1, 1)) else spring<IntOffset>(
             dampingRatio = 1f,
             stiffness = 800f * speed,
             visibilityThreshold = IntOffset(1, 1)
         )
 
     val color: SpringSpec<Color>
-        get() = spring<Color>(
+        get() = if (reducedState.value) instant<Color>() else spring<Color>(
             dampingRatio = 1f,
             stiffness = 900f * speed
         )
 
     val spatialDp: SpringSpec<Dp>
-        get() = spring<Dp>(
+        get() = if (reducedState.value) instant<Dp>(0.1f.dp) else spring<Dp>(
             dampingRatio = 0.96f,
             stiffness = 800f * speed,
             visibilityThreshold = 0.1f.dp
@@ -174,4 +187,17 @@ class RhythmMotionScheme(private val speed: Float) : MotionScheme {
     override fun <T> defaultEffectsSpec(): FiniteAnimationSpec<T> = spec(900f, 1f)
     override fun <T> fastEffectsSpec(): FiniteAnimationSpec<T> = spec(1200f, 1f)
     override fun <T> slowEffectsSpec(): FiniteAnimationSpec<T> = spec(600f, 1f)
+}
+
+/** Material motion used when the user asked for reduced motion. */
+object ReducedMotionScheme : MotionScheme {
+    private fun <T> instant(): FiniteAnimationSpec<T> =
+        spring<T>(dampingRatio = 1f, stiffness = 100_000f)
+
+    override fun <T> defaultSpatialSpec(): FiniteAnimationSpec<T> = instant()
+    override fun <T> fastSpatialSpec(): FiniteAnimationSpec<T> = instant()
+    override fun <T> slowSpatialSpec(): FiniteAnimationSpec<T> = instant()
+    override fun <T> defaultEffectsSpec(): FiniteAnimationSpec<T> = instant()
+    override fun <T> fastEffectsSpec(): FiniteAnimationSpec<T> = instant()
+    override fun <T> slowEffectsSpec(): FiniteAnimationSpec<T> = instant()
 }

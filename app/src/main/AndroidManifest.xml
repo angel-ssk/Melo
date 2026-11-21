@@ -146,6 +146,20 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/rhythm_stats_widget_info" />
         </receiver>
+
+        <!-- Melo Wellbeing Widget -->
+        <receiver
+            android:name="chromahub.rhythm.app.infrastructure.widget.glance.MeloWellbeingWidgetReceiver"
+            android:exported="true"
+            android:label="Melo Bienestar"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/melo_wellbeing_widget_info" />
+        </receiver>
         
         <!-- MediaPlaybackService is exported so Android Auto, the system
              media controller and other apps can connect to the media session

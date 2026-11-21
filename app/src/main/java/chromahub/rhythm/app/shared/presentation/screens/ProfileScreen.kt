@@ -17,6 +17,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -48,6 +49,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -132,6 +134,7 @@ fun ProfileScreen(
     val photoPath by appSettings.profilePhotoPath.collectAsState()
     val joinDate by appSettings.profileJoinDate.collectAsState()
     val dailyGoal by appSettings.profileDailyGoalMinutes.collectAsState()
+    val wellbeingNotifications by appSettings.wellbeingNotifications.collectAsState()
     val dailyStats by appSettings.dailyListeningStats.collectAsState()
 
     var selectedRange by rememberSaveable { mutableStateOf(ProfileRange.WEEK) }
@@ -253,6 +256,11 @@ fun ProfileScreen(
 
             Spacer(Modifier.height(20.dp))
 
+            // --- Badges ----------------------------------------------------------
+            WellbeingBadges(summary = snapshot.summary)
+
+            Spacer(Modifier.height(20.dp))
+
             // --- Listening heatmap (last 12 months) ----------------------------
             ListeningHeatmap(dailyStats = dailyStats)
 
@@ -264,6 +272,40 @@ fun ProfileScreen(
                 goalMinutes = dailyGoal,
                 onGoalChange = { appSettings.setProfileDailyGoalMinutes(it) }
             )
+
+            Spacer(Modifier.height(16.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                ),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.profile_wellbeing_notifications),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = stringResource(R.string.profile_wellbeing_notifications_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = wellbeingNotifications,
+                        onCheckedChange = { appSettings.setWellbeingNotifications(it) }
+                    )
+                }
+            }
 
             Spacer(Modifier.height(16.dp))
 
@@ -829,6 +871,59 @@ private fun rememberActiveDays(
             }
         }
         maxOf(counted, summary?.activeDays ?: 0).coerceAtMost(range.daysInWindow)
+    }
+}
+
+/** Local, privacy-friendly achievement cards derived from existing stats. */
+@Composable
+private fun WellbeingBadges(summary: PlaybackStatsRepository.PlaybackStatsSummary?) {
+    val badges = remember(summary) {
+        val s = summary ?: return@remember emptyList()
+        buildList {
+            if (s.activeDays >= 1) add(R.string.badge_first_step to "✨")
+            if (s.currentStreakDays >= 7) add(R.string.badge_streak_7 to "🔥")
+            if (s.totalPlayCount >= 100) add(R.string.badge_songs_100 to "🎵")
+            if (s.uniqueArtists >= 10) add(R.string.badge_explorer to "🧭")
+            if (s.totalSessions >= 10) add(R.string.badge_marathon to "🏃")
+        }
+    }
+    if (badges.isEmpty()) return
+    Column {
+        Text(
+            text = stringResource(R.string.profile_badges_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(Modifier.height(8.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            badges.forEach { (labelRes, emoji) ->
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    ),
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = emoji, style = MaterialTheme.typography.headlineSmall)
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = stringResource(labelRes),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

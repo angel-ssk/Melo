@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Melo</string>
     <!-- Common Labels -->
@@ -3152,4 +3152,57 @@
     <string name="eq_device_no_profile">Nenhum perfil AutoEQ vinculado</string>
     <string name="eq_manage_all_devices">Gerenciar Dispositivos</string>
     <string name="eq_reorder">Reordenar</string>
+    <string name="profile_title">Seu perfil</string>
+    <string name="profile_range_day">Dia</string>
+    <string name="profile_range_week">Semana</string>
+    <string name="profile_range_month">Mês</string>
+    <string name="profile_range_year">Ano</string>
+    <string name="profile_days_listening">dias ouvindo música</string>
+    <string name="profile_of_days">de %1$d dias</string>
+    <string name="profile_edit_name">Editar nome</string>
+    <string name="profile_edit_name_title">Altere seu nome</string>
+    <string name="profile_name_label">Nome exibido</string>
+    <string name="profile_avatar_cd">Foto de perfil</string>
+    <string name="profile_change_photo_cd">Alterar foto de perfil</string>
+    <string name="profile_rhythm_stats_title">Estatísticas do Melo</string>
+    <string name="profile_stat_listening_time">Tempo de escucha</string>
+    <string name="profile_stat_songs">Músicas reproduzidas</string>
+    <string name="profile_stat_artists">Artistas únicos</string>
+    <string name="profile_stat_sessions">Sessões de escucha</string>
+    <string name="profile_streak">%1$d dias de sequência</string>
+    <string name="profile_streak_subtitle">Mantenha seu ritmo</string>
+    <string name="profile_daily_goal_title">Meta diária de escucha</string>
+    <string name="profile_daily_goal_progress">%1$d min de %2$d min hoje</string>
+    <string name="profile_daily_goal_adjust">Ajuste sua meta diária</string>
+    <string name="profile_open">Abrir perfil</string>
+    <string name="profile_heatmap_title">Sua atividade de escucha</string>
+    <string name="profile_heatmap_subtitle">Últimos 12 meses</string>
+    <string name="profile_heatmap_less">Menos</string>
+    <string name="profile_heatmap_more">Mais</string>
+    <string name="profile_wrap_button">Compartilhe seu Melo Wrap</string>
+    <string name="profile_wrap_generating">Criando seu Wrap…</string>
+    <string name="profile_wrap_error">Não foi possível criar seu Wrap</string>
+    <string name="profile_wrap_share_title">Compartilhar Melo Wrap</string>
+    <string name="profile_badges_title">Seus selos</string>
+    <string name="badge_first_step">Primeiro passo</string>
+    <string name="badge_streak_7">Sequência de 7 dias</string>
+    <string name="badge_songs_100">100 músicas</string>
+    <string name="badge_explorer">Explorador</string>
+    <string name="badge_marathon">Maratona</string>
+    <string name="profile_wellbeing_notifications">Lembretes de bem-estar</string>
+    <string name="profile_wellbeing_notifications_desc">Meta diária, sequências e descanso</string>
+    <string name="settings_high_refresh_motion_title">Animações ultra suaves (120 Hz+)</string>
+    <string name="settings_high_refresh_motion_desc">Transições com mola para telas de alta taxa</string>
+    <string name="settings_detected_refresh_rate">Taxa detectada: %1$s</string>
+    <string name="settings_adaptive_motion">Adaptar velocidade à taxa de atualização</string>
+    <string name="settings_motion_speed">Velocidade da animação: %1$s×</string>
+    <string name="about_creator_melo">Criador do Melo</string>
+    <string name="about_creator_rhythm">Criador do Rhythm</string>
+    <string name="cd_melo_logo">Logotipo do Melo</string>
+    <string name="home_melo_mix_cd">Criar Melo Mix</string>
+    <string name="sleep_action_fade_out">Desvanecer</string>
+    <string name="sleep_action_pause">Pausar</string>
+    <string name="sleep_action_stop">Parar</string>
+    <string name="widget_wellbeing_description">Melo Bem-estar: meta e dias de escuta</string>
+    <string name="updates_up_to_date_title">Você está em dia!</string>
 </resources>

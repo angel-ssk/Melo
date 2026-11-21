@@ -2854,4 +2854,17 @@
     <string name="updates_available_format">Version %1$s • %2$s</string>
     <string name="updates_up_to_date_message">Melo is up to date with the latest features and security updates</string>
     <string name="updates_up_to_date_title">You\'re all set!</string>
+    <string name="profile_wellbeing_notifications">Wellbeing reminders</string>
+    <string name="profile_wellbeing_notifications_desc">Daily goal, streak and wind-down notifications</string>
+    <string name="profile_badges_title">Your badges</string>
+    <string name="badge_first_step">First step</string>
+    <string name="badge_streak_7">7-day streak</string>
+    <string name="badge_songs_100">100 songs</string>
+    <string name="badge_explorer">Explorer</string>
+    <string name="badge_marathon">Marathon</string>
+    <string name="home_melo_mix_cd">Create Melo Mix</string>
+    <string name="sleep_action_fade_out">Fade out</string>
+    <string name="sleep_action_pause">Pause</string>
+    <string name="sleep_action_stop">Stop</string>
+    <string name="widget_wellbeing_description">Melo Wellbeing: daily goal and listening days</string>
 </resources>

@@ -3015,4 +3015,17 @@
     <string name="updates_available_format">Versión %1$s • %2$s</string>
     <string name="updates_up_to_date_message">Melo está al día con las últimas funciones y actualizaciones de seguridad</string>
     <string name="updates_up_to_date_title">¡Estás al día!</string>
+    <string name="profile_wellbeing_notifications">Recordatorios de bienestar</string>
+    <string name="profile_wellbeing_notifications_desc">Avisos de meta diaria, rachas y hora de descansar</string>
+    <string name="profile_badges_title">Tus logros</string>
+    <string name="badge_first_step">Primer paso</string>
+    <string name="badge_streak_7">Racha de 7 días</string>
+    <string name="badge_songs_100">100 canciones</string>
+    <string name="badge_explorer">Explorador</string>
+    <string name="badge_marathon">Maratón</string>
+    <string name="home_melo_mix_cd">Crear Melo Mix</string>
+    <string name="sleep_action_fade_out">Desvanecer</string>
+    <string name="sleep_action_pause">Pausar</string>
+    <string name="sleep_action_stop">Detener</string>
+    <string name="widget_wellbeing_description">Melo Bienestar: meta diaria y días escuchando</string>
 </resources>

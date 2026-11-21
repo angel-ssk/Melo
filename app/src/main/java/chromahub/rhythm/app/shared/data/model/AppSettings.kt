@@ -285,6 +285,7 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_PROFILE_PHOTO_PATH = "profile_photo_path"
         private const val KEY_PROFILE_JOIN_DATE = "profile_join_date"
         private const val KEY_PROFILE_DAILY_GOAL_MINUTES = "profile_daily_goal_minutes"
+        private const val KEY_WELLBEING_NOTIFICATIONS = "wellbeing_notifications"
         private const val KEY_HIGH_REFRESH_MOTION = "high_refresh_motion"
         private const val KEY_MOTION_SPEED = "motion_speed"
         private const val KEY_ADAPTIVE_MOTION = "adaptive_motion"
@@ -1510,6 +1511,9 @@ class AppSettings private constructor(context: Context) {
         prefs.getInt(KEY_PROFILE_DAILY_GOAL_MINUTES, 60).coerceIn(5, 480)
     )
     val profileDailyGoalMinutes: StateFlow<Int> = _profileDailyGoalMinutes.asStateFlow()
+
+    private val _wellbeingNotifications = MutableStateFlow(prefs.getBoolean(KEY_WELLBEING_NOTIFICATIONS, true))
+    val wellbeingNotifications: StateFlow<Boolean> = _wellbeingNotifications.asStateFlow()
 
     /** Enables spring-based, high-refresh (120 Hz+) motion across the whole app. */
     private val _highRefreshMotion = MutableStateFlow(prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true))
@@ -3601,6 +3605,11 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _profilePhotoPath.value = path
     }
 
+    fun setWellbeingNotifications(enabled: Boolean) {
+        prefs.edit { putBoolean(KEY_WELLBEING_NOTIFICATIONS, enabled) }
+        _wellbeingNotifications.value = enabled
+    }
+
     fun setProfileDailyGoalMinutes(minutes: Int) {
         val safe = minutes.coerceIn(5, 480)
         prefs.edit { putInt(KEY_PROFILE_DAILY_GOAL_MINUTES, safe) }
@@ -5645,6 +5654,7 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _profileJoinDate.value = prefs.getString(KEY_PROFILE_JOIN_DATE, null)
             ?: java.time.LocalDate.now().toString()
         _profileDailyGoalMinutes.value = prefs.getInt(KEY_PROFILE_DAILY_GOAL_MINUTES, 60).coerceIn(5, 480)
+        _wellbeingNotifications.value = prefs.getBoolean(KEY_WELLBEING_NOTIFICATIONS, true)
         _highRefreshMotion.value = prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true)
         _motionSpeed.value = prefs.getFloat(KEY_MOTION_SPEED, 1.0f).coerceIn(0.75f, 1.75f)
         _adaptiveMotion.value = prefs.getBoolean(KEY_ADAPTIVE_MOTION, true)

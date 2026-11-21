@@ -574,6 +574,24 @@ fun HomeScreen(
             )
         },
         headerActions = buildList {
+            add(
+                HeaderAction(
+                    icon = chromahub.rhythm.app.shared.presentation.components.icons.MaterialSymbolIcon("auto_awesome"),
+                    contentDescription = context.getString(R.string.home_melo_mix_cd),
+                    onClick = {
+                        coroutineScope.launch {
+                            val statsRepo = chromahub.rhythm.app.shared.data.repository.PlaybackStatsRepository.getInstance(context)
+                            val ids = (statsRepo.getOnRepeatSongIds() +
+                                statsRepo.getForgottenFavoritesSongIds(musicViewModel.songPlayCounts.value) +
+                                statsRepo.getRecentlyPlayedSongIds(30)).distinct().take(40).toSet()
+                            val mix = songs.filter { it.id in ids }
+                            if (mix.isNotEmpty()) {
+                                musicViewModel.createPlaylist("Melo Mix", mix)
+                            }
+                        }
+                    }
+                )
+            )
             val showReorder = !isLandscapeTablet
             val showSettings = !isTablet && floatingNavigationBar
 

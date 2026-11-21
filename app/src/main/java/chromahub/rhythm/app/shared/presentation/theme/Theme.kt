@@ -255,6 +255,7 @@ fun RhythmTheme(
     motionSpeed: Float = 1f,
     adaptiveMotion: Boolean = true,
     refreshHz: Float = 60f,
+    reduceMotion: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -348,6 +349,7 @@ fun RhythmTheme(
 
     SideEffect {
         RhythmMotion.setSpeed(effectiveMotionSpeed)
+        RhythmMotion.setReducedMotion(reduceMotion)
     }
 
     val view = LocalView.current
@@ -366,7 +368,8 @@ fun RhythmTheme(
         // Spring-based expressive motion interpolates on every vsync tick, so it
         // scales naturally to 120/144/165 Hz panels. Standard motion is kept as
         // a battery-friendly fallback via settings.
-        motionScheme = if (highRefreshMotion) RhythmMotionScheme(effectiveMotionSpeed)
+        motionScheme = if (reduceMotion) ReducedMotionScheme
+        else if (highRefreshMotion) RhythmMotionScheme(effectiveMotionSpeed)
         else MotionScheme.standard(),
         typography = typography,
         shapes = Shapes,

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Melo</string>
     <!-- Common Labels -->
@@ -2797,4 +2797,57 @@
     <string name="onboarding_expressive_shapes_desc">Appliquez les formes Material 3 pour les albums, cadres, et composants d\'interface</string>
     <string name="onboarding_autoeq_desc">Calibre l\'audio pour des milliers de models de casques</string>
     <string name="onboarding_replaygain_desc">Ajuste automatiquement le volume audio entre les chansons</string>
+    <string name="profile_title">Votre profil</string>
+    <string name="profile_range_day">Jour</string>
+    <string name="profile_range_week">Semaine</string>
+    <string name="profile_range_month">Mois</string>
+    <string name="profile_range_year">Année</string>
+    <string name="profile_days_listening">jours d\'écoute de musique</string>
+    <string name="profile_of_days">sur %1$d jours</string>
+    <string name="profile_edit_name">Modifier le nom</string>
+    <string name="profile_edit_name_title">Changez votre nom</string>
+    <string name="profile_name_label">Nom affiché</string>
+    <string name="profile_avatar_cd">Photo de profil</string>
+    <string name="profile_change_photo_cd">Changer la photo de profil</string>
+    <string name="profile_rhythm_stats_title">Statistiques Melo</string>
+    <string name="profile_stat_listening_time">Temps d\'écoute</string>
+    <string name="profile_stat_songs">Chansons écoutées</string>
+    <string name="profile_stat_artists">Artistes uniques</string>
+    <string name="profile_stat_sessions">Sessions d\'écoute</string>
+    <string name="profile_streak">%1$d jours de série</string>
+    <string name="profile_streak_subtitle">Gardez votre rythme</string>
+    <string name="profile_daily_goal_title">Objectif d\'écoute quotidien</string>
+    <string name="profile_daily_goal_progress">%1$d min sur %2$d min aujourd\'hui</string>
+    <string name="profile_daily_goal_adjust">Ajuster votre objectif quotidien</string>
+    <string name="profile_open">Ouvrir le profil</string>
+    <string name="profile_heatmap_title">Votre activité d\'écoute</string>
+    <string name="profile_heatmap_subtitle">12 derniers mois</string>
+    <string name="profile_heatmap_less">Moins</string>
+    <string name="profile_heatmap_more">Plus</string>
+    <string name="profile_wrap_button">Partagez votre Melo Wrap</string>
+    <string name="profile_wrap_generating">Création de votre Wrap…</string>
+    <string name="profile_wrap_error">Impossible de créer votre Wrap</string>
+    <string name="profile_wrap_share_title">Partager Melo Wrap</string>
+    <string name="profile_badges_title">Vos badges</string>
+    <string name="badge_first_step">Premier pas</string>
+    <string name="badge_streak_7">Série de 7 jours</string>
+    <string name="badge_songs_100">100 chansons</string>
+    <string name="badge_explorer">Explorateur</string>
+    <string name="badge_marathon">Marathon</string>
+    <string name="profile_wellbeing_notifications">Rappels de bien-être</string>
+    <string name="profile_wellbeing_notifications_desc">Objectif quotidien, séries et repos</string>
+    <string name="settings_high_refresh_motion_title">Animations ultra fluides (120 Hz+)</string>
+    <string name="settings_high_refresh_motion_desc">Transitions à ressort pour les écrans haute fréquence</string>
+    <string name="settings_detected_refresh_rate">Écran détecté : %1$s</string>
+    <string name="settings_adaptive_motion">Adapter la vitesse au taux de rafraîchissement</string>
+    <string name="settings_motion_speed">Vitesse d\'animation : %1$s×</string>
+    <string name="about_creator_melo">Créateur de Melo</string>
+    <string name="about_creator_rhythm">Créateur de Rhythm</string>
+    <string name="cd_melo_logo">Logo Melo</string>
+    <string name="home_melo_mix_cd">Créer Melo Mix</string>
+    <string name="sleep_action_fade_out">Fondu</string>
+    <string name="sleep_action_pause">Pause</string>
+    <string name="sleep_action_stop">Arrêter</string>
+    <string name="widget_wellbeing_description">Melo Bien-être : objectif et jours d\'écoute</string>
+    <string name="updates_up_to_date_title">Vous êtes à jour !</string>
 </resources>

@@ -219,6 +219,16 @@ class MainActivity : AppCompatActivity() {
             val motionSpeed by appSettings.motionSpeed.collectAsState()
             val adaptiveMotion by appSettings.adaptiveMotion.collectAsState()
             val refreshHz = chromahub.rhythm.app.util.rememberDisplayRefreshRate()
+            // Honour Android's "Remove animations" setting and power saver.
+            val reduceMotion = remember {
+                val scale = android.provider.Settings.Global.getFloat(
+                    this@MainActivity.contentResolver,
+                    android.provider.Settings.Global.ANIMATOR_DURATION_SCALE,
+                    1f
+                )
+                val powerSave = (this@MainActivity.getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager)?.isPowerSaveMode == true
+                scale == 0f || powerSave
+            }
             val appMode by appSettings.appMode.collectAsState()
             
             // Determine the theme based on settings
@@ -246,7 +256,8 @@ class MainActivity : AppCompatActivity() {
                 highRefreshMotion = highRefreshMotion,
                 motionSpeed = motionSpeed,
                 adaptiveMotion = adaptiveMotion,
-                refreshHz = refreshHz
+                refreshHz = refreshHz,
+                reduceMotion = reduceMotion
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

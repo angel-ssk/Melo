@@ -97,6 +97,28 @@ class RhythmApplication : Application(), ImageLoaderFactory {
             startANRWatchdog()
         }
         
+        // Melo 1.1: daily wellbeing reminder.
+        try {
+            val now = java.util.Calendar.getInstance()
+            val next = java.util.Calendar.getInstance().apply {
+                set(java.util.Calendar.HOUR_OF_DAY, 21)
+                set(java.util.Calendar.MINUTE, 0)
+                set(java.util.Calendar.SECOND, 0)
+                if (before(now)) add(java.util.Calendar.DAY_OF_MONTH, 1)
+            }
+            val delay = next.timeInMillis - now.timeInMillis
+            val request = androidx.work.PeriodicWorkRequestBuilder<chromahub.rhythm.app.infrastructure.worker.WellbeingNotificationWorker>(
+                24, java.util.concurrent.TimeUnit.HOURS
+            ).setInitialDelay(delay, java.util.concurrent.TimeUnit.MILLISECONDS).build()
+            androidx.work.WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                chromahub.rhythm.app.infrastructure.worker.WellbeingNotificationWorker.WORK_NAME,
+                androidx.work.ExistingPeriodicWorkPolicy.KEEP,
+                request
+            )
+        } catch (e: Exception) {
+            Log.w(TAG, "Could not schedule wellbeing notifications", e)
+        }
+
         Log.d(TAG, "RhythmApplication initialization complete")
         
         // Trim caches on startup so storage stays within the user's chosen limit
