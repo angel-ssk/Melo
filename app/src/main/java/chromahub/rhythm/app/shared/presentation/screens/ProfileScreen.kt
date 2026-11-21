@@ -133,7 +133,7 @@ fun ProfileScreen(
     val statsRepository = remember { PlaybackStatsRepository.getInstance(context) }
 
     val rawProfileName by appSettings.profileName.collectAsState()
-    val isDev = chromahub.rhythm.app.util.MeloDevMode.enabled
+    val isDev = chromahub.rhythm.app.util.MeloDevMode.isEnabled(rawProfileName)
     val profileName = if (isDev) chromahub.rhythm.app.util.MeloDevMode.NAME else rawProfileName
     val storedPhotoPath by appSettings.profilePhotoPath.collectAsState()
     val photoPath = if (isDev) null else storedPhotoPath
@@ -222,6 +222,7 @@ fun ProfileScreen(
                 name = profileName,
                 photoPath = photoPath,
                 joinDate = joinDate,
+                isDev = isDev,
                 onAvatarClick = { if (!isDev) photoLauncher.launch("image/*") },
                 onNameClick = {
                     if (!isDev) {
@@ -518,6 +519,7 @@ private fun ProfileIdentityHeader(
     name: String,
     photoPath: String?,
     joinDate: String,
+    isDev: Boolean,
     onAvatarClick: () -> Unit,
     onNameClick: () -> Unit
 ) {
@@ -547,8 +549,8 @@ private fun ProfileIdentityHeader(
                 name = name,
                 size = 104.dp,
                 onClick = onAvatarClick,
-                devAvatar = chromahub.rhythm.app.util.MeloDevMode.enabled,
-                showCrown = chromahub.rhythm.app.util.MeloDevMode.enabled
+                devAvatar = isDev,
+                showCrown = isDev
             )
             Box(
                 modifier = Modifier
@@ -1080,12 +1082,13 @@ private fun formatDuration(durationMs: Long): String {
 /** Small helper used by the Home top-left avatar to keep layout stable. */
 @Composable
 fun ProfileAvatarButton(photoPath: String?, name: String, onClick: () -> Unit) {
+    val isDev = chromahub.rhythm.app.util.MeloDevMode.isEnabled(name)
     ProfileAvatar(
         photoPath = photoPath,
         name = name,
         size = 40.dp,
         onClick = onClick,
-        devAvatar = chromahub.rhythm.app.util.MeloDevMode.enabled,
-        showCrown = chromahub.rhythm.app.util.MeloDevMode.enabled
+        devAvatar = isDev,
+        showCrown = isDev
     )
 }
