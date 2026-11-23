@@ -194,6 +194,7 @@ object SettingsRoutes {
     const val BATTERY_SAVER = "battery_saver_settings"
     const val REPLAY_GAIN = "replay_gain_settings"
     const val CROSSFADE = "crossfade_settings"
+    const val APP_ICON = "tuner_app_icon_settings"
     const val NATIVE_CAPABILITIES = "tuner_native_capabilities_settings"
     const val EXTERNAL_CAPABILITIES = "tuner_external_capabilities_settings"
     const val DECODER_EXTENSIONS = "tuner_decoder_extensions_settings"
@@ -284,6 +285,7 @@ fun SettingsScreen(
                 title = context.getString(R.string.settings_section_appearance),
                 items = buildList {
                     add(SettingItem(RhythmIcons.Palette, context.getString(R.string.settings_theme_customization), context.getString(R.string.settings_theme_customization_desc), palette = SettingsPalettes.Purple, onClick = { onNavigateTo(SettingsRoutes.THEME_CUSTOMIZATION) }))
+    add(SettingItem(MaterialSymbolIcon("photo_frame"), context.getString(R.string.settings_app_icon), context.getString(R.string.settings_app_icon_desc), palette = SettingsPalettes.SkyBlue, onClick = { onNavigateTo(SettingsRoutes.APP_ICON) }))
                     add(SettingItem(MaterialSymbolIcon("interests"), context.getString(R.string.settings_shapes), context.getString(R.string.settings_shapes_desc), palette = SettingsPalettes.Purple, onClick = { onNavigateTo(SettingsRoutes.EXPRESSIVE_SHAPES) }))
                     add(SettingItem(RhythmIcons.MusicNote, context.getString(R.string.settings_player_customization), context.getString(R.string.settings_player_customization_desc), palette = SettingsPalettes.SkyBlue, onClick = { onNavigateTo(SettingsRoutes.PLAYER_CUSTOMIZATION) }))
                     add(SettingItem(MaterialSymbolIcon("dock_to_bottom"), context.getString(R.string.settings_miniplayer_customization), context.getString(R.string.settings_miniplayer_customization_desc), palette = SettingsPalettes.Rose, onClick = { onNavigateTo(SettingsRoutes.MINIPLAYER_CUSTOMIZATION) }))

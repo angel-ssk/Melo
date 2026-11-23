@@ -273,6 +273,7 @@ fun HomeScreen(
     onNavigateToRhythmGuard: () -> Unit = {},
     onNavigateToArtist: (Artist) -> Unit = {},
     onNavigateToProfile: () -> Unit = {},
+    onNavigateToMeloMix: () -> Unit = {},
     isStreamingMode: Boolean = false,
     streamingViewModel: chromahub.rhythm.app.features.streaming.presentation.viewmodel.StreamingMusicViewModel? = null,
     streamingSongs: List<Song> = emptyList(),
@@ -578,40 +579,7 @@ fun HomeScreen(
                 HeaderAction(
                     icon = chromahub.rhythm.app.shared.presentation.components.icons.MaterialSymbolIcon("auto_awesome"),
                     contentDescription = context.getString(R.string.home_melo_mix_cd),
-                    onClick = {
-                        coroutineScope.launch {
-                            val statsRepo = chromahub.rhythm.app.shared.data.repository.PlaybackStatsRepository.getInstance(context)
-                            val ids = (statsRepo.getOnRepeatSongIds() +
-                                statsRepo.getForgottenFavoritesSongIds(musicViewModel.songPlayCounts.value) +
-                                statsRepo.getRecentlyPlayedSongIds(30)).distinct().take(40).toSet()
-                            val mix = songs.filter { it.id in ids }
-                            if (mix.isNotEmpty()) {
-                                musicViewModel.createPlaylist("Melo Mix", mix)
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.home_melo_mix_created, mix.size),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                // No history yet: build a fresh mix of recent + random songs.
-                                val fallback = songs.sortedByDescending { it.dateAdded }.take(20)
-                                if (fallback.isNotEmpty()) {
-                                    musicViewModel.createPlaylist("Melo Mix", fallback)
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.home_melo_mix_created, fallback.size),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        R.string.home_melo_mix_empty,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                        }
-                    }
+                    onClick = onNavigateToMeloMix
                 )
             )
             val showReorder = !isLandscapeTablet

@@ -261,6 +261,7 @@ sealed class Screen(val route: String) {
     object TunerCacheManagement : Screen("tuner_cache_management_settings")
     object TunerBackupRestore : Screen("tuner_backup_restore_settings")
     object TunerThemeCustomization : Screen("tuner_theme_customization_settings")
+    object TunerAppIcon : Screen("tuner_app_icon_settings")
     object TunerEqualizer : Screen("tuner_equalizer_settings")
     object TunerSleepTimer : Screen("tuner_sleep_timer_settings")
     object TunerCrashLogHistory : Screen("tuner_crash_log_history_settings")
@@ -294,6 +295,7 @@ sealed class Screen(val route: String) {
     object Equalizer : Screen("equalizer")
     // Rhythm fork: Wellbeing-style profile
     object Profile : Screen("profile")
+    object MeloMix : Screen("melo_mix")
 }
 
 // Streaming detail/service routes hosted inside the unified navigation shell.
@@ -2043,6 +2045,11 @@ private fun LocalNavigationContent(
                             onNavigateToRhythmGuard = {
                                 navController.navigate(Screen.TunerRhythmGuard.route)
                             },
+                            onNavigateToMeloMix = {
+                                navController.navigate(Screen.MeloMix.route) {
+                                    launchSingleTop = true
+                                }
+                            },
                             onNavigateToProfile = {
                                 navController.navigate(Screen.Profile.route) {
                                     launchSingleTop = true
@@ -2277,6 +2284,13 @@ private fun LocalNavigationContent(
                     ThemeCustomizationSettingsScreen(onBackClick = navigateBackOrToSettings)
                 }
 
+                composable(Screen.TunerAppIcon.route) {
+                    chromahub.rhythm.app.shared.presentation.screens.settings.AppIconSettingsScreen(
+                        onBackClick = navigateBackOrToSettings,
+                        appSettings = appSettings
+                    )
+                }
+
                 composable(
                     route = Screen.Equalizer.route,
                     enterTransition = {
@@ -2439,6 +2453,13 @@ private fun LocalNavigationContent(
                     SlideUpCornerWrapper {
                         RhythmStatsScreen(navController = navController, viewModel = viewModel)
                     }
+                }
+
+                composable(Screen.MeloMix.route) {
+                    chromahub.rhythm.app.shared.presentation.screens.MeloMixScreen(
+                        viewModel = viewModel,
+                        onBack = { navController.popBackStack() }
+                    )
                 }
 
                 composable(

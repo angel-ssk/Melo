@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="launcher_bg">#FFFFFF</color>
+    <color name="icon_bg_azure">#1946B5</color>
+    <color name="icon_bg_ocean">#0B6E8F</color>
+    <color name="icon_bg_forest">#1E7A4E</color>
+    <color name="icon_bg_crimson">#A8283A</color>
+    <color name="icon_bg_mono">#1B1B1F</color>
+    <color name="icon_bg_coral">#E2664A</color>
 </resources>

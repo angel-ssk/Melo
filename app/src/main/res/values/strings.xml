@@ -2870,4 +2870,16 @@
     <string name="home_melo_mix_created">Melo Mix created with %1$d songs</string>
     <string name="home_melo_mix_empty">Listen to something first to create your Melo Mix</string>
     <string name="profile_dev_crown_cd">Melo developer crown</string>
+    <string name="settings_app_icon">App icon</string>
+    <string name="settings_app_icon_desc">Choose a color for the Melo icon</string>
+    <string name="settings_app_icon_styles">Icon styles</string>
+    <string name="settings_app_icon_applied">Applied</string>
+    <string name="melo_mix_title">Melo Mix</string>
+    <string name="your_mix">Your Mix</string>
+    <string name="melo_mix_subtitle">Today\'s Mix for you</string>
+    <string name="daily_mix">DAILY MIX</string>
+    <string name="daily_mix_subtitle">Based on your history</string>
+    <string name="melo_mix_show_all">See full Daily Mix</string>
+    <string name="melo_mix_show_less">Show less</string>
+    <string name="melo_mix_shuffle_cd">Shuffle mix</string>
 </resources>

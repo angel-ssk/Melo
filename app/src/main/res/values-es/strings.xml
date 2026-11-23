@@ -3031,4 +3031,16 @@
     <string name="home_melo_mix_created">Melo Mix creado con %1$d canciones</string>
     <string name="home_melo_mix_empty">Escucha algo primero para crear tu Melo Mix</string>
     <string name="profile_dev_crown_cd">Corona de desarrollador de Melo</string>
+    <string name="settings_app_icon">Icono de la app</string>
+    <string name="settings_app_icon_desc">Elige un color para el icono de Melo</string>
+    <string name="settings_app_icon_styles">Estilos de icono</string>
+    <string name="settings_app_icon_applied">Aplicado</string>
+    <string name="melo_mix_title">Melo Mix</string>
+    <string name="your_mix">Tu Mix</string>
+    <string name="melo_mix_subtitle">El mix de hoy para ti</string>
+    <string name="daily_mix">MIX DIARIO</string>
+    <string name="daily_mix_subtitle">Basado en tu historial</string>
+    <string name="melo_mix_show_all">Ver todo el Mix Diario</string>
+    <string name="melo_mix_show_less">Ver menos</string>
+    <string name="melo_mix_shuffle_cd">Reproducir mix aleatorio</string>
 </resources>

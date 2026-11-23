@@ -286,6 +286,7 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_PROFILE_JOIN_DATE = "profile_join_date"
         private const val KEY_PROFILE_DAILY_GOAL_MINUTES = "profile_daily_goal_minutes"
         private const val KEY_WELLBEING_NOTIFICATIONS = "wellbeing_notifications"
+        private const val KEY_APP_ICON_STYLE = "app_icon_style"
         private const val KEY_HIGH_REFRESH_MOTION = "high_refresh_motion"
         private const val KEY_MOTION_SPEED = "motion_speed"
         private const val KEY_ADAPTIVE_MOTION = "adaptive_motion"
@@ -1514,6 +1515,14 @@ class AppSettings private constructor(context: Context) {
 
     private val _wellbeingNotifications = MutableStateFlow(prefs.getBoolean(KEY_WELLBEING_NOTIFICATIONS, true))
     val wellbeingNotifications: StateFlow<Boolean> = _wellbeingNotifications.asStateFlow()
+
+    private val _appIconStyle = MutableStateFlow(prefs.getString(KEY_APP_ICON_STYLE, "original") ?: "original")
+    val appIconStyle: StateFlow<String> = _appIconStyle.asStateFlow()
+
+    fun setAppIconStyle(style: String) {
+        prefs.edit { putString(KEY_APP_ICON_STYLE, style) }
+        _appIconStyle.value = style
+    }
 
     /** Enables spring-based, high-refresh (120 Hz+) motion across the whole app. */
     private val _highRefreshMotion = MutableStateFlow(prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true))
@@ -5655,6 +5664,7 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
             ?: java.time.LocalDate.now().toString()
         _profileDailyGoalMinutes.value = prefs.getInt(KEY_PROFILE_DAILY_GOAL_MINUTES, 60).coerceIn(5, 480)
         _wellbeingNotifications.value = prefs.getBoolean(KEY_WELLBEING_NOTIFICATIONS, true)
+        _appIconStyle.value = prefs.getString(KEY_APP_ICON_STYLE, "original") ?: "original"
         _highRefreshMotion.value = prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true)
         _motionSpeed.value = prefs.getFloat(KEY_MOTION_SPEED, 1.0f).coerceIn(0.75f, 1.75f)
         _adaptiveMotion.value = prefs.getBoolean(KEY_ADAPTIVE_MOTION, true)

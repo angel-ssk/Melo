@@ -133,6 +133,106 @@
                 android:resource="@xml/rhythm_cookie_widget_info" />
         </receiver>
 
+        <!-- Melo app icon aliases -->
+        <activity-alias
+            android:name=".activities.MainActivity_Original"
+            android:targetActivity=".activities.MainActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.MainActivity_Azure"
+            android:targetActivity=".activities.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"
+            android:icon="@mipmap/ic_launcher_azure"
+            android:roundIcon="@mipmap/ic_launcher_azure">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.MainActivity_Ocean"
+            android:targetActivity=".activities.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"
+            android:icon="@mipmap/ic_launcher_ocean"
+            android:roundIcon="@mipmap/ic_launcher_ocean">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.MainActivity_Forest"
+            android:targetActivity=".activities.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"
+            android:icon="@mipmap/ic_launcher_forest"
+            android:roundIcon="@mipmap/ic_launcher_forest">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.MainActivity_Crimson"
+            android:targetActivity=".activities.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"
+            android:icon="@mipmap/ic_launcher_crimson"
+            android:roundIcon="@mipmap/ic_launcher_crimson">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.MainActivity_Mono"
+            android:targetActivity=".activities.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"
+            android:icon="@mipmap/ic_launcher_mono"
+            android:roundIcon="@mipmap/ic_launcher_mono">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".activities.MainActivity_Coral"
+            android:targetActivity=".activities.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"
+            android:icon="@mipmap/ic_launcher_coral"
+            android:roundIcon="@mipmap/ic_launcher_coral">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_MUSIC" />
+            </intent-filter>
+        </activity-alias>
+
         <!-- Rhythm Stats Widget -->
         <receiver
             android:name="chromahub.rhythm.app.infrastructure.widget.glance.RhythmStatsWidgetReceiver"
@@ -211,11 +311,7 @@
             android:theme="@style/Theme.App.Starting"
             android:launchMode="singleTask"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode|keyboard|keyboardHidden|density">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.APP_MUSIC" />
-            </intent-filter>
+            <!-- Launcher intent moved to icon aliases below so users can switch icons -->
             
             <!-- Handle playlists -->
             <intent-filter>
