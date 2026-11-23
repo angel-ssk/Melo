@@ -886,7 +886,12 @@ class AppUpdaterViewModel(
                 return@launch
             }
 
-            // Start or resume download
+            // Always start a clean download. A stale resume state can append bytes
+            // to a missing/partial file and produce an unparseable APK.
+            activeDownload = null
+            _downloadState.value = null
+            _downloadedFile.value = null
+
             downloadApkInApp(downloadUrl, latestVersion.apkAssetName, expectedSize = latestVersion.apkSize)
         }
     }
@@ -1219,10 +1224,18 @@ class AppUpdaterViewModel(
                                         "No reference size available (HTTP Content-Length unavailable and GitHub API returned 0) — skipping size verification for $fileName ($fileSize bytes)",
                                     )
                                 } else if (fileSize != finalExpectedSize) {
-                                    Log.w(
+                                    // A truncated or resumed-with-junk file will fail at install
+                                    // time with "couldn't analyze package". Never install it.
+                                    Log.e(
                                         tag,
-                                        "File size mismatch (expected: $finalExpectedSize [HTTP: $httpExpectedSize, GitHub: $expectedSize], actual: $fileSize) — proceeding anyway; checksum will verify integrity",
+                                        "File size mismatch (expected: $finalExpectedSize [HTTP: $httpExpectedSize, GitHub: $expectedSize], actual: $fileSize) — discarding download",
                                     )
+                                    viewModelScope.launch {
+                                        file.delete()
+                                        _error.value = "La descarga está incompleta. Inténtalo de nuevo."
+                                        handleDownloadFailure(downloadUrl, fileName, retryAttempt, "File size mismatch")
+                                    }
+                                    return
                                 } else {
                                     Log.d(tag, "File size verification passed: $fileSize bytes (expected: $finalExpectedSize)")
                                 }
@@ -1726,11 +1739,15 @@ class AppUpdaterViewModel(
         try {
             val context = getApplication<Application>()
 
-            // Check if the file is valid
-            if (file.length() == 0L) {
+            // Check if the file is valid: non-empty AND a real ZIP/APK header.
+            val headerOk = runCatching {
+                file.inputStream().use { it.read() == 0x50 && it.read() == 0x4B } // "PK"
+            }.getOrDefault(false)
+            if (file.length() < 1024L || !headerOk) {
                 _downloadedFile.value = null
-                _error.value = "Downloaded file is corrupted. Please try downloading again."
+                _error.value = "El archivo descargado no es un APK válido. Vuelve a descargarlo."
                 clearDownloadState()
+                file.delete()
                 return
             }
 
