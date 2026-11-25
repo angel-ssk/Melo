@@ -542,6 +542,7 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                             Slider(
                                 state = auraAgeSliderState,
                                 onValueChange = {
+                                    auraAgeSliderState.value = it
                                     HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                     appSettings.setMeloGuardAge(it.toInt())
                                 }
@@ -677,6 +678,7 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                     Slider(
                                         state = alertThresholdSliderState,
                                         onValueChange = {
+                                            alertThresholdSliderState.value = it
                                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                             appSettings.setMeloGuardAlertThresholdMinutes(
                                                 it.toInt()
@@ -746,6 +748,7 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                     Slider(
                                         state = warningTimeoutSliderState,
                                         onValueChange = {
+                                            warningTimeoutSliderState.value = it
                                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                             appSettings.setMeloGuardWarningTimeoutMinutes(
                                                 it.toInt()
@@ -815,6 +818,7 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                     Slider(
                                         state = postTimeoutCooldownSliderState,
                                         onValueChange = {
+                                            postTimeoutCooldownSliderState.value = it
                                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                             appSettings.setMeloGuardPostTimeoutCooldownMinutes(
                                                 it.toInt()
@@ -884,6 +888,7 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                     Slider(
                                         state = breakResumeSliderState,
                                         onValueChange = {
+                                            breakResumeSliderState.value = it
                                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                             appSettings.setMeloGuardBreakResumeMinutes(
                                                 it.toInt()
@@ -1087,6 +1092,7 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                     Slider(
                                         state = manualVolumeThresholdSliderState,
                                         onValueChange = {
+                                            manualVolumeThresholdSliderState.value = it
                                             appSettings.setMeloGuardManualVolumeThreshold(
                                                 it
                                             )

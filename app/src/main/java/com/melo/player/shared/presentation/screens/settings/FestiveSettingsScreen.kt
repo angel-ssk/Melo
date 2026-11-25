@@ -213,6 +213,7 @@ fun FestiveSettingsScreen(
                             Slider(
                                 state = festiveSliderState,
                                 onValueChange = { 
+                                    festiveSliderState.value = it
                                     appSettings.setFestiveThemeIntensity(it) 
                                 },
                                 modifier = Modifier.fillMaxWidth(),

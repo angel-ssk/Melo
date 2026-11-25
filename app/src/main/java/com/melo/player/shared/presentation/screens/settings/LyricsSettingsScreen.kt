@@ -866,4 +866,3 @@ fun LyricsSettingsScreen(onBackClick: () -> Unit) {
         )
     }
 }
-

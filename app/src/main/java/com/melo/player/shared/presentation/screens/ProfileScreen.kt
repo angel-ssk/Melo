@@ -78,11 +78,14 @@ fun ProfileScreen(onBackClick: () -> Unit) {
     val context = LocalContext.current
     val appSettings = remember { AppSettings.getInstance(context) }
     val profileName by appSettings.profileName.collectAsState()
+    val profileUsername by appSettings.profileUsername.collectAsState()
     val photoPath by appSettings.profilePhotoPath.collectAsState()
 
     var rangeIndex by remember { mutableIntStateOf(1) }
     var showNameDialog by remember { mutableStateOf(false) }
+    var showUsernameDialog by remember { mutableStateOf(false) }
     var draftName by remember { mutableStateOf(profileName) }
+    var draftUsername by remember { mutableStateOf(profileUsername) }
 
     val ranges = listOf(
         StatsTimeRange.TODAY,
@@ -155,9 +158,23 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                 .padding(horizontal = 24.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                IconButton(onClick = onBackClick) {
-                    Icon(imageVector = MeloIcons.Back, contentDescription = null)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = onBackClick,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.75f))
+                ) {
+                    Icon(
+                        imageVector = MeloIcons.Back,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
                 }
             }
 
@@ -194,7 +211,7 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                 color = MaterialTheme.colorScheme.onBackground
             )
             Text(
-                text = "@melolistener",
+                text = "@$profileUsername",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -301,13 +318,49 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                     Text(stringResource(R.string.profile_edit_name))
                 }
                 Button(
-                    onClick = { pickPhoto.launch("image/*") },
+                    onClick = { draftUsername = profileUsername; showUsernameDialog = true },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(20.dp)
                 ) {
-                    Text(stringResource(R.string.profile_choose_photo))
+                    Text(stringResource(R.string.profile_edit_username))
                 }
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Button(
+                onClick = { pickPhoto.launch("image/*") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Text(stringResource(R.string.profile_choose_photo))
+            }
+        }
+
+        if (showUsernameDialog) {
+            androidx.compose.material3.AlertDialog(
+                onDismissRequest = { showUsernameDialog = false },
+                title = { Text(stringResource(R.string.profile_edit_username)) },
+                text = {
+                    OutlinedTextField(
+                        value = draftUsername,
+                        onValueChange = { draftUsername = it },
+                        singleLine = true,
+                        label = { Text("@") }
+                    )
+                },
+                confirmButton = {
+                    Button(onClick = {
+                        appSettings.setProfileUsername(
+                            draftUsername.trim().trimStart('@').ifBlank { "melolistener" }
+                        )
+                        showUsernameDialog = false
+                    }) { Text("OK") }
+                },
+                dismissButton = {
+                    Button(onClick = { showUsernameDialog = false }) { Text("Cancel") }
+                }
+            )
         }
 
         if (showNameDialog) {

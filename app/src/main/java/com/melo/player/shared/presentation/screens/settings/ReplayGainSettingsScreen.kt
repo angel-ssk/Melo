@@ -219,6 +219,7 @@ fun ReplayGainSettingsScreen(
                                     Slider(
                                         state = preampSliderState,
                                         onValueChange = {
+                                            preampSliderState.value = it
                                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                             appSettings.setReplayGainPreamp(it)
                                         },
@@ -256,6 +257,7 @@ fun ReplayGainSettingsScreen(
                                     Slider(
                                         state = untaggedPreampSliderState,
                                         onValueChange = {
+                                            untaggedPreampSliderState.value = it
                                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                             appSettings.setReplayGainPreampUntagged(it)
                                         },

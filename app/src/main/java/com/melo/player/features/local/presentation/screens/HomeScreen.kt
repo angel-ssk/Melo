@@ -564,7 +564,6 @@ fun HomeScreen(
         headerDisplayMode = headerDisplayMode,
         alwaysCollapsed = false,
         showAppIcon = showAppIcon,
-        onAppIconClick = onNavigateToProfile,
         iconVisibilityMode = iconVisibilityMode,
         headerActions = buildList {
             val showReorder = !isLandscapeTablet
@@ -594,6 +593,37 @@ fun HomeScreen(
                     )
                 )
             }
+
+            // Profile is always available as its own top-right icon.
+            add(
+                HeaderAction(
+                    contentDescription = stringResource(R.string.profile_title),
+                    onClick = {
+                        HapticUtils.performHapticFeedback(context, haptics, HapticType.LIGHT)
+                        onNavigateToProfile()
+                    },
+                    content = {
+                        val profilePhoto by appSettings.profilePhotoPath.collectAsState()
+                        val photoFile = profilePhoto?.let { java.io.File(it) }
+                        if (photoFile != null && photoFile.exists()) {
+                            AsyncImage(
+                                model = photoFile,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(28.dp)
+                                    .clip(CircleShape)
+                            )
+                        } else {
+                            Icon(
+                                imageVector = com.melo.player.shared.presentation.components.icons.MaterialSymbolIcon("person"),
+                                contentDescription = null,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                )
+            )
         },
     ) { modifier ->
         if (isStreamingMode) {

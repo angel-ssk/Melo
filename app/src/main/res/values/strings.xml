@@ -2566,6 +2566,7 @@
     <string name="api_deezer_desc">Artist images and album artwork</string>
     <string name="profile_title">Profile</string>
     <string name="profile_edit_name">Edit name</string>
+    <string name="profile_edit_username">Edit username</string>
     <string name="profile_choose_photo">Choose photo</string>
     <string name="profile_melo_stats">Melo stats</string>
     <string name="profile_listening_time">Listening time</string>

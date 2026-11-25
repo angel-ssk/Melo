@@ -966,6 +966,7 @@ private fun PlaybackQuickSettingsCard(
                             Slider(
                                 state = crossfadeSliderState,
                                 onValueChange = {
+                                    crossfadeSliderState.value = it
                                     HapticUtils.performHapticFeedback(context, haptics, HapticType.LIGHT)
                                     onCrossfadeDurationChange(it)
                                 },
@@ -1633,4 +1634,3 @@ private fun QualitySelectionBottomSheet(
         }
     }
 }
-

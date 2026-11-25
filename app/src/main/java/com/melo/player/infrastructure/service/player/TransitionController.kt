@@ -411,7 +411,8 @@ class TransitionController(
 
             val minFade = 500L
             val guardWindow = 150L
-            val leadTimeMs = 50L
+            // Fire a bit before the end so Player B has time to decode.
+            val leadTimeMs = 250L
 
             if (duration < minFade * 2) {
                 Log.w(TAG, "Track too short for crossfade (duration=$duration).")

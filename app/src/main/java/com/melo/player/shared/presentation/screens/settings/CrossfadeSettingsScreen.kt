@@ -202,6 +202,7 @@ fun CrossfadeSettingsScreen(
                                     Slider(
                                         state = crossfadeSliderState,
                                         onValueChange = {
+                                            crossfadeSliderState.value = it
                                             HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                             appSettings.setCrossfadeDuration(it)
                                         },

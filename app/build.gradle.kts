@@ -92,8 +92,6 @@ android {
             buildConfigField("boolean", "ENABLE_SPOTIFY_SEARCH", "true")
             buildConfigField("boolean", "ENABLE_WIKIPEDIA", "true")
             buildConfigField("String", "FLAVOR", "\"github\"")
-            
-            versionNameSuffix = "-gh"
         }
     }
 

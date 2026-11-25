@@ -2753,6 +2753,7 @@
     <string name="api_deezer_desc">Imágenes de artistas y portadas de álbumes gratuitas; no requieren configuración</string>
     <string name="profile_title">Perfil</string>
     <string name="profile_edit_name">Editar nombre</string>
+    <string name="profile_edit_username">Editar usuario</string>
     <string name="profile_choose_photo">Elegir foto</string>
     <string name="profile_melo_stats">Melo estadísticas</string>
     <string name="profile_listening_time">Tiempo escuchando</string>

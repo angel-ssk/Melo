@@ -419,6 +419,7 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                         Slider(
                                             state = recentlyPlayedSliderState,
                                             onValueChange = {
+                                                recentlyPlayedSliderState.value = it
                                                 HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                                 appSettings.setHomeRecentlyPlayedCount(it.toInt())
                                             },
@@ -462,6 +463,7 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                         Slider(
                                             state = artistsSliderState,
                                             onValueChange = {
+                                                artistsSliderState.value = it
                                                 HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                                 appSettings.setHomeArtistsCount(it.toInt())
                                             },
@@ -505,6 +507,7 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                         Slider(
                                             state = newReleasesSliderState,
                                             onValueChange = {
+                                                newReleasesSliderState.value = it
                                                 HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                                 appSettings.setHomeNewReleasesCount(it.toInt())
                                             },
@@ -548,6 +551,7 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                         Slider(
                                             state = recentlyAddedSliderState,
                                             onValueChange = {
+                                                recentlyAddedSliderState.value = it
                                                 HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                                 appSettings.setHomeRecentlyAddedCount(it.toInt())
                                             },
@@ -591,6 +595,7 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                         Slider(
                                             state = recommendedSliderState,
                                             onValueChange = {
+                                                recommendedSliderState.value = it
                                                 HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                                 appSettings.setHomeRecommendedCount(it.toInt())
                                             },
@@ -736,6 +741,7 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                             Slider(
                                                 state = discoverSliderState,
                                                 onValueChange = {
+                                                    discoverSliderState.value = it
                                                     HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                                                     appSettings.setHomeDiscoverItemCount(it.toInt())
                                                 },
@@ -1033,6 +1039,7 @@ fun HomeSettingsSliderCard(
             Slider(
                 state = sliderState,
                 onValueChange = {
+                    sliderState.value = it
                     HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                     onValueChange(it)
                 },
@@ -1123,6 +1130,7 @@ fun HomeSettingsSliderRow(
         Slider(
             state = sliderState,
             onValueChange = {
+                sliderState.value = it
                 HapticUtils.performHapticFeedback(context, haptic, HapticType.LIGHT)
                 onValueChange(it)
             },

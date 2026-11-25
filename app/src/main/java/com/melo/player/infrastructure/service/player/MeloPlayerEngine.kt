@@ -822,6 +822,14 @@ class MeloPlayerEngine(
         val incomingPlayer = playerB
         val targetVolume = userVolume
 
+        // Start decoding the incoming track immediately at zero volume. Waiting
+        // until after the swap to call play() left a silent gap ("stuck" track)
+        // when the outgoing player reached its end before Player B was ready.
+        incomingPlayer.volume = 0f
+        if (outgoingPlayer.playWhenReady && incomingPlayer.playbackState != Player.STATE_IDLE) {
+            incomingPlayer.play()
+        }
+
         val outgoingMediaItemCount = outgoingPlayer.mediaItemCount
         val currentOutgoingIndex = outgoingPlayer.currentMediaItemIndex
             .takeIf { it in 0 until outgoingMediaItemCount }
