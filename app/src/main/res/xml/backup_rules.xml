@@ -7,8 +7,8 @@
 -->
 <full-backup-content xmlns:tools="http://schemas.android.com/tools">
     <!-- Include our app's shared preferences -->
-    <include domain="sharedpref" path="rhythm_preferences.xml"/>
+    <include domain="sharedpref" path="melo_preferences.xml"/>
     
     <!-- Exclude Room database to avoid stale cached library data surviving reinstalls -->
-    <exclude domain="database" path="rhythm_database*" tools:ignore="FullBackupContent"/>
+    <exclude domain="database" path="melo_database*" tools:ignore="FullBackupContent"/>
 </full-backup-content>

@@ -1,4 +1,4 @@
-Rhythm v5.5 - Stable Update
+Melo v5.5 - Stable Update
 
 • Persistent playback queue & shuffle memory across restarts
 • Headroom protection (-maxGain) & speaker bypass for AutoEQ
@@ -8,4 +8,4 @@ Rhythm v5.5 - Stable Update
 • Private Android Photo Picker for artwork (no media permissions)
 • Instant song details loading & background service stability
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

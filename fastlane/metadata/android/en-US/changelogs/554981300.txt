@@ -1,4 +1,4 @@
-Rhythm v5.5 - Update
+Melo v5.5 - Update
 
 • Real-time audio playback quality & output pipeline telemetry
 • Native & external audio capability inspector screens
@@ -9,4 +9,4 @@ Rhythm v5.5 - Update
 • Starred Subsonic tracks now sync to Liked Songs
 • Crossfade and audio routing stability fixes
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

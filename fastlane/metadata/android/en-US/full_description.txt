@@ -1,6 +1,6 @@
-Your Music, Your Rhythm
+Your Music, Your Melo
 
-Experience your music collection like never before. Rhythm is a beautiful, open-source Material You music player built for audiophiles, supporting both local and streaming playback. Enjoy high-quality audio with zero tracking and absolutely no ads.  
+Experience your music collection like never before. Melo is a beautiful, open-source Material You music player built for audiophiles, supporting both local and streaming playback. Enjoy high-quality audio with zero tracking and absolutely no ads.  
 
 🔊 Audiophile-Grade Sound
 • High-Res Audio: Preserves native sample rates and bit depths for pure, unaltered sound.
@@ -20,11 +20,11 @@ Experience your music collection like never before. Rhythm is a beautiful, open-
 • Reliable Scanning: A full-scan media scanner ensures no songs are ever missed, with configurable allowed formats.  
 
 ⚙️ Feature-Packed
-• Rhythm Guard: Integrated hearing safety system with age-aware volume protection.
+• Melo Guard: Integrated hearing safety system with age-aware volume protection.
 • Built-in metadata editor with artwork integration from Deezer and YouTube Music.
 • Sleep timer, playback statistics, and stability tools for a crash-free experience.
 • Easy queue management and M3U playlist import/export.
 • In-app auto-updates directly from GitHub.  
 
 🔒 100% Private
-Rhythm respects your data. There are no ads, no analytics, and no accounts required. It is completely offline-capable and proudly open-source (GPL v3).
+Melo respects your data. There are no ads, no analytics, and no accounts required. It is completely offline-capable and proudly open-source (GPL v3).

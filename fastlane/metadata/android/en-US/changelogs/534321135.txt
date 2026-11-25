@@ -1,4 +1,4 @@
-Rhythm v5.3 Update
+Melo v5.3 Update
 
 🚀 Features & Improvements
 • Track error dialog & improved tablet UI
@@ -9,7 +9,7 @@ Rhythm v5.3 Update
 🐛 Bug Fixes
 • Fixed high battery drain & Nextcloud login
 • Resolved shuffle mode disabling itself
-• Fixed scrolling, back navigation & Rhythm Guard
+• Fixed scrolling, back navigation & Melo Guard
 
 🌍 Translations
 • Added Uzbek; updated 8 languages

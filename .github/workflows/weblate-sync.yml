@@ -137,7 +137,7 @@ jobs:
           fi
 
           set -euo pipefail
-          API="https://hosted.weblate.org/api/components/rhythm"
+          API="https://hosted.weblate.org/api/components/melo"
           CURL=(curl -s --max-time 120 -H "Authorization: Token $WEBLATE_TOKEN")
           LOCKED=""
 

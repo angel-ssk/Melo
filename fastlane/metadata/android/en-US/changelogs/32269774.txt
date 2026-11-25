@@ -1,4 +1,4 @@
-🎵 Rhythm v3.2 - Maintenance Update
+🎵 Melo v3.2 - Maintenance Update
 
 New: 
 • Playlist Action Dialog for smart playlist playback 

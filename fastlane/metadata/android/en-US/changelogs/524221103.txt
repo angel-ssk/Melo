@@ -1,4 +1,4 @@
-Rhythm v5.2 - Beta Update
+Melo v5.2 - Beta Update
 
 • Implement play next and improve broadcast safety
 • Fix player action wiring and song selection
@@ -7,4 +7,4 @@ Rhythm v5.2 - Beta Update
 • Bump Compose and UI dependency versions
 • Added Canvas support
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

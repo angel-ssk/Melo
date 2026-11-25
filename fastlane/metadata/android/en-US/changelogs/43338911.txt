@@ -1,4 +1,4 @@
-Rhythm v4.3 - Feature Update 
+Melo v4.3 - Feature Update 
 
 ✨ Added:
 • Lyrics: Ability to Embed Lyrics to tracks
@@ -13,6 +13,6 @@ Rhythm v4.3 - Feature Update
 • Media Scanner: Implemented Fixes for Android 8, 8.1 & 9
 • Many more Crash Fixes, UI & Performance Improvements
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)
 
 

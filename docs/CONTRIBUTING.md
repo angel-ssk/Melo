@@ -1,6 +1,6 @@
-# Contributing to Rhythm
+# Contributing to Melo
 
-Thank you for your interest in contributing to Rhythm! We welcome contributions from the community. For the full contributing guide, please see the [Wiki Contributing Guide](https://github.com/cromaguy/Rhythm/wiki/Contributing).
+Thank you for your interest in contributing to Melo! We welcome contributions from the community. For the full contributing guide, please see the [Wiki Contributing Guide](https://github.com/angel-ssk/Melo/wiki/Contributing).
 
 ## Quick Start
 
@@ -15,16 +15,16 @@ Thank you for your interest in contributing to Rhythm! We welcome contributions 
 
 ## 🌍 Translations
 
-Rhythm uses **[Weblate](https://hosted.weblate.org/engage/rhythm/)** for crowd-sourced translations. This is the **only** supported way to contribute translations.
+Melo uses **[Weblate](https://hosted.weblate.org/engage/melo/)** for crowd-sourced translations. This is the **only** supported way to contribute translations.
 
 **How to translate:**
-1. Visit [hosted.weblate.org/engage/rhythm/](https://hosted.weblate.org/engage/rhythm/)
+1. Visit [hosted.weblate.org/engage/melo/](https://hosted.weblate.org/engage/melo/)
 2. Create a free Weblate account
 3. Select your language and start translating the **Strings** component
 
 > ⚠️ **Do not** open pull requests that modify `app/src/main/res/values-*/strings.xml` files directly. Weblate manages these files and syncs them back to the repository automatically via its own PRs. Manual edits will conflict with and be overwritten by Weblate.
 
-[![Translation status](https://hosted.weblate.org/widget/rhythm/strings/svg-badge.svg)](https://hosted.weblate.org/engage/rhythm/)
+[![Translation status](https://hosted.weblate.org/widget/melo/strings/svg-badge.svg)](https://hosted.weblate.org/engage/melo/)
 
 ## Code of Conduct
 
@@ -36,7 +36,7 @@ By contributing to this project, you agree that your contributions will be licen
 
 ## Questions?
 
-- Open a [discussion](https://github.com/cromaguy/Rhythm/discussions)
-- Join our [Telegram group](https://t.me/RhythmSupport)
-- Read the full [Contributing Guide](https://github.com/cromaguy/Rhythm/wiki/Contributing)
+- Open a [discussion](https://github.com/angel-ssk/Melo/discussions)
+- Join our [Telegram group](https://t.me/MeloSupport)
+- Read the full [Contributing Guide](https://github.com/angel-ssk/Melo/wiki/Contributing)
 

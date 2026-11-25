@@ -238,9 +238,9 @@ def main():
 
     # Title & Banner
     if is_beta:
-        github_notes.append(f"# Rhythm {major_minor} - Bug Fix Update\n")
+        github_notes.append(f"# Melo {major_minor} - Bug Fix Update\n")
     else:
-        github_notes.append(f"# Rhythm {major_minor} - Feature Update\n")
+        github_notes.append(f"# Melo {major_minor} - Feature Update\n")
 
     if banner_html:
         github_notes.append(banner_html + "\n")
@@ -278,7 +278,7 @@ def main():
     if is_beta:
         github_notes.append("> * Don't restore old backups")
         github_notes.append("\n> [!CAUTION]")
-        github_notes.append("> This is a **Beta** build. Please report [Issues](https://github.com/cromaguy/Rhythm/issues) if found.\n")
+        github_notes.append("> This is a **Beta** build. Please report [Issues](https://github.com/angel-ssk/Melo/issues) if found.\n")
     else:
         github_notes.append("> * The app is in active development, so many features might be missing compared to other FOSS players.")
         github_notes.append("> * You will find several improvements and changes with each release, so please stay up to date.")
@@ -290,16 +290,16 @@ def main():
     github_notes.append('<div align="center">\n')
     github_notes.append('| | | | | | |')
     github_notes.append('|:---:|:---:|:---:|:---:|:---:|:---:|')
-    github_notes.append('| [<img src="https://raw.githubusercontent.com/cromaguy/Rhythm/main/assets/badge-googleplay.png" alt="Google Play" height="35">](https://play.google.com/store/apps/details?id=chromahub.rhythm.play) | [<img src="https://raw.githubusercontent.com/cromaguy/Rhythm/main/assets/badge-github.png" alt="Download APK" height="35">](https://github.com/cromaguy/Rhythm/releases/latest) | [<img src="https://raw.githubusercontent.com/cromaguy/Rhythm/main/assets/badge-fdroid.png" alt="F-Droid" height="35">](https://f-droid.org/packages/chromahub.rhythm.app) | [<img src="https://raw.githubusercontent.com/cromaguy/Rhythm/main/assets/badge-izzyondroid.png" alt="IzzyOnDroid" height="35">](https://apt.izzysoft.de/fdroid/index/apk/chromahub.rhythm.app) | [<img src="https://raw.githubusercontent.com/cromaguy/Rhythm/main/assets/badge-obtainium.png" alt="Obtainium" height="35">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/cromaguy/Rhythm/) | [<img src="https://raw.githubusercontent.com/cromaguy/Rhythm/main/assets/badge-openapk.png" alt="OpenAPK" height="35">](https://www.openapk.net/rhythm/chromahub.rhythm.app/) |')
+    github_notes.append('| [<img src="https://raw.githubusercontent.com/angel-ssk/Melo/main/assets/badge-googleplay.png" alt="Google Play" height="35">](https://play.google.com/store/apps/details?id=com.melo.play) | [<img src="https://raw.githubusercontent.com/angel-ssk/Melo/main/assets/badge-github.png" alt="Download APK" height="35">](https://github.com/angel-ssk/Melo/releases/latest) | [<img src="https://raw.githubusercontent.com/angel-ssk/Melo/main/assets/badge-fdroid.png" alt="F-Droid" height="35">](https://f-droid.org/packages/com.melo.player) | [<img src="https://raw.githubusercontent.com/angel-ssk/Melo/main/assets/badge-izzyondroid.png" alt="IzzyOnDroid" height="35">](https://apt.izzysoft.de/fdroid/index/apk/com.melo.player) | [<img src="https://raw.githubusercontent.com/angel-ssk/Melo/main/assets/badge-obtainium.png" alt="Obtainium" height="35">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/angel-ssk/Melo/) | [<img src="https://raw.githubusercontent.com/angel-ssk/Melo/main/assets/badge-openapk.png" alt="OpenAPK" height="35">](https://www.openapk.net/melo/com.melo.player/) |')
     github_notes.append('\n</div>\n')
     
     github_notes.append("---")
     
     # Sponsors and credits
-    github_notes.append("\nIf you enjoy **Rhythm** and want to support open-source development:\n")
+    github_notes.append("\nIf you enjoy **Melo** and want to support open-source development:\n")
     github_notes.append("[![Support me](https://github.com/user-attachments/assets/434466be-fd50-41e5-8bc4-38fcbb57ee17)](https://ko-fi.com/anjishnunandi)\n")
     github_notes.append("* **Patreon:** [patreon.com/AnjishnuNandi](https://patreon.com/AnjishnuNandi)")
-    github_notes.append("* **GitHub Sponsors:** [github.com/sponsors/cromaguy](https://github.com/sponsors/cromaguy)\n")
+    github_notes.append("* **GitHub Sponsors:** [github.com/sponsors/angel-ssk](https://github.com/sponsors/angel-ssk)\n")
     github_notes.append("### 🏆 Special Credits")
     github_notes.append("* **The Community**: A big thanks to all Testers, Contributors, and Users!")
     github_notes.append("\n---\n")

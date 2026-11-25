@@ -1,6 +1,6 @@
 Tu música, tu ritmo
 
-Disfruta de tu colección musical como nunca antes. Rhythm es un reproductor de música Material You de código abierto y elegante, diseñado para audiófilos, compatible con reproducción local y en streaming. Disfruta de audio de alta calidad sin interrupciones ni anuncios.
+Disfruta de tu colección musical como nunca antes. Melo es un reproductor de música Material You de código abierto y elegante, diseñado para audiófilos, compatible con reproducción local y en streaming. Disfruta de audio de alta calidad sin interrupciones ni anuncios.
 
 🔊 Sonido de calidad audiófila
 • Audio de alta resolución: Conserva las frecuencias de muestreo y profundidades de bits nativas para un sonido puro e inalterado.
@@ -20,11 +20,11 @@ Disfruta de tu colección musical como nunca antes. Rhythm es un reproductor de 
 • Escaneo fiable: Un escáner multimedia de escaneo completo garantiza que no te pierdas ninguna canción.
 
 ⚙️ Repleto de funciones
-• Rhythm Guard: Sistema integrado de protección auditiva con control de volumen adaptado a la edad.
+• Melo Guard: Sistema integrado de protección auditiva con control de volumen adaptado a la edad.
 • Editor de metadatos integrado con integración de carátulas de Deezer y YouTube Music.
 • Temporizador de apagado, estadísticas de reproducción y herramientas de estabilidad para una experiencia sin interrupciones.
 • Gestión sencilla de la cola de reproducción e importación/exportación de listas M3U.
 • Actualizaciones automáticas integradas directamente desde GitHub.
 
 🔒 100% privado
-Rhythm respeta tus datos. No tiene anuncios, ni análisis, ni requiere cuenta. Funciona completamente sin conexión y es orgullosamente de código abierto (GPL v3).
+Melo respeta tus datos. No tiene anuncios, ni análisis, ni requiere cuenta. Funciona completamente sin conexión y es orgullosamente de código abierto (GPL v3).

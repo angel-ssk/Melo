@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024-2026 Anjishnu Nandi <https://github.com/cromaguy>
+// SPDX-FileCopyrightText: 2024-2026 Anjishnu Nandi <https://github.com/angel-ssk>
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import java.util.Properties
@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "chromahub.rhythm.app"
+    namespace = "com.melo.player"
     compileSdk {
         version = release(37) {
             minorApiLevel = 2
@@ -30,14 +30,14 @@ android {
     }
 
     defaultConfig {
-        applicationId = "chromahub.rhythm.app"
+        applicationId = "com.melo.player"
         minSdk = 26
         targetSdk = 37
         
         val overrideVersionCode = project.findProperty("versionCodeOverride")?.toString()?.toIntOrNull()
         val overrideVersionName = project.findProperty("versionNameOverride")?.toString()
-        versionCode = overrideVersionCode ?: 565061360
-        versionName = overrideVersionName ?: "5.6.506.1360"
+        versionCode = overrideVersionCode ?: 1000000
+        versionName = overrideVersionName ?: "1.0"
 
         val overrideReleaseDate = project.findProperty("releaseDateOverride")?.toString()
         buildConfigField("String", "RELEASE_DATE", "\"${overrideReleaseDate ?: "2026-11-24"}\"")
@@ -64,7 +64,7 @@ android {
     productFlavors {
         create("fdroid") {
             dimension = "distribution"
-            applicationId = "chromahub.rhythm.app"
+            applicationId = "com.melo.player"
             
             // F-Droid build: Enable all features (FOSS ethos)
             buildConfigField("boolean", "ENABLE_YOUTUBE_MUSIC", "true")
@@ -81,7 +81,7 @@ android {
         
         create("github") {
             dimension = "distribution"
-            applicationId = "chromahub.rhythm.app"
+            applicationId = "com.melo.player"
             
             // GitHub releases: Enable all features (same as F-Droid)
             buildConfigField("boolean", "ENABLE_YOUTUBE_MUSIC", "true")
@@ -220,7 +220,7 @@ androidComponents {
                 ?: ""
 
             output.outputFileName.set(
-                "Rhythm-${android.defaultConfig.versionName}-${variant.name}${abiSuffix}.apk"
+                "Melo-${android.defaultConfig.versionName}-${variant.name}${abiSuffix}.apk"
             )
         }
     }

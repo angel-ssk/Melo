@@ -4,26 +4,26 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/icon.png">
   <source media="(prefers-color-scheme: light)" srcset="assets/icon.png">
-  <img src="assets/icon_full.png" alt="Rhythm Music Player" width="220" style="border-radius: 32px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+  <img src="assets/icon_full.png" alt="Melo Music Player" width="220" style="border-radius: 32px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
 </picture>
 
-# Project Rhythm
-**Your Music, Your Rhythm.**
+# Project Melo
+**Your Music, Your Melo.**
 
-<a href="https://trendshift.io/repositories/15217" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15217" alt="cromaguy%2FRhythm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/15217" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15217" alt="angel-ssk%2FMelo | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
 [![Platform](https://img.shields.io/badge/Android-34A853?style=flat-square&logo=android&logoColor=white)](https://android.com)
 [![API Level](https://img.shields.io/badge/API-26%2B-4285f4?style=flat-square&logo=android&logoColor=white)](https://android-arsenal.com/api?level=26)
 [![Kotlin](https://img.shields.io/badge/Kotlin-100%25-7c4dff?style=flat-square&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-GPL_v3-4285f4?style=flat-square)](docs/LICENSE)
 <br>
-[![Release](https://img.shields.io/github/v/release/cromaguy/Rhythm?style=flat-square&logo=github&color=673ab7&logoColor=white)](https://github.com/cromaguy/Rhythm/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/cromaguy/Rhythm/total?style=flat-square&logo=download&color=00bcd4&logoColor=white)](https://github.com/cromaguy/Rhythm/releases)
-[![Stars](https://img.shields.io/github/stars/cromaguy/Rhythm?style=flat-square&logo=star&color=ffc107&logoColor=white)](https://github.com/cromaguy/Rhythm/stargazers)
-[<img src="https://shields.rbtlog.dev/simple/chromahub.rhythm.app?style=flat-square" alt="RB shield">](https://shields.rbtlog.dev/chromahub.rhythm.app)
-[![Translation status](https://hosted.weblate.org/widget/rhythm/strings/svg-badge.svg)](https://hosted.weblate.org/engage/rhythm/)
+[![Release](https://img.shields.io/github/v/release/angel-ssk/Melo?style=flat-square&logo=github&color=673ab7&logoColor=white)](https://github.com/angel-ssk/Melo/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/angel-ssk/Melo/total?style=flat-square&logo=download&color=00bcd4&logoColor=white)](https://github.com/angel-ssk/Melo/releases)
+[![Stars](https://img.shields.io/github/stars/angel-ssk/Melo?style=flat-square&logo=star&color=ffc107&logoColor=white)](https://github.com/angel-ssk/Melo/stargazers)
+[<img src="https://shields.rbtlog.dev/simple/com.melo.player?style=flat-square" alt="RB shield">](https://shields.rbtlog.dev/com.melo.player)
+[![Translation status](https://hosted.weblate.org/widget/melo/strings/svg-badge.svg)](https://hosted.weblate.org/engage/melo/)
 
-### [🌐 Website](https://rhythmweb.vercel.app/) • [▶️ Google Play](https://play.google.com/store/apps/details?id=chromahub.rhythm.play) • [📥 Download](https://github.com/cromaguy/Rhythm/releases/latest) • [🎧 Discord](https://discord.gg/XjPyUYPQYc) • [💬 Telegram](https://t.me/RhythmSupport) • [📖 Wiki](https://github.com/cromaguy/Rhythm/wiki)
+### [🌐 Website](https://meloweb.vercel.app/) • [▶️ Google Play](https://play.google.com/store/apps/details?id=com.melo.play) • [📥 Download](https://github.com/angel-ssk/Melo/releases/latest) • [🎧 Discord](https://discord.gg/XjPyUYPQYc) • [💬 Telegram](https://t.me/MeloSupport) • [📖 Wiki](https://github.com/angel-ssk/Melo/wiki)
 
 </div>
 
@@ -31,21 +31,21 @@
 
 ## 💖 Support the Developer
 
-Building and maintaining **Rhythm** is a massive labor of love, provided completely free and open-source. If you love using this app, please consider supporting development!
+Building and maintaining **Melo** is a massive labor of love, provided completely free and open-source. If you love using this app, please consider supporting development!
 
 <div align="center">
 
 | ☕ **One-Time Support** | 🤝 **Ongoing Sponsorship** |
 | :---: | :---: |
-| [![Ko-Fi](https://img.shields.io/badge/Buy_Me_A_Coffee-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/anjishnunandi)<br><br>[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](http://paypal.me/AnjishnuNandi) | [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/AnjishnuNandi)<br><br>[![GitHub Sponsor](https://img.shields.io/badge/GitHub_Sponsors-EA4AAA?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sponsors/cromaguy) |
+| [![Ko-Fi](https://img.shields.io/badge/Buy_Me_A_Coffee-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/anjishnunandi)<br><br>[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](http://paypal.me/AnjishnuNandi) | [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/AnjishnuNandi)<br><br>[![GitHub Sponsor](https://img.shields.io/badge/GitHub_Sponsors-EA4AAA?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sponsors/angel-ssk) |
 
 </div>
 
 ---
 
-## ✨ Why Choose Rhythm?
+## ✨ Why Choose Melo?
 
-Rhythm is a modern, open-source music player built with **Material 3 Expressive** design. It delivers professional-grade audio with High-Resolution playback, EAC3-JOC/Dolby Atmos via FFmpeg, and completely respects your privacy.
+Melo is a modern, open-source music player built with **Material 3 Expressive** design. It delivers professional-grade audio with High-Resolution playback, EAC3-JOC/Dolby Atmos via FFmpeg, and completely respects your privacy.
 
 | 🎨 **Design & UI** | 🎵 **Audio Engine** |
 | :--- | :--- |
@@ -58,10 +58,10 @@ Rhythm is a modern, open-source music player built with **Material 3 Expressive*
 | :--- | :--- |
 | **Synced Lyrics:** LRCLib integration with word-by-word highlighting + full-screen view. | **100% FOSS:** Completely open-source with zero tracking. |
 | **Smart Library:** A–Z scroll bar, multi-select batch operations, Album Artists & Dates tabs. | **Offline Capable:** Designed to work flawlessly without the internet. |
-| **Rhythm Stats 2.0:** Comprehensive stats with Overview, Songs, Albums, Artists, History. | **Local First:** Your data and habits stay securely on your device. |
+| **Melo Stats 2.0:** Comprehensive stats with Overview, Songs, Albums, Artists, History. | **Local First:** Your data and habits stay securely on your device. |
 | **Go Mode (Streaming):** Local + server playback (Subsonic, Navidrome, Jellyfin) with nearby-server discovery. | |
-| **Rhythm Go Downloads:** Download streaming tracks for offline playback. | |
-| **Rhythm Guard:** Integrated hearing safety and volume protection. | |
+| **Melo Go Downloads:** Download streaming tracks for offline playback. | |
+| **Melo Guard:** Integrated hearing safety and volume protection. | |
 | **Mono Audio:** Downmix to mono for single-earpiece listening. | |
 | **Foldable Ready:** Posture-aware player layouts that adapt to tabletop, book, and separated-screen postures. | |
 | **Home Screen Widgets:** Multiple layouts including a dedicated Lyrics widget. | |
@@ -141,7 +141,7 @@ Rhythm is a modern, open-source music player built with **Material 3 Expressive*
 <br/><b>🔍 Search</b>
 </td>
 <td align="center">
-<img src="assets/ScreenShots/Tablet/Rhythm_Stats.png" alt="Stats" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<img src="assets/ScreenShots/Tablet/Melo_Stats.png" alt="Stats" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
 <br/><b>📊 Playback Stats</b>
 </td>
 <td align="center">
@@ -160,22 +160,22 @@ Rhythm is a modern, open-source music player built with **Material 3 Expressive*
 
 ## 📥 Download & Install
 
-Choose your preferred platform to download the latest version of Rhythm:
+Choose your preferred platform to download the latest version of Melo:
 
 <div align="center">
 
 | Source | Badge | Details |
 | :--- | :---: | :--- |
-| **Google Play** | [<img src="assets/badge-googleplay.png" alt="Get it on Google Play" height="35">](https://play.google.com/store/apps/details?id=chromahub.rhythm.play) | [Install on Android](https://play.google.com/store/apps/details?id=chromahub.rhythm.play) • [Join from Web (Open Testing)](https://play.google.com/apps/testing/chromahub.rhythm.play) |
-| **GitHub** | [<img src="assets/badge-github.png" alt="Download APK" height="35">](https://github.com/cromaguy/Rhythm/releases/latest) | Direct APK download (Full Features) |
-| **F-Droid** | [<img src="assets/badge-fdroid.png" alt="F-Droid" height="35">](https://f-droid.org/packages/chromahub.rhythm.app) | Official repository (Full Features) |
-| **IzzyOnDroid** | [<img src="assets/badge-izzyondroid.png" alt="IzzyOnDroid" height="35">](https://apt.izzysoft.de/fdroid/index/apk/chromahub.rhythm.app) | Privacy-focused repo (Full Features) |
-| **Obtainium** | [<img src="assets/badge-obtainium.png" alt="Obtainium" height="35">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/cromaguy/Rhythm/) | Auto-updates straight from GitHub |
-| **OpenAPK** | [<img src="assets/badge-openapk.png" alt="OpenAPK" height="35">](https://www.openapk.net/rhythm/chromahub.rhythm.app/) | Alternative APK source |
+| **Google Play** | [<img src="assets/badge-googleplay.png" alt="Get it on Google Play" height="35">](https://play.google.com/store/apps/details?id=com.melo.play) | [Install on Android](https://play.google.com/store/apps/details?id=com.melo.play) • [Join from Web (Open Testing)](https://play.google.com/apps/testing/com.melo.play) |
+| **GitHub** | [<img src="assets/badge-github.png" alt="Download APK" height="35">](https://github.com/angel-ssk/Melo/releases/latest) | Direct APK download (Full Features) |
+| **F-Droid** | [<img src="assets/badge-fdroid.png" alt="F-Droid" height="35">](https://f-droid.org/packages/com.melo.player) | Official repository (Full Features) |
+| **IzzyOnDroid** | [<img src="assets/badge-izzyondroid.png" alt="IzzyOnDroid" height="35">](https://apt.izzysoft.de/fdroid/index/apk/com.melo.player) | Privacy-focused repo (Full Features) |
+| **Obtainium** | [<img src="assets/badge-obtainium.png" alt="Obtainium" height="35">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/angel-ssk/Melo/) | Auto-updates straight from GitHub |
+| **OpenAPK** | [<img src="assets/badge-openapk.png" alt="OpenAPK" height="35">](https://www.openapk.net/melo/com.melo.player/) | Alternative APK source |
 
 </div>
 
-> 💡 **Note:** F-Droid, IzzyOnDroid, and GitHub releases include all features, including Deezer & YouTube Music artwork, LRCLib lyrics, and YouTube Music artwork. See [Build Variants](docs/BUILD_VARIANTS.md) or the [Wiki Build Instructions](https://github.com/cromaguy/Rhythm/wiki/Build-Instructions) for details. Need help? Check out the [Installation Guide](https://github.com/cromaguy/Rhythm/wiki/Installation-Guide).
+> 💡 **Note:** F-Droid, IzzyOnDroid, and GitHub releases include all features, including Deezer & YouTube Music artwork, LRCLib lyrics, and YouTube Music artwork. See [Build Variants](docs/BUILD_VARIANTS.md) or the [Wiki Build Instructions](https://github.com/angel-ssk/Melo/wiki/Build-Instructions) for details. Need help? Check out the [Installation Guide](https://github.com/angel-ssk/Melo/wiki/Installation-Guide).
 
 ---
 
@@ -189,27 +189,27 @@ Built with modern tools and clean architecture:
 * **Data & Network:** Room + SQLite, Retrofit, OkHttp, Gson.
 * **Build & Management:** AGP, Kotlin, WorkManager, LeakCanary.
 
-📖 **Full tech stack:** Read more in the [Wiki](https://github.com/cromaguy/Rhythm/wiki/Technology-Stack).
+📖 **Full tech stack:** Read more in the [Wiki](https://github.com/angel-ssk/Melo/wiki/Technology-Stack).
 
 ---
 
 ## 🌍 Translations
 
-Rhythm is translated into **28+ languages** by the community via **Weblate**. You don't need to write code to contribute — just visit the link below and start translating!
+Melo is translated into **28+ languages** by the community via **Weblate**. You don't need to write code to contribute — just visit the link below and start translating!
 
 <div align="center">
 
-[![Translation status](https://hosted.weblate.org/widget/rhythm/strings/multi-auto.svg)](https://hosted.weblate.org/engage/rhythm/)
+[![Translation status](https://hosted.weblate.org/widget/melo/strings/multi-auto.svg)](https://hosted.weblate.org/engage/melo/)
 
 </div>
 
 | Language | Status |
 | :--- | :--- |
 | 🇬🇧 English | Source (always 100%) |
-| 🌐 28+ others | [View all on Weblate](https://hosted.weblate.org/projects/rhythm/#languages) |
+| 🌐 28+ others | [View all on Weblate](https://hosted.weblate.org/projects/melo/#languages) |
 
 **How to help translate:**
-1. Go to [hosted.weblate.org/engage/rhythm/](https://hosted.weblate.org/engage/rhythm/)
+1. Go to [hosted.weblate.org/engage/melo/](https://hosted.weblate.org/engage/melo/)
 2. Register a free account
 3. Pick your language and start translating
 
@@ -219,19 +219,21 @@ Rhythm is translated into **28+ languages** by the community via **Weblate**. Yo
 
 ## 🤝 Contributing & Community
 
-We welcome contributions! See our [CONTRIBUTING.md](https://github.com/cromaguy/Rhythm/blob/main/docs/CONTRIBUTING.md) for guidelines.
+We welcome contributions! See our [CONTRIBUTING.md](https://github.com/angel-ssk/Melo/blob/main/docs/CONTRIBUTING.md) for guidelines.
 
-* 🐛 **Found a bug?** [Open an issue](https://github.com/cromaguy/Rhythm/issues)
-* 💡 **Have an idea?** [Request a feature](https://github.com/cromaguy/Rhythm/issues)
-* 💬 **Want to chat?** [Join Discord](https://discord.gg/XjPyUYPQYc), [Telegram](https://t.me/RhythmSupport) or [GitHub Discussions](https://github.com/cromaguy/Rhythm/discussions)
-* 📖 **Need help?** [Read the Wiki](https://github.com/cromaguy/Rhythm/wiki)
-* 🌍 **Want to translate?** [Translate on Weblate](https://hosted.weblate.org/engage/rhythm/)
+* 🐛 **Found a bug?** [Open an issue](https://github.com/angel-ssk/Melo/issues)
+* 💡 **Have an idea?** [Request a feature](https://github.com/angel-ssk/Melo/issues)
+* 💬 **Want to chat?** [Join Discord](https://discord.gg/XjPyUYPQYc), [Telegram](https://t.me/MeloSupport) or [GitHub Discussions](https://github.com/angel-ssk/Melo/discussions)
+* 📖 **Need help?** [Read the Wiki](https://github.com/angel-ssk/Melo/wiki)
+* 🌍 **Want to translate?** [Translate on Weblate](https://hosted.weblate.org/engage/melo/)
 
 ---
 
 ## 🏆 Credits
 
-**Lead Developer & Architect:** [Anjishnu Nandi](https://github.com/cromaguy)
+**Mantenedor:** [Angel (@angel-ssk)](https://github.com/angel-ssk)
+
+**Crédito original:** proyecto derivado del trabajo de Anjishnu Nandi, cuyos avisos SPDX se conservan según exige la licencia GPL-3.0-or-later.
 
 **Huge Thanks To:**
 * [Izzy](https://github.com/IzzySoft) - IzzyOnDroid repository management
@@ -250,6 +252,6 @@ We welcome contributions! See our [CONTRIBUTING.md](https://github.com/cromaguy/
 
 <sub>**License:** [GNU General Public License v3.0](docs/LICENSE)</sub><br>
 <sub>© 2026 Team ChromaHub. All rights reserved.</sub><br>
-<sub>⭐ If Rhythm improved your daily listening, don't forget to star the repository! ⭐</sub>
+<sub>⭐ If Melo improved your daily listening, don't forget to star the repository! ⭐</sub>
 
 </div>

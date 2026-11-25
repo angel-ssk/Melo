@@ -1,4 +1,4 @@
-Rhythm v5.6 - Stable Update
+Melo v5.6 - Stable Update
 
 • Rootless ViPER4Android DSP: Clarity, DDC & Convolver
 • Revamped miniplayer with M3 motion & carousel gestures
@@ -9,4 +9,4 @@ Rhythm v5.6 - Stable Update
 • Audio buffer & transition optimizations
 • Playback queue, widget, and gesture fixes
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

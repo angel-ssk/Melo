@@ -1,4 +1,4 @@
-🎵 Rhythm v4.0.309.851 Stable - Maintenance Update
+🎵 Melo v4.0.309.851 Stable - Maintenance Update
 
 ✨ New Features:
 • Tablet UI for Playlist Screens 
@@ -10,4 +10,4 @@
 🐛 Bug Fixes:
 • Resolved alignment issues in Player due to poor responsiveness handling
 
-Thank you for using Rhythm! Report issues on GitHub.
+Thank you for using Melo! Report issues on GitHub.

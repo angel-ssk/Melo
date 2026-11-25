@@ -1,15 +1,15 @@
-# Getting Started with Rhythm
+# Getting Started with Melo
 
-This guide will help you set up and start using Rhythm Music Player after installation.
+This guide will help you set up and start using Melo Music Player after installation.
 
 ## 📋 First-Time Setup (Onboarding)
 
-Rhythm features a dynamic onboarding process to personalize your music experience. Depending on your choice and playback mode, you will follow either a Quick Setup or a detailed Full Tour.
+Melo features a dynamic onboarding process to personalize your music experience. Depending on your choice and playback mode, you will follow either a Quick Setup or a detailed Full Tour.
 
 ### The Onboarding Flow
-1. **Welcome Screen 👋**: Introduction to Rhythm's features.
+1. **Welcome Screen 👋**: Introduction to Melo's features.
 2. **App Mode Choice 📱**: Choose between **Local** (device files) or **Go Mode** (server-based streaming via Subsonic/Navidrome/Jellyfin).
-3. **Rhythm Guard 🛡️**: Set up hearing safety defaults based on your age.
+3. **Melo Guard 🛡️**: Set up hearing safety defaults based on your age.
 4. **Permission Setup 🔐**: Grant necessary storage and notification permissions.
 5. **Notification Preferences 🔔**: Configure how you receive alerts and playback controls.
 6. **Backup & Restore 💾**: Restore previous settings or configure auto-backups.
@@ -20,7 +20,7 @@ Rhythm features a dynamic onboarding process to personalize your music experienc
 11. **Media Scanning 🔍**: Set up blacklist/whitelist filters for your library.
 12. **Home Screen Widgets 📱**: Learn about available layouts and customization.
 13. **Integrations 🔗**: Connect artwork APIs (Deezer, YouTube Music).
-14. **Rhythm Stats 📊**: Explore listening insights and history.
+14. **Melo Stats 📊**: Explore listening insights and history.
 15. **Update Preferences ⬆️**: Configure update channels and polling.
 16. **Review Summary**: Final check of your configurations.
 17. **Setup Complete ✅**: Start your initial media scan and begin listening!
@@ -133,7 +133,7 @@ Browse by:
 ### Adding Widgets
 1. Long-press home screen
 2. Tap "Widgets"
-3. Find "Rhythm Music"
+3. Find "Melo Music"
 4. Drag widget to home screen
 5. Resize as needed
 
@@ -172,7 +172,7 @@ Browse by:
 
 ---
 
-## 📊 Rhythm Stats
+## 📊 Melo Stats
 
 Access comprehensive statistics:
 - **Total Listening Time**: Track your listening habits
@@ -215,15 +215,15 @@ Access comprehensive statistics:
 - Contextual help in settings
 
 ### Community Support
-- [Telegram Community](https://t.me/RhythmSupport)
+- [Telegram Community](https://t.me/MeloSupport)
 - [Discord Server](https://discord.gg/XjPyUYPQYc)
-- [GitHub Discussions](https://github.com/cromaguy/Rhythm/discussions)
-- [Issue Tracker](https://github.com/cromaguy/Rhythm/issues)
+- [GitHub Discussions](https://github.com/angel-ssk/Melo/discussions)
+- [Issue Tracker](https://github.com/angel-ssk/Melo/issues)
 
 ### Documentation
-- [Official Website](https://rhythmweb.vercel.app/)
-- [Wiki](https://github.com/cromaguy/Rhythm/wiki)
-- [FAQ](https://github.com/cromaguy/Rhythm/wiki/FAQ)
+- [Official Website](https://meloweb.vercel.app/)
+- [Wiki](https://github.com/angel-ssk/Melo/wiki)
+- [FAQ](https://github.com/angel-ssk/Melo/wiki/FAQ)
 
 ---
 
@@ -240,4 +240,4 @@ Access comprehensive statistics:
 
 ---
 
-**Ready to dive deeper?** Check out the [Features Overview](https://github.com/cromaguy/Rhythm/wiki/Features) for complete capabilities!
+**Ready to dive deeper?** Check out the [Features Overview](https://github.com/angel-ssk/Melo/wiki/Features) for complete capabilities!

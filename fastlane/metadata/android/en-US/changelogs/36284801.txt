@@ -1,4 +1,4 @@
-🎵 Rhythm v3.6 Stable - Feature Update
+🎵 Melo v3.6 Stable - Feature Update
 
 ✨ New Features:
 • AutoEQ: Tuned Presets for 6032 Devices with Import & Export Functionalities
@@ -8,4 +8,4 @@
 • Festive Theme Engine: Improved Christmas theme
 • Many more UI & Performance improvements
 
-Thank you for using Rhythm! Report issues on GitHub.
+Thank you for using Melo! Report issues on GitHub.

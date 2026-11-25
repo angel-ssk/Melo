@@ -1,0 +1,35 @@
+/*
+ * SPDX-FileCopyrightText: 2024-2026 Anjishnu Nandi <https://github.com/angel-ssk>
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+package com.melo.player.shared.presentation.components.dialogs
+
+import androidx.compose.runtime.Composable
+import com.melo.player.shared.presentation.components.bottomsheets.PlaybackSpeedAndPitchBottomSheet
+
+@Composable
+fun PlaybackSpeedDialog(
+    currentSpeed: Float,
+    currentPitch: Float = currentSpeed,
+    syncEnabled: Boolean = false,
+    onSyncChange: (Boolean) -> Unit = {},
+    onDismiss: () -> Unit,
+    onSave: (Float) -> Unit,
+    onSaveBoth: ((speed: Float, pitch: Float) -> Unit)? = null
+) {
+    PlaybackSpeedAndPitchBottomSheet(
+        currentSpeed = currentSpeed,
+        currentPitch = currentPitch,
+        syncEnabled = syncEnabled,
+        onSyncChange = onSyncChange,
+        onDismiss = onDismiss,
+        onSave = { speed, pitch ->
+            if (onSaveBoth != null) {
+                onSaveBoth(speed, pitch)
+            } else {
+                onSave(speed)
+            }
+        }
+    )
+}

@@ -10,33 +10,33 @@
 # ──────────────────────────────
 
 # Keep model classes used for Gson serialization in shared settings, playlists, etc.
--keep class chromahub.rhythm.app.shared.data.model.** { *; }
+-keep class com.melo.player.shared.data.model.** { *; }
 
 # Keep PlaylistImportExportUtils inner data classes (PlaylistExportData, PlaylistSongEntry)
 # used for JSON playlist export/import via Gson reflection
--keep class chromahub.rhythm.app.util.PlaylistImportExportUtils$* { *; }
+-keep class com.melo.player.util.PlaylistImportExportUtils$* { *; }
 
-# Keep GitHub API, Rhythm lyrics API, and other network response models
--keep class chromahub.rhythm.app.network.** { *; }
+# Keep GitHub API, Melo lyrics API, and other network response models
+-keep class com.melo.player.network.** { *; }
 
 # Keep ColorExtractor models used for Theme parsing (Gson targets)
--keep class chromahub.rhythm.app.util.ExtractedColors { *; }
+-keep class com.melo.player.util.ExtractedColors { *; }
 
 # Keep updater local state models (Gson targets)
--keep class chromahub.rhythm.app.shared.presentation.viewmodel.DownloadState { *; }
+-keep class com.melo.player.shared.presentation.viewmodel.DownloadState { *; }
 
 # Keep streaming models (Gson targets)
--keep class chromahub.rhythm.app.features.streaming.domain.model.** { *; }
+-keep class com.melo.player.features.streaming.domain.model.** { *; }
 
 # Keep the streaming catalog cache (persisted to disk with Gson): without this R8 renames its
 # fields to a, b, c..., so the file's JSON keys depend on the R8 naming of each release build.
--keep class chromahub.rhythm.app.features.streaming.data.repository.StreamingCatalogCache { *; }
+-keep class com.melo.player.features.streaming.data.repository.StreamingCatalogCache { *; }
 # Same for the checkpoint of an interrupted library fetch and the provider songs it stores.
--keep class chromahub.rhythm.app.features.streaming.data.repository.LibraryFetchCheckpoint { *; }
--keep class chromahub.rhythm.app.features.streaming.data.provider.ProviderSong { *; }
+-keep class com.melo.player.features.streaming.data.repository.LibraryFetchCheckpoint { *; }
+-keep class com.melo.player.features.streaming.data.provider.ProviderSong { *; }
 
 # Keep PlaybackEvent inside PlaybackStatsRepository (nested Gson serialization target)
--keep class chromahub.rhythm.app.shared.data.repository.PlaybackStatsRepository$PlaybackEvent { *; }
+-keep class com.melo.player.shared.data.repository.PlaybackStatsRepository$PlaybackEvent { *; }
 
 # Keep classes and fields annotated with @SerializedName to prevent Gson reflection issues
 -keep class * {
@@ -51,7 +51,7 @@
 # ──────────────────────────────
 
 # Keep database entities and DAOs specifically so Room can generate and link them
--keep class chromahub.rhythm.app.features.local.data.database.entity.** { *; }
+-keep class com.melo.player.features.local.data.database.entity.** { *; }
 -keep class * implements androidx.room.RoomDatabase
 -keep class * extends androidx.room.RoomDatabase { *; }
 -keep @androidx.room.Dao class * { *; }

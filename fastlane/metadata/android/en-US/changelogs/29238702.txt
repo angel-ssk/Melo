@@ -1,4 +1,4 @@
-🎵 Rhythm - Bug Fix Update
+🎵 Melo - Bug Fix Update
 
 ✨ New Features:
 • Queue & Shuffle Settings: Auto-add to queue, clear queue behavior
@@ -13,4 +13,4 @@
 • Fixed lag and double playback with shuffle/play all
 • Re-implemented explorer for faster loading
 
-Thank you for using Rhythm! 🎵
+Thank you for using Melo! 🎵

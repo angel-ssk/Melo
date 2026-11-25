@@ -1,4 +1,4 @@
-Rhythm v5.1 - Beta Update
+Melo v5.1 - Beta Update
 
 • Minor Improvements
 • Fixed Sleep Timer
@@ -7,4 +7,4 @@ Rhythm v5.1 - Beta Update
 • Fixed: cannot import playlists from json backup #449
 • Fixed: Connection failed: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found. #451
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

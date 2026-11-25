@@ -2,7 +2,7 @@
 
 ## Overview
 
-Rhythm uses Android build variants (product flavors) to create different builds for different distribution channels while maintaining a single codebase.
+Melo uses Android build variants (product flavors) to create different builds for different distribution channels while maintaining a single codebase.
 
 ## Quick Reference
 
@@ -25,7 +25,7 @@ All flavors belong to the `distribution` dimension, ensuring they're mutually ex
 
 #### 1. `fdroid`
 **Purpose:** F-Droid repository distribution  
-**Package:** `chromahub.rhythm.app`  
+**Package:** `com.melo.player`  
 **Version Suffix:** `-fdroid`
 
 **BuildConfig Flags:**
@@ -48,7 +48,7 @@ FLAVOR = "fdroid"
 
 #### 2. `github`
 **Purpose:** Direct GitHub releases  
-**Package:** `chromahub.rhythm.app`  
+**Package:** `com.melo.player`  
 **Version Suffix:** `-gh`
 
 **BuildConfig Flags:**
@@ -168,13 +168,13 @@ Each variant has a `config.xml` with boolean resources:
 ### APK Naming Convention
 
 ```
-Rhythm-{versionName}-{flavorVariant}-{abi}.apk
+Melo-{versionName}-{flavorVariant}-{abi}.apk
 ```
 
 **Examples:**
 ```
-Rhythm-5.4.456.1196 Beta-fdroidRelease-arm64-v8a.apk
-Rhythm-5.4.456.1196 Beta-githubRelease-armeabi-v7a.apk
+Melo-5.4.456.1196 Beta-fdroidRelease-arm64-v8a.apk
+Melo-5.4.456.1196 Beta-githubRelease-armeabi-v7a.apk
 ```
 
 ### Output Locations
@@ -215,7 +215,7 @@ app/build/outputs/bundle/githubRelease/app-github-release.aab
 ./gradlew installFdroidDebug
 
 # Install GitHub release
-adb install app/build/outputs/apk/github/release/Rhythm-*.apk
+adb install app/build/outputs/apk/github/release/Melo-*.apk
 ```
 
 ### Verify BuildConfig Values
@@ -224,7 +224,7 @@ After building, check generated BuildConfig:
 
 **F-Droid:**
 ```
-app/build/generated/source/buildConfig/fdroid/release/chromahub/rhythm/app/BuildConfig.java
+app/build/generated/source/buildConfig/fdroid/release/com/melo/player/BuildConfig.java
 ```
 
 Should contain:
@@ -235,7 +235,7 @@ public static final boolean ENABLE_SPOTIFY_SEARCH = true;
 
 **GitHub:**
 ```
-app/build/generated/source/buildConfig/github/release/chromahub/rhythm/app/BuildConfig.java
+app/build/generated/source/buildConfig/github/release/com/melo/player/BuildConfig.java
 ```
 
 Should contain:
@@ -333,7 +333,7 @@ if (ytmusicApiService != null) {
 ```kotlin
 create("newvariant") {
     dimension = "distribution"
-    applicationId = "chromahub.rhythm.app"
+    applicationId = "com.melo.player"
     buildConfigField("boolean", "ENABLE_YOUTUBE_MUSIC", "true")
     versionNameSuffix = "-new"
 }
@@ -412,4 +412,4 @@ A: Single package name simplifies distribution across different channels.
 ---
 
 *Last Updated: August 10, 2026*  
-*Rhythm Music Player Build System Documentation*
+*Melo Music Player Build System Documentation*

@@ -73,7 +73,7 @@ jobs:
       if: github.event_name == 'pull_request'
       uses: actions/upload-artifact@v7
       with:
-        name: rhythm-pr-${{ github.event.pull_request.number }}
+        name: melo-pr-${{ github.event.pull_request.number }}
         path: |
           app/build/outputs/apk/github/release/*.apk
           app/build/outputs/apk/github/debug/*.apk

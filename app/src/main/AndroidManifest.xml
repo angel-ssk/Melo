@@ -41,7 +41,7 @@
     </queries>
 
     <application
-        android:name=".RhythmApplication"
+        android:name=".MeloApplication"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -52,7 +52,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:localeConfig="@xml/locale_config"
-        android:theme="@style/Theme.Rhythm"
+        android:theme="@style/Theme.Melo"
         android:largeHeap="true"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="36">
@@ -97,9 +97,9 @@
         
 
 
-        <!-- Rhythm Music Widget (Modern Glance with Material 3) -->
+        <!-- Melo Music Widget (Modern Glance with Material 3) -->
         <receiver
-            android:name=".infrastructure.widget.glance.RhythmWidgetReceiver"
+            android:name=".infrastructure.widget.glance.MeloWidgetReceiver"
             android:exported="true"
             android:label="@string/widget_name_glance"
             android:enabled="true">
@@ -113,9 +113,9 @@
 
         <!-- Lyric Widget Provider (Glance-based) -->
         <receiver
-            android:name=".infrastructure.widget.glance.RhythmLyricsWidgetReceiver"
+            android:name=".infrastructure.widget.glance.MeloLyricsWidgetReceiver"
             android:exported="true"
-            android:label="Rhythm Lyrics"
+            android:label="Melo Lyrics"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -125,32 +125,32 @@
                 android:resource="@xml/lyric_widget" />
         </receiver>
 
-        <!-- Rhythm Cookie Widget -->
+        <!-- Melo Cookie Widget -->
         <receiver
-            android:name=".infrastructure.widget.glance.RhythmCookieWidgetReceiver"
+            android:name=".infrastructure.widget.glance.MeloCookieWidgetReceiver"
             android:exported="true"
-            android:label="Rhythm Cookie"
+            android:label="Melo Cookie"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/rhythm_cookie_widget_info" />
+                android:resource="@xml/melo_cookie_widget_info" />
         </receiver>
 
-        <!-- Rhythm Stats Widget -->
+        <!-- Melo Stats Widget -->
         <receiver
-            android:name=".infrastructure.widget.glance.RhythmStatsWidgetReceiver"
+            android:name=".infrastructure.widget.glance.MeloStatsWidgetReceiver"
             android:exported="true"
-            android:label="Rhythm Stats"
+            android:label="Melo Stats"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/rhythm_stats_widget_info" />
+                android:resource="@xml/melo_stats_widget_info" />
         </receiver>
         
         <!-- MediaPlaybackService is exported so Android Auto, the system
@@ -189,13 +189,13 @@
         <activity
             android:name=".activities.CrashActivity"
             android:exported="false"
-            android:theme="@style/Theme.Rhythm"
+            android:theme="@style/Theme.Melo"
             android:process=":crash_process" />
 
         <activity
-            android:name=".activities.RhythmGuardTimeoutActivity"
+            android:name=".activities.MeloGuardTimeoutActivity"
             android:exported="false"
-            android:theme="@style/Theme.Rhythm"
+            android:theme="@style/Theme.Melo"
             android:launchMode="singleTop" />
 
         <activity
@@ -241,7 +241,7 @@
             android:name=".activities.ExternalPlaybackActivity"
             android:exported="true"
             android:label="Play Audio"
-            android:theme="@style/Theme.Rhythm.Translucent"
+            android:theme="@style/Theme.Melo.Translucent"
             android:launchMode="singleTask"
             android:excludeFromRecents="false"
             android:configChanges="orientation|screenSize|keyboardHidden">
@@ -298,9 +298,9 @@
                 android:value="true" />
         </service>
 
-        <!-- Rhythm Quick Settings Tile Service -->
+        <!-- Melo Quick Settings Tile Service -->
         <service
-            android:name=".infrastructure.service.RhythmTileService"
+            android:name=".infrastructure.service.MeloTileService"
             android:label="@string/app_name"
             android:icon="@drawable/ic_notification"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
@@ -312,7 +312,7 @@
 
         <!-- On-demand album and song artwork provider -->
         <provider
-            android:name=".infrastructure.provider.RhythmAlbumArtProvider"
+            android:name=".infrastructure.provider.MeloAlbumArtProvider"
             android:authorities="${applicationId}.albumart"
             android:exported="true"
             android:grantUriPermissions="true" />

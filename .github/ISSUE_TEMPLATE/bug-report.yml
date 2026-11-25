@@ -1,8 +1,8 @@
 name: Bug Report
-description: Report a bug or issue you encountered in Rhythm
+description: Report a bug or issue you encountered in Melo
 title: "[BUG]: "
 labels: ["bug"]
-assignees: ["cromaguy"]
+assignees: ["angel-ssk"]
 body:
   - type: markdown
     attributes:
@@ -154,7 +154,7 @@ body:
       label: Logs / Stack Traces
       description: |
         If the app crashed, please paste the logs here. 
-        Note: Rhythm shows a Crash Screen with log output and saves crash logs to the `Rhythm/Crashes` directory on your device.
+        Note: Melo shows a Crash Screen with log output and saves crash logs to the `Melo/Crashes` directory on your device.
       render: shell
 
   - type: textarea

@@ -80,7 +80,7 @@ jobs:
           mkdir -p .config
           # Decode keystore and signing property files if secrets are available
           if [ -n "$SIGNING_KEYSTORE" ]; then
-            printf '%s' "$SIGNING_KEYSTORE" | base64 -di > ./config/signing/rhythm_keystore.jks
+            printf '%s' "$SIGNING_KEYSTORE" | base64 -di > ./config/signing/melo_keystore.jks
           fi
           if [ -n "$SIGNING_PROPERTIES" ]; then
             printf '%s' "$SIGNING_PROPERTIES" | base64 -di > ./.config/keystore.properties
@@ -170,9 +170,9 @@ jobs:
           CHANGES_SHORT=$(printf '%s' "$CHANGES" | head -n 5 | tr '\n' ' ' | cut -c1-200)
           # Materialize to files; consumers read via $(cat ...) so commit-message
           # content ($, backticks, quotes) can never break shell quoting
-          printf '%s\n' "$CHANGES_HTML" > /tmp/rhythm_changes_html.txt
-          printf '%s\n' "$CHANGES_JSON" > /tmp/rhythm_changes_json.txt
-          printf '%s\n' "$CHANGES_SHORT" > /tmp/rhythm_changes_short.txt
+          printf '%s\n' "$CHANGES_HTML" > /tmp/melo_changes_html.txt
+          printf '%s\n' "$CHANGES_JSON" > /tmp/melo_changes_json.txt
+          printf '%s\n' "$CHANGES_SHORT" > /tmp/melo_changes_short.txt
 
       - name: Send start notification to Telegram
         if: steps.check_version.outputs.should_run == 'true'
@@ -185,7 +185,7 @@ jobs:
             exit 0
           fi
           RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          MESSAGE="⚙️ <b>Rhythm Nightly Build Started</b>"
+          MESSAGE="⚙️ <b>Melo Nightly Build Started</b>"
           MESSAGE+=$'\n\n'
           MESSAGE+="📦 <b>Version:</b> <code>${{ steps.version_info.outputs.name }}</code>"
           MESSAGE+=$'\n'
@@ -195,7 +195,7 @@ jobs:
           MESSAGE+=$'\n\n'
           MESSAGE+="📝 <b>Recent changes:</b>"
           MESSAGE+=$'\n'
-          MESSAGE+="$(cat /tmp/rhythm_changes_html.txt)"
+          MESSAGE+="$(cat /tmp/melo_changes_html.txt)"
           MESSAGE+=$'\n\n'
           MESSAGE+="<a href=\"${RUN_URL}\">🔍 View Actions Run</a>"
           
@@ -221,10 +221,10 @@ jobs:
         if: steps.check_version.outputs.should_run == 'true'
         uses: actions/upload-artifact@v7
         with:
-          name: Rhythm-Nightly-Artifacts
+          name: Melo-Nightly-Artifacts
           path: |
-            app/build/outputs/apk/github/release/Rhythm-*-githubRelease*.apk
-            app/build/outputs/apk/fdroid/release/Rhythm-*-fdroidRelease*.apk
+            app/build/outputs/apk/github/release/Melo-*-githubRelease*.apk
+            app/build/outputs/apk/fdroid/release/Melo-*-fdroidRelease*.apk
           retention-days: 30
 
       # ── Notifications ────────────────────────────────────────────────────────
@@ -233,13 +233,13 @@ jobs:
         if: success() && steps.check_version.outputs.should_run == 'true'
         id: find_apk
         run: |
-          APK_PATH=$(find app/build/outputs/apk/github/release -name "Rhythm-*-githubRelease.apk" ! -name "*-arm64-v8a.apk" ! -name "*-armeabi-v7a.apk" ! -name "*-x86_64.apk" ! -name "*-x86.apk" | head -n 1)
+          APK_PATH=$(find app/build/outputs/apk/github/release -name "Melo-*-githubRelease.apk" ! -name "*-arm64-v8a.apk" ! -name "*-armeabi-v7a.apk" ! -name "*-x86_64.apk" ! -name "*-x86.apk" | head -n 1)
           if [ -z "$APK_PATH" ]; then
             echo "No APK found — skipping notifications."
             echo "path=" >> $GITHUB_OUTPUT
           else
-            cp "$APK_PATH" /tmp/rhythm-nightly.apk
-            echo "path=/tmp/rhythm-nightly.apk" >> $GITHUB_OUTPUT
+            cp "$APK_PATH" /tmp/melo-nightly.apk
+            echo "path=/tmp/melo-nightly.apk" >> $GITHUB_OUTPUT
             echo "Found APK: $APK_PATH"
           fi
 
@@ -257,7 +257,7 @@ jobs:
             exit 0
           fi
           RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          CAPTION="🎵 <b>Rhythm Nightly Build</b>"
+          CAPTION="🎵 <b>Melo Nightly Build</b>"
           CAPTION+=$'\n\n'
           CAPTION+="📦 <b>Version:</b> <code>${{ steps.version_info.outputs.name }}</code>"
           CAPTION+=$'\n'
@@ -271,7 +271,7 @@ jobs:
           CAPTION+=$'\n\n'
           CAPTION+="📝 <b>Recent changes:</b>"
           CAPTION+=$'\n'
-          CAPTION+="$(cat /tmp/rhythm_changes_short.txt)"
+          CAPTION+="$(cat /tmp/melo_changes_short.txt)"
           CAPTION+=$'\n\n'
           CAPTION+="<a href=\"${RUN_URL}\">🔍 View Actions Run</a>"
           if [ ! -f "${{ steps.find_apk.outputs.path }}" ]; then
@@ -308,11 +308,11 @@ jobs:
 
           cat > /tmp/discord_payload.json <<EOF
           {
-            "username": "Rhythm CI",
-            "avatar_url": "https://github.com/cromaguy/Rhythm/raw/main/assets/icon.png",
+            "username": "Melo CI",
+            "avatar_url": "https://github.com/angel-ssk/Melo/raw/main/assets/icon.png",
             "embeds": [
               {
-                "title": "🎵 Rhythm Nightly Build Available",
+                "title": "🎵 Melo Nightly Build Available",
                 "description": "A new nightly build has been compiled and is ready for testing.",
                 "url": "${RUN_URL}",
                 "color": 7340031,
@@ -344,7 +344,7 @@ jobs:
                   },
                   {
                     "name": "📝 Recent changes",
-                    "value": "$(cat /tmp/rhythm_changes_json.txt)",
+                    "value": "$(cat /tmp/melo_changes_json.txt)",
                     "inline": false
                   },
                   {
@@ -354,7 +354,7 @@ jobs:
                   }
                 ],
                 "footer": {
-                  "text": "Rhythm CI • Nightly Channel"
+                  "text": "Melo CI • Nightly Channel"
                 },
                 "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
               }
@@ -380,7 +380,7 @@ jobs:
             exit 0
           fi
           RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          MESSAGE="❌ <b>Rhythm Nightly Build Failed</b>"
+          MESSAGE="❌ <b>Melo Nightly Build Failed</b>"
           MESSAGE+=$'\n\n'
           MESSAGE+="📦 <b>Version:</b> <code>${{ steps.version_info.outputs.name }}</code>"
           MESSAGE+=$'\n'

@@ -1,4 +1,4 @@
-🎵 Rhythm - Bug Fix Update
+🎵 Melo - Bug Fix Update
 
 🎨 Improvements:
 • Embedded lyrics extraction logic
@@ -8,4 +8,4 @@
 • Metadata retrieval
 • Many more..
 
-Happy Diwali & Thank you for using Rhythm! 🎵
+Happy Diwali & Thank you for using Melo! 🎵

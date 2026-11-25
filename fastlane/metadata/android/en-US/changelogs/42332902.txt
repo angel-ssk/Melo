@@ -1,4 +1,4 @@
-Rhythm v4.2 - Maintenance Update 
+Melo v4.2 - Maintenance Update 
 
 ✨ Fixes:
 • Queue: Fixed Queue operations across multiple screens
@@ -9,6 +9,6 @@ Rhythm v4.2 - Maintenance Update
 • System: Faster loading time
 • Many more UI & Performance improvements
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)
 
 

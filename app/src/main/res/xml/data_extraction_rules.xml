@@ -6,10 +6,10 @@
 <data-extraction-rules>
     <cloud-backup>
         <!-- Exclude Room database to avoid stale cached library data surviving reinstalls -->
-        <exclude domain="database" path="rhythm_database*"/>
+        <exclude domain="database" path="melo_database*"/>
     </cloud-backup>
     <device-transfer>
         <!-- Exclude Room database to avoid stale cached library data surviving reinstalls -->
-        <exclude domain="database" path="rhythm_database*"/>
+        <exclude domain="database" path="melo_database*"/>
     </device-transfer>
 </data-extraction-rules>

@@ -1,4 +1,4 @@
-🎵 Rhythm v2.9.230.684 - Maintenance
+🎵 Melo v2.9.230.684 - Maintenance
 
 ✨ New Features:
 • Audio Quality Badges: Dolby, DTS, Lossless, Hi-Res detection
@@ -13,4 +13,4 @@
 • Fixed Auto Backup
 • Fixed AAC/ALAC detection in M4A containers
 
-Thank you for using Rhythm!
+Thank you for using Melo!

@@ -1,4 +1,4 @@
-🎵 Rhythm v2.9.232.687 - BugFix Update
+🎵 Melo v2.9.232.687 - BugFix Update
 
 ✨ New Features:
 • Embedded Lyrics: Extract lyrics from audio file metadata

@@ -5,13 +5,13 @@
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <!-- launcher_bg adapts to the app theme (white in light, dark in night) -->
         <item name="windowSplashScreenBackground">@color/launcher_bg</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/rhythm_logo</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/melo_logo</item>
         <item name="windowSplashScreenAnimationDuration">10</item>
-        <item name="postSplashScreenTheme">@style/Theme.Rhythm</item>
+        <item name="postSplashScreenTheme">@style/Theme.Melo</item>
     </style>
 
     <!-- Base app theme -->
-    <style name="Theme.Rhythm" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.Melo" parent="Theme.AppCompat.NoActionBar">
         <!-- Window background adapts to the app theme to avoid a wrong-color flash on startup -->
         <item name="android:windowBackground">@color/launcher_bg</item>
         <item name="android:windowActivityTransitions">true</item>
@@ -21,7 +21,7 @@
     </style>
 
     <!-- Transparent host for activities that render a modal bottom sheet over the caller -->
-    <style name="Theme.Rhythm.Translucent" parent="Theme.Rhythm">
+    <style name="Theme.Melo.Translucent" parent="Theme.Melo">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>

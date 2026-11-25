@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-We take security seriously. This section outlines which versions of Rhythm are currently supported with security updates.
+We take security seriously. This section outlines which versions of Melo are currently supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -12,15 +12,15 @@ We take security seriously. This section outlines which versions of Rhythm are c
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in Rhythm, please help us by reporting it responsibly.
+If you discover a security vulnerability in Melo, please help us by reporting it responsibly.
 
 ### How to Report
 
 **Please do NOT report security vulnerabilities through public GitHub issues.**
 
 Instead, please report security vulnerabilities by emailing:
-- **Email**: [security@rhythmapp.dev](mailto:security@rhythmapp.dev)
-- **Subject**: `[SECURITY] Vulnerability Report - Rhythm`
+- **Email**: [security@meloapp.dev](mailto:security@meloapp.dev)
+- **Subject**: `[SECURITY] Vulnerability Report - Melo`
 
 ### What to Include
 
@@ -57,7 +57,7 @@ We appreciate security researchers who help keep our users safe. With your permi
 ### Contact
 
 For security-related questions or concerns:
-- **Email**: [security@rhythmapp.dev](mailto:security@rhythmapp.dev)
-- **Telegram**: [Rhythm Support Group](https://t.me/RhythmSupport)
+- **Email**: [security@meloapp.dev](mailto:security@meloapp.dev)
+- **Telegram**: [Melo Support Group](https://t.me/MeloSupport)
 
-Thank you for helping keep Rhythm and its users secure! 🛡️
+Thank you for helping keep Melo and its users secure! 🛡️

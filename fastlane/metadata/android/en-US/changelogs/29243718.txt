@@ -1,4 +1,4 @@
-🎵 Rhythm v2.9.243.718 Stable - EOL Update
+🎵 Melo v2.9.243.718 Stable - EOL Update
 
 ✨ New Features:
 • Added Quick Playback Settings
@@ -9,4 +9,4 @@
 🐛 Bug Fixes:
 • Fixed Device Switcher
 
-Thank you for using Rhythm! Report issues on GitHub.
+Thank you for using Melo! Report issues on GitHub.

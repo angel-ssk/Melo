@@ -1,4 +1,4 @@
-Rhythm v4.2 - Maintenance Update 
+Melo v4.2 - Maintenance Update 
 
 ✨ Fixes:
 • Queue: Reliable Queue operations across multiple screens
@@ -11,6 +11,6 @@ Rhythm v4.2 - Maintenance Update
 • Media Scanner: Now it does a full scan instead of incremental scans
 • Many more Crash Fixes, UI & Performance Improvements
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)
 
 

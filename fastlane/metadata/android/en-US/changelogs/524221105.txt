@@ -1,4 +1,4 @@
-Rhythm v5.2 - Stable Update
+Melo v5.2 - Stable Update
 
 • Add Weblate integration and translation updates
 • Implement play next and improve broadcast safety
@@ -9,4 +9,4 @@ Rhythm v5.2 - Stable Update
 • Refresh artwork on settings changes
 • Improved Mini Player and Player transitions
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

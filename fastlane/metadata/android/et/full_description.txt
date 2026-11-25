@@ -1,6 +1,6 @@
 Sinu muusika, sinu rütm
 
-Kasuta oma muusikakogu täiesti uuel viisil. Rhythm on kaunis ja avatud lähtekoodiga Material You kujunduskeeles muusikapleier melomaanidele, mis toetab nii kohalikku kui ka voogesituse taasesitust. Naudi kvaliteetset heli ilma välise jälitamiseta ja täiesti ilma reklaamideta.
+Kasuta oma muusikakogu täiesti uuel viisil. Melo on kaunis ja avatud lähtekoodiga Material You kujunduskeeles muusikapleier melomaanidele, mis toetab nii kohalikku kui ka voogesituse taasesitust. Naudi kvaliteetset heli ilma välise jälitamiseta ja täiesti ilma reklaamideta.
 
 🔊 Audiofiili tasemel heli
 • Kõrge eraldusvõimega heli: Säilita algupärased diskreetimissagedused ja bitisügavused puhta, muutmata heli jaoks.
@@ -20,11 +20,11 @@ Kasuta oma muusikakogu täiesti uuel viisil. Rhythm on kaunis ja avatud lähteko
 • Usaldusväärne skaneerimine: Täismahuline multimeediaskanner tagab, et ühtegi lugu ei jää kunagi leidmata, sealhulgas saad lubatud vorminguid seadistada.
 
 ⚙️ Rohkelt funktsionaalsust
-• Rhythm Guard: Lõimitud kuulmiskaitsesüsteem vanusepõhise helitugevuse kaitsega.
+• Melo Guard: Lõimitud kuulmiskaitsesüsteem vanusepõhise helitugevuse kaitsega.
 • Sisseehitatud metaandmete muutmisvaade koos Deezeri ja YouTube Musicu kaanekujunduse lõimingutega.
 • Unetaimer, taasesituse statistika ja töökindlust parandavad tööriistad kokkujooksmisvaba kasutuskogemuse jaoks.
 • Lihtne järjekorra haldamine ning M3U esitusloendite import ja eksport.
 • Rakendusesisesed automaatsed uuendused otse GitHubist.
 
 🔒 100% privaatne
-Rhythm austab sinu andmeid. Rakenduses pole reklaame, analüütikat ega kontosid. Rakendus töötab täielikult võrguühenduseta ning on uhkelt avaldatud avatud lähtekoodi litsentsi alusel (GPL v3).
+Melo austab sinu andmeid. Rakenduses pole reklaame, analüütikat ega kontosid. Rakendus töötab täielikult võrguühenduseta ning on uhkelt avaldatud avatud lähtekoodi litsentsi alusel (GPL v3).

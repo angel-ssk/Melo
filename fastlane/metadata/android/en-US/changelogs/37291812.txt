@@ -1,4 +1,4 @@
-🎵 Rhythm v3.7 Stable - Maintenance Update
+🎵 Melo v3.7 Stable - Maintenance Update
 
 ✨ New Features:
 • Playlist Screen: Added ability to reorder, sort, multi remove songs
@@ -13,4 +13,4 @@
 • Player: Seek & Playback
 • Translation
 
-Thank you for using Rhythm! Report issues on GitHub.
+Thank you for using Melo! Report issues on GitHub.

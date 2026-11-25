@@ -1,10 +1,10 @@
 # Permissions Guide
 
-This guide explains all permissions requested by Rhythm Music Player, why they're needed, and how they're used.
+This guide explains all permissions requested by Melo Music Player, why they're needed, and how they're used.
 
 ## 🔒 Privacy First
 
-Rhythm is **100% FOSS-compliant** and respects your privacy:
+Melo is **100% FOSS-compliant** and respects your privacy:
 - ✅ No analytics or tracking
 - ✅ No personal data collection
 - ✅ No internet requirement for core functionality
@@ -185,7 +185,7 @@ You can grant access to only selected photos/media instead of full library acces
 
 ## 🚫 Removed Permissions
 
-Rhythm **does NOT** request these permissions (removed for privacy):
+Melo **does NOT** request these permissions (removed for privacy):
 
 ❌ `MANAGE_EXTERNAL_STORAGE` - Broad file access (not needed for music)
 ❌ `ACCESS_MEDIA_LOCATION` - GPS coordinates in photos (not needed)
@@ -202,13 +202,13 @@ Rhythm **does NOT** request these permissions (removed for privacy):
 ### Granting Permissions
 
 #### During First Launch
-1. Open Rhythm
+1. Open Melo
 2. Follow onboarding wizard
 3. Grant requested permissions when prompted
 
 #### Manual Grant (Android Settings)
 1. Open **Settings** → **Apps**
-2. Find and tap **Rhythm Music**
+2. Find and tap **Melo Music**
 3. Tap **Permissions**
 4. Enable required permissions
 
@@ -220,7 +220,7 @@ Rhythm **does NOT** request these permissions (removed for privacy):
 ### Revoking Permissions
 
 To revoke a permission:
-1. **Settings** → **Apps** → **Rhythm Music** → **Permissions**
+1. **Settings** → **Apps** → **Melo Music** → **Permissions**
 2. Tap the permission to revoke
 3. Select **Don't allow**
 
@@ -233,7 +233,7 @@ To revoke a permission:
 ### Permission Reset
 
 If permissions are messed up:
-1. **Settings** → **Apps** → **Rhythm Music**
+1. **Settings** → **Apps** → **Melo Music**
 2. Tap **Storage & cache** → **Clear data**
 3. Reopen app and grant permissions again
 
@@ -243,18 +243,18 @@ If permissions are messed up:
 
 ## 🔍 Permission Audit
 
-### How to Verify What Rhythm Accesses
+### How to Verify What Melo Accesses
 
 #### Using Android Permission Manager
 1. **Settings** → **Privacy** → **Permission manager**
 2. Tap each permission type (Files, Notifications, etc.)
-3. Find **Rhythm Music** in the list
+3. Find **Melo Music** in the list
 4. Verify granted permissions
 
 #### Using ADB (Advanced)
 ```bash
-# List all permissions for Rhythm
-adb shell dumpsys package chromahub.rhythm.app | grep permission
+# List all permissions for Melo
+adb shell dumpsys package com.melo.player | grep permission
 
 # Check runtime permissions
 adb shell pm list permissions -g
@@ -282,7 +282,7 @@ Block internet access if you want offline-only:
 - **[RethinkDNS](https://rethinkdns.com/)**: DNS + Firewall
 
 ### Scoped Storage (Android 11+)
-Rhythm uses **Scoped Storage** on Android 11+:
+Melo uses **Scoped Storage** on Android 11+:
 - Access limited to music files only
 - No access to documents, photos, or other file types
 - Enhanced privacy and security
@@ -291,33 +291,33 @@ Rhythm uses **Scoped Storage** on Android 11+:
 
 ## ❓ FAQ
 
-### Why does Rhythm need internet access?
+### Why does Melo need internet access?
 For optional online features: lyrics (LRCLib), artwork (Deezer), and updates (GitHub). The app works fully offline without internet.
 
-### Can I use Rhythm without granting notifications?
+### Can I use Melo without granting notifications?
 Yes, but you won't see playback controls in the notification shade. Player screen still works normally.
 
-### Does Rhythm access my photos?
-No. Rhythm does not request or require photo permissions. Custom artwork selection uses the secure system Android Photo Picker, granting access only to the specific image you pick.
+### Does Melo access my photos?
+No. Melo does not request or require photo permissions. Custom artwork selection uses the secure system Android Photo Picker, granting access only to the specific image you pick.
 
 ### Why Bluetooth permissions?
 To detect when you connect Bluetooth headphones/speakers and auto-resume playback. Optional feature.
 
 ### Is my listening data sent anywhere?
-**No.** Rhythm stores all data locally on your device. Nothing is uploaded or shared.
+**No.** Melo stores all data locally on your device. Nothing is uploaded or shared.
 
 ### Can I audit the code?
-**Yes!** Rhythm is fully open-source: [GitHub Repository](https://github.com/cromaguy/Rhythm)
+**Yes!** Melo is fully open-source: [GitHub Repository](https://github.com/angel-ssk/Melo)
 
 ---
 
 ## 🔗 Related Documentation
 
-- [Installation Guide](https://github.com/cromaguy/Rhythm/wiki/Installation-Guide)
-- [Getting Started](https://github.com/cromaguy/Rhythm/wiki/Getting-Started)
-- [Troubleshooting](https://github.com/cromaguy/Rhythm/wiki/Troubleshooting)
-- [Security Policy](https://github.com/cromaguy/Rhythm/blob/main/docs/SECURITY.md)
+- [Installation Guide](https://github.com/angel-ssk/Melo/wiki/Installation-Guide)
+- [Getting Started](https://github.com/angel-ssk/Melo/wiki/Getting-Started)
+- [Troubleshooting](https://github.com/angel-ssk/Melo/wiki/Troubleshooting)
+- [Security Policy](https://github.com/angel-ssk/Melo/blob/main/docs/SECURITY.md)
 
 ---
 
-**Still have questions?** Ask in our [Telegram Community](https://t.me/RhythmSupport) or [Discord Server](https://discord.gg/XjPyUYPQYc).
+**Still have questions?** Ask in our [Telegram Community](https://t.me/MeloSupport) or [Discord Server](https://discord.gg/XjPyUYPQYc).

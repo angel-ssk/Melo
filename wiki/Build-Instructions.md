@@ -1,6 +1,6 @@
-# Rhythm Build Instructions
+# Melo Build Instructions
 
-Complete guide to building Rhythm from source code. Whether you're contributing, customizing, or just curious, this guide will get you started.
+Complete guide to building Melo from source code. Whether you're contributing, customizing, or just curious, this guide will get you started.
 
 ---
 
@@ -40,15 +40,15 @@ Complete guide to building Rhythm from source code. Whether you're contributing,
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/cromaguy/Rhythm.git
-cd Rhythm
+git clone https://github.com/angel-ssk/Melo.git
+cd Melo
 ```
 
 ### 2. Open in Android Studio
 
 1. Launch **Android Studio**
 2. Select **Open an Existing Project**
-3. Navigate to the cloned `Rhythm` folder
+3. Navigate to the cloned `Melo` folder
 4. Click **OK**
 
 ### 3. Sync Gradle
@@ -112,11 +112,11 @@ Check `app/build.gradle.kts`:
 
 ```kotlin
 android {
-    namespace = "chromahub.rhythm.app"
+    namespace = "com.melo.player"
     compileSdk = 37
     
     defaultConfig {
-        applicationId = "chromahub.rhythm.app"
+        applicationId = "com.melo.player"
         minSdk = 26          // Android 8.0
         targetSdk = 37       // Android 15
         versionCode = 544561196
@@ -143,7 +143,7 @@ android {
 
 ### Step 5: Build Variants
 
-Rhythm supports multiple build variants:
+Melo supports multiple build variants:
 
 #### **Debug Build** (Development)
 ```bash
@@ -152,7 +152,7 @@ Rhythm supports multiple build variants:
 ./gradlew assembleGithubDebug
 ```
 - Output: `app/build/outputs/apk/fdroid/debug/` or `app/build/outputs/apk/github/debug/`
-- Files are named `Rhythm-{versionName}-{flavorVariant}-{abi}.apk` (e.g., `Rhythm-5.4.456.1196 Beta-fdroidDebug-arm64-v8a.apk`)
+- Files are named `Melo-{versionName}-{flavorVariant}-{abi}.apk` (e.g., `Melo-5.4.456.1196 Beta-fdroidDebug-arm64-v8a.apk`)
 - Features: Debugging enabled, logs enabled
 - Signing: Debug keystore (auto-generated)
 
@@ -173,9 +173,9 @@ Rhythm supports multiple build variants:
 ### Generate Signing Key
 
 ```bash
-keytool -genkey -v -keystore rhythm-release-key.jks \
+keytool -genkey -v -keystore melo-release-key.jks \
         -keyalg RSA -keysize 2048 -validity 10000 \
-        -alias rhythm-key
+        -alias melo-key
 ```
 
 **Important**: Store this keystore securely and remember the passwords!
@@ -185,9 +185,9 @@ keytool -genkey -v -keystore rhythm-release-key.jks \
 Create `.config/keystore.properties` (do NOT commit this file):
 
 ```properties
-store_file=../rhythm-release-key.jks
+store_file=../melo-release-key.jks
 store_password=YourStorePassword
-key_alias=rhythm-key
+key_alias=melo-key
 key_password=YourKeyPassword
 ```
 
@@ -224,7 +224,7 @@ release {
 ```
 
 Output: Flavor-specific directory — `app/build/outputs/apk/github/release/` or `app/build/outputs/apk/fdroid/release/`
-APK naming: `Rhythm-{versionName}-{flavorVariant}-{abi}.apk`
+APK naming: `Melo-{versionName}-{flavorVariant}-{abi}.apk`
 
 ---
 
@@ -425,7 +425,7 @@ Download NDK via **SDK Manager** → **SDK Tools** → **NDK (Side by side)**
 
 ### Debug APK
 - **Path**: `app/build/outputs/apk/{flavor}/debug/` (e.g., `.../fdroid/debug/`)
-- **File**: `Rhythm-{versionName}-{flavor}Debug-{abi}.apk`
+- **File**: `Melo-{versionName}-{flavor}Debug-{abi}.apk`
 - **Size**: ~50-60 MB
 - **Signing**: Debug keystore
 - **Debuggable**: Yes
@@ -433,7 +433,7 @@ Download NDK via **SDK Manager** → **SDK Tools** → **NDK (Side by side)**
 
 ### Release APK
 - **Path**: `app/build/outputs/apk/{flavor}/release/` (e.g., `.../fdroid/release/`)
-- **File**: `Rhythm-{versionName}-{flavor}Release-{abi}.apk`
+- **File**: `Melo-{versionName}-{flavor}Release-{abi}.apk`
 - **Size**: ~30-40 MB (R8/ProGuard optimized)
 - **Signing**: Release keystore
 - **Debuggable**: No
@@ -535,11 +535,11 @@ rm -rf app/build
 
 ## 💬 Need Help?
 
-- **Telegram**: [Rhythm Support](https://t.me/RhythmSupport)
-- **Discord**: [Rhythm Community](https://discord.gg/XjPyUYPQYc)
-- **GitHub Issues**: [Report Build Problems](https://github.com/cromaguy/Rhythm/issues)
-- **Contributing Guide**: [https://github.com/cromaguy/Rhythm/wiki/Contributing](https://github.com/cromaguy/Rhythm/wiki/Contributing)
+- **Telegram**: [Melo Support](https://t.me/MeloSupport)
+- **Discord**: [Melo Community](https://discord.gg/XjPyUYPQYc)
+- **GitHub Issues**: [Report Build Problems](https://github.com/angel-ssk/Melo/issues)
+- **Contributing Guide**: [https://github.com/angel-ssk/Melo/wiki/Contributing](https://github.com/angel-ssk/Melo/wiki/Contributing)
 
 ---
 
-**Happy Building!** 🎉 If you encounter issues not covered here, please [open an issue](https://github.com/cromaguy/Rhythm/issues) so we can improve this guide.
+**Happy Building!** 🎉 If you encounter issues not covered here, please [open an issue](https://github.com/angel-ssk/Melo/issues) so we can improve this guide.

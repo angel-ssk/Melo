@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Rhythm</string>
+    <string name="app_name">Melo</string>
     <string name="home">Αρχική Σελίδα</string>
     <string name="library">Βιβλιοθήκη</string>
     <string name="search">Αναζήτηση</string>
     <string name="media3_notification_channel_name">Το Rythm Παίζει Τώρα</string>
     <string name="media3_notification_channel_description">Στοιχεία ελέγχου αναπαραγωγής στο προσκήνιο, ενέργειες αναζήτησης και εξώφυλλο άλμπουμ</string>
     <string name="widget_description_glance">Δείτε τι παίζει και ελέγξτε την μουσική σας από την αρχική σας οθώνη -- αναπαραγωγή, παύση, παράλειψη και παραπάνω.</string>
-    <string name="widget_name_glance">Μουσική Rhythm</string>
+    <string name="widget_name_glance">Μουσική Melo</string>
     <string name="unknown_artist">Άγνωστος Καλλιτέχνης</string>
     <string name="play_pause">Αναπαραγωγή/Παύση</string>
     <string name="settings_widget">Widget</string>
@@ -23,20 +23,20 @@
     <string name="settings_notifications">Ειδοποιήσεις</string>
     <string name="settings_notifications_library_group">Βιβλιοθήκη και Συχρονισμός</string>
     <string name="settings_notifications_updates_group">Αναβαθμίσεις Εφαρμογής</string>
-    <string name="settings_notifications_rhythm_guard_group">Ασφάλεια Rhythm Guard</string>
-    <string name="settings_notifications_rhythm_pulse_group">Highlights &amp; Tips Ακρόασης</string>
+    <string name="settings_notifications_melo_guard_group">Ασφάλεια Melo Guard</string>
+    <string name="settings_notifications_melo_pulse_group">Highlights &amp; Tips Ακρόασης</string>
     <string name="settings_notifications_system_group">Έλεγχος Συστήματος</string>
     <string name="settings_library_operations_notifications">Διεργασίες και Αντίγραμα Ασφαλείας Βιβλιοθήκης</string>
     <string name="settings_library_operations_notifications_desc">Εμφανίστε ειδοποιήσεις για ευρετηρίαση μέσων &amp; διαχείριση playlists</string>
-    <string name="settings_update_notifications_merged_desc">Λάβετε ειδοποιήσεις όταν οι αναβαθμίσεις του Rhythm είναι έτοιμες για εγκατάσταση</string>
-    <string name="settings_rhythm_guard_alert_notifications">Προηδοποίηση Ασφάλειας Ακοής</string>
-    <string name="settings_rhythm_guard_alert_notifications_desc">Ειδοποιήση όταν η ένταση ή η έκθεση ήχου υπερβαίνει τα ασφαλή όρια</string>
-    <string name="settings_rhythm_guard_timer_notifications">Βοηθός Διαλείμματος Ακρόασης</string>
-    <string name="settings_rhythm_guard_timer_notifications_desc">Εμφάνιση αντίστροφων μετρήσεων και ειδοποιήσεων για προγραμματισμένα διαλείμματα ακρόασης</string>
-    <string name="settings_rhythm_pulse_notifications">Highlights &amp; Tips Ακρόασης</string>
-    <string name="settings_rhythm_pulse_notifications_desc">Λάβετε προσαρμωσμένα στατιστικά ακρόασης και χαρακτηριστικά αναπαραγωγής</string>
-    <string name="settings_rhythm_pulse_interval">Συχνότητα Tip</string>
-    <string name="settings_rhythm_pulse_interval_dialog_title">Διαλέξτε Συχνότητα</string>
+    <string name="settings_update_notifications_merged_desc">Λάβετε ειδοποιήσεις όταν οι αναβαθμίσεις του Melo είναι έτοιμες για εγκατάσταση</string>
+    <string name="settings_melo_guard_alert_notifications">Προηδοποίηση Ασφάλειας Ακοής</string>
+    <string name="settings_melo_guard_alert_notifications_desc">Ειδοποιήση όταν η ένταση ή η έκθεση ήχου υπερβαίνει τα ασφαλή όρια</string>
+    <string name="settings_melo_guard_timer_notifications">Βοηθός Διαλείμματος Ακρόασης</string>
+    <string name="settings_melo_guard_timer_notifications_desc">Εμφάνιση αντίστροφων μετρήσεων και ειδοποιήσεων για προγραμματισμένα διαλείμματα ακρόασης</string>
+    <string name="settings_melo_pulse_notifications">Highlights &amp; Tips Ακρόασης</string>
+    <string name="settings_melo_pulse_notifications_desc">Λάβετε προσαρμωσμένα στατιστικά ακρόασης και χαρακτηριστικά αναπαραγωγής</string>
+    <string name="settings_melo_pulse_interval">Συχνότητα Tip</string>
+    <string name="settings_melo_pulse_interval_dialog_title">Διαλέξτε Συχνότητα</string>
     <string name="settings_system_notification_channels">Ρυθμίσεις Ειδοποιήσεων Android</string>
     <string name="settings_system_notification_channels_desc">Εξατομίκευση καναλιών ειδοποιήσεων συστήματος, προειδοποιήσεων και συμπεριφοράς</string>
     <string name="settings_notification_permission_title">Είναι απαραίτητη η Άδεια Ειδοποιήσεων</string>

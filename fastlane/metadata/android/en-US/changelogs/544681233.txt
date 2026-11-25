@@ -1,4 +1,4 @@
-Rhythm v5.4 - Stable Update
+Melo v5.4 - Stable Update
 
 • Overhauled onboarding tour with quick setup sheets
 • Smarter multi-artist splitting & custom delimiter presets
@@ -7,4 +7,4 @@ Rhythm v5.4 - Stable Update
 • Clear, user-friendly Jellyfin connection error messages
 • Material 3 UI updates and navigation stability improvements
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

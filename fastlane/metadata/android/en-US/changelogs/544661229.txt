@@ -1,4 +1,4 @@
-﻿Rhythm v5.4 - Stable Update
+Melo v5.4 - Stable Update
 
 • Added docked navigation bar mode & ambient zoom toggle
 • Modern Coil artwork decoder with lossless extraction
@@ -9,4 +9,4 @@
 • Optimized cold startup & scanning for large libraries
 • Updated translations
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

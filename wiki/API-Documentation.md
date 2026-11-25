@@ -1,6 +1,6 @@
 # API Documentation
 
-Internal API reference for developers working with Rhythm's codebase. This covers the actual interfaces, classes, and patterns used in the project.
+Internal API reference for developers working with Melo's codebase. This covers the actual interfaces, classes, and patterns used in the project.
 
 > **Note:** For the exact implementation details, always refer to the source code. This document provides a high-level overview of key architecture components.
 
@@ -12,11 +12,11 @@ Internal API reference for developers working with Rhythm's codebase. This cover
 
 | Package | Purpose |
 |:---|:---|
-| `chromahub.rhythm.app.core.domain` | Domain interfaces and models |
-| `chromahub.rhythm.app.features.local` | Local playback feature |
-| `chromahub.rhythm.app.features.streaming` | Streaming playback feature |
-| `chromahub.rhythm.app.shared` | Shared utilities, themes, navigation |
-| `chromahub.rhythm.app.infrastructure` | Player engine, audio processors, service, widgets, workers, network |
+| `com.melo.player.core.domain` | Domain interfaces and models |
+| `com.melo.player.features.local` | Local playback feature |
+| `com.melo.player.features.streaming` | Streaming playback feature |
+| `com.melo.player.shared` | Shared utilities, themes, navigation |
+| `com.melo.player.infrastructure` | Player engine, audio processors, service, widgets, workers, network |
 
 ---
 
@@ -24,7 +24,7 @@ Internal API reference for developers working with Rhythm's codebase. This cover
 
 ### MediaPlaybackService
 
-**File:** `infrastructure/service/player/RhythmPlayerEngine.kt`
+**File:** `infrastructure/service/player/MeloPlayerEngine.kt`
 
 The core playback engine using Media3 ExoPlayer with a custom `DefaultRenderersFactory` that enables the FFmpeg decoder extension and chains the app's audio processors (Replay Gain, Bass Boost, Virtualizer, Mono downmix):
 
@@ -47,10 +47,10 @@ val renderersFactory = object : DefaultRenderersFactory(context) {
 
 **Service:** `infrastructure/service/MediaPlaybackService.kt` extends `MediaLibraryService` and manages:
 - `MediaLibrarySession` for external control
-- `Player` instance via `RhythmPlayerEngine`
+- `Player` instance via `MeloPlayerEngine`
 - Media notification with playback controls
 - Audio focus handling
-- Mono audio downmix state (`RhythmMonoAudioProcessor`) toggled via the device configuration sheet
+- Mono audio downmix state (`MeloMonoAudioProcessor`) toggled via the device configuration sheet
 
 ---
 
@@ -134,10 +134,10 @@ interface YouTubeMusicApiService {
 
 | Widget | Class |
 |:---|:---|
-| Music Player Widget | `RhythmMusicWidget : GlanceAppWidget()` |
-| Lyrics Widget | `RhythmLyricsWidget : GlanceAppWidget()` |
+| Music Player Widget | `MeloMusicWidget : GlanceAppWidget()` |
+| Lyrics Widget | `MeloLyricsWidget : GlanceAppWidget()` |
 
-Widget updates are managed by `RhythmWidgetWorker` (a `CoroutineWorker`) and `GlanceWidgetUpdater`.
+Widget updates are managed by `MeloWidgetWorker` (a `CoroutineWorker`) and `GlanceWidgetUpdater`.
 
 ---
 
@@ -185,10 +185,10 @@ All flags are `true` for both `fdroid` and `github` flavors:
 
 ## 📚 Further Reading
 
-- [Architecture Guide](https://github.com/cromaguy/Rhythm/wiki/Architecture)
-- [Technology Stack](https://github.com/cromaguy/Rhythm/wiki/Technology-Stack)
-- [Contributing Guide](https://github.com/cromaguy/Rhythm/wiki/Contributing)
+- [Architecture Guide](https://github.com/angel-ssk/Melo/wiki/Architecture)
+- [Technology Stack](https://github.com/angel-ssk/Melo/wiki/Technology-Stack)
+- [Contributing Guide](https://github.com/angel-ssk/Melo/wiki/Contributing)
 
 ---
 
-**Questions?** Check the [FAQ](https://github.com/cromaguy/Rhythm/wiki/FAQ) or ask in [Telegram](https://t.me/RhythmSupport) or [Discord](https://discord.gg/XjPyUYPQYc)!
+**Questions?** Check the [FAQ](https://github.com/angel-ssk/Melo/wiki/FAQ) or ask in [Telegram](https://t.me/MeloSupport) or [Discord](https://discord.gg/XjPyUYPQYc)!

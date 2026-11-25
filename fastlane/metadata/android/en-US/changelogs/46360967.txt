@@ -1,8 +1,8 @@
-🎵 Rhythm v4.6 - Hotfix Update
+🎵 Melo v4.6 - Hotfix Update
 
 ✨ Improvements & Additions:
 • Whitelist: Include hidden & .nomedia files
-• Rhythm Guard: Added cool-down ability
+• Melo Guard: Added cool-down ability
 • Search: Now properly stores history
 • General: App-wide playback & optimization
 
@@ -11,4 +11,4 @@
 • Core: Media scan, Notifications, Queue drag auto-scroll, Crash fixes
 • UI: Nav failures when Library is default screen
 
-Thank you for using Rhythm! Report issues on GitHub.
+Thank you for using Melo! Report issues on GitHub.

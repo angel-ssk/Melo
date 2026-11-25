@@ -1,4 +1,4 @@
-Rhythm 5 - Maintenance Update
+Melo 5 - Maintenance Update
 
 - Fixed crashes.
 - Improved Haptics.

@@ -1,4 +1,4 @@
-Rhythm v5.1 - Beta Update
+Melo v5.1 - Beta Update
 
 • Added Song-Specific Lyrics Preferences and Custom LRC File Management
 • Fixed: Premature signaling of Instrumental lyrics #442
@@ -6,4 +6,4 @@ Rhythm v5.1 - Beta Update
 • Fixed: all playlists missing in latest beta build  #437
 • Updated dependencies
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

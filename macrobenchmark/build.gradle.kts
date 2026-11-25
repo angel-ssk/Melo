@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "chromahub.rhythm.app.macrobenchmark"
+    namespace = "com.melo.player.macrobenchmark"
     compileSdk {
         version = release(37) {
             minorApiLevel = 2

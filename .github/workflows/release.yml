@@ -38,7 +38,7 @@ jobs:
         run: |
           mkdir -p config/signing
           mkdir -p .config
-          printf '%s' "$SIGNING_KEYSTORE" | base64 -di > ./config/signing/rhythm_keystore.jks
+          printf '%s' "$SIGNING_KEYSTORE" | base64 -di > ./config/signing/melo_keystore.jks
           printf '%s' "$SIGNING_PROPERTIES" | base64 -di > ./.config/keystore.properties
           printf '%s' "$PRIVATE_PROPERTIES" | base64 -di > ./config/signing/private.properties
 
@@ -53,14 +53,14 @@ jobs:
       - name: Generate checksums
         run: |
           cd app/build/outputs/apk/github/release
-          for file in Rhythm-*-githubRelease*.apk; do
+          for file in Melo-*-githubRelease*.apk; do
             if [ -f "$file" ]; then
               sha256sum "$file" > "$file.sha256"
               md5sum "$file" > "$file.md5"
             fi
           done
           cd $GITHUB_WORKSPACE/app/build/outputs/apk/fdroid/release
-          for file in Rhythm-*-fdroidRelease*.apk; do
+          for file in Melo-*-fdroidRelease*.apk; do
             if [ -f "$file" ]; then
               sha256sum "$file" > "$file.sha256"
               md5sum "$file" > "$file.md5"
@@ -87,12 +87,12 @@ jobs:
           prerelease: ${{ steps.prerelease.outputs.value }}
           body_path: release_notes.md
           files: |
-            app/build/outputs/apk/github/release/Rhythm-*-githubRelease*.apk
-            app/build/outputs/apk/github/release/Rhythm-*-githubRelease*.apk.sha256
-            app/build/outputs/apk/github/release/Rhythm-*-githubRelease*.apk.md5
-            app/build/outputs/apk/fdroid/release/Rhythm-*-fdroidRelease*.apk
-            app/build/outputs/apk/fdroid/release/Rhythm-*-fdroidRelease*.apk.sha256
-            app/build/outputs/apk/fdroid/release/Rhythm-*-fdroidRelease*.apk.md5
+            app/build/outputs/apk/github/release/Melo-*-githubRelease*.apk
+            app/build/outputs/apk/github/release/Melo-*-githubRelease*.apk.sha256
+            app/build/outputs/apk/github/release/Melo-*-githubRelease*.apk.md5
+            app/build/outputs/apk/fdroid/release/Melo-*-fdroidRelease*.apk
+            app/build/outputs/apk/fdroid/release/Melo-*-fdroidRelease*.apk.sha256
+            app/build/outputs/apk/fdroid/release/Melo-*-fdroidRelease*.apk.md5
 
       # ── Notifications ────────────────────────────────────────────────────────
 
@@ -100,13 +100,13 @@ jobs:
         if: success()
         id: find_apk
         run: |
-          APK_PATH=$(find app/build/outputs/apk/github/release -name "Rhythm-*-githubRelease.apk" ! -name "*-arm64-v8a.apk" ! -name "*-armeabi-v7a.apk" ! -name "*-x86_64.apk" ! -name "*-x86.apk" | head -n 1)
+          APK_PATH=$(find app/build/outputs/apk/github/release -name "Melo-*-githubRelease.apk" ! -name "*-arm64-v8a.apk" ! -name "*-armeabi-v7a.apk" ! -name "*-x86_64.apk" ! -name "*-x86.apk" | head -n 1)
           if [ -z "$APK_PATH" ]; then
             echo "No APK found — skipping notifications."
             echo "path=" >> $GITHUB_OUTPUT
           else
-            cp "$APK_PATH" /tmp/rhythm-release.apk
-            echo "path=/tmp/rhythm-release.apk" >> $GITHUB_OUTPUT
+            cp "$APK_PATH" /tmp/melo-release.apk
+            echo "path=/tmp/melo-release.apk" >> $GITHUB_OUTPUT
             echo "Found APK: $APK_PATH"
           fi
 
@@ -124,9 +124,9 @@ jobs:
           fi
           IS_BETA="${{ steps.prerelease.outputs.value }}"
           if [ "$IS_BETA" = "true" ]; then
-            BADGE="🔶 <b>Rhythm Beta Release</b>"
+            BADGE="🔶 <b>Melo Beta Release</b>"
           else
-            BADGE="✅ <b>Rhythm Stable Release</b>"
+            BADGE="✅ <b>Melo Stable Release</b>"
           fi
           RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
           CAPTION="${BADGE}"
@@ -171,20 +171,20 @@ jobs:
 
           if [ "$IS_BETA" = "true" ]; then
             EMBED_COLOR=16744272   # orange #FF8010
-            EMBED_TITLE="🔶 Rhythm Beta Release"
-            EMBED_DESC="A new **beta release** of Rhythm is now available on GitHub!"
+            EMBED_TITLE="🔶 Melo Beta Release"
+            EMBED_DESC="A new **beta release** of Melo is now available on GitHub!"
             NOTE="This is a **beta/pre-release** build. Please report issues on [GitHub Issues](https://github.com/${{ github.repository }}/issues)."
           else
             EMBED_COLOR=5763719    # green #57F287
-            EMBED_TITLE="✅ Rhythm Stable Release"
-            EMBED_DESC="A new **stable release** of Rhythm is now available — update recommended!"
+            EMBED_TITLE="✅ Melo Stable Release"
+            EMBED_DESC="A new **stable release** of Melo is now available — update recommended!"
             NOTE="Turn on **Auto-Backup** in Settings so you can always recover your data."
           fi
 
           cat > /tmp/discord_payload.json <<EOF
           {
-            "username": "Rhythm Releases",
-            "avatar_url": "https://github.com/cromaguy/Rhythm/raw/main/assets/icon.png",
+            "username": "Melo Releases",
+            "avatar_url": "https://github.com/angel-ssk/Melo/raw/main/assets/icon.png",
             "embeds": [
               {
                 "title": "${EMBED_TITLE}",
@@ -214,7 +214,7 @@ jobs:
                   }
                 ],
                 "footer": {
-                  "text": "Rhythm CI • Release Channel"
+                  "text": "Melo CI • Release Channel"
                 },
                 "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
               }

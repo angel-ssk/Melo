@@ -168,8 +168,8 @@ def format_fastlane_changelog(version_name, changes_text, release_type):
     match = re.search(r"(\d+)\.(\d+)", version_name)
     version_str = f"v{match.group(1)}.{match.group(2)}" if match else ""
     
-    title = f"Rhythm {version_str} - {release_type} Update\n\n"
-    footer = "\nThanks for using Rhythm ;)"
+    title = f"Melo {version_str} - {release_type} Update\n\n"
+    footer = "\nThanks for using Melo ;)"
     
     # Parse items — collapse translation entries into one
     items = []
@@ -281,7 +281,7 @@ def prompt_banner_choice(is_beta):
         return default_url
 
 def main():
-    print("=== Rhythm Release Preparation Tool ===")
+    print("=== Melo Release Preparation Tool ===")
     
     # Prompt release type
     release_type = input("Enter release type [1: Stable, 2: Beta, 3: Nightly] (default: Stable): ").strip().replace("\ufeff", "")

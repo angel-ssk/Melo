@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Rhythm</string>
+    <string name="app_name">Melo</string>
     <string name="home">Գլխավոր</string>
     <string name="library">Գրադարան</string>
     <string name="search">Փնտրել</string>
-    <string name="media3_notification_channel_name">Rhythm այժմ նվագում է</string>
+    <string name="media3_notification_channel_name">Melo այժմ նվագում է</string>
     <string name="media3_notification_channel_description">Նվագարկման կառավարման տարրեր ծանուցման վահանակում, հետ ու առաջ անցնելու հնարավորություն և ալբոմի շապիկներ</string>
     <string name="widget_description_glance">Տես՝ ինչ է նվագարկվում, և կառավարիր երաժշտությունդ գլխավոր էկրանից՝ միացրու, դադարեցրու, փոխիր երգը և ավելին։</string>
-    <string name="widget_name_glance">Rhythm երաժշտություն</string>
+    <string name="widget_name_glance">Melo երաժշտություն</string>
     <string name="unknown_artist">Անհայտ երգիչ</string>
     <string name="play_pause">Նվագել/Կանգնեցնել</string>
     <string name="settings_widget">Վիդջեթ</string>
@@ -23,8 +23,8 @@
     <string name="settings_notifications">Ծանուցումներ</string>
     <string name="settings_notifications_library_group">Գրադարան և համաժամեցում</string>
     <string name="settings_notifications_updates_group">Թարմացումներ</string>
-    <string name="settings_notifications_rhythm_guard_group">Rhythm Guard-ի անվտանգություն</string>
-    <string name="settings_notifications_rhythm_pulse_group">Լսելու նախասիրություններ ու խորհուրդներ</string>
+    <string name="settings_notifications_melo_guard_group">Melo Guard-ի անվտանգություն</string>
+    <string name="settings_notifications_melo_pulse_group">Լսելու նախասիրություններ ու խորհուրդներ</string>
     <string name="settings_notifications_system_group">Համակարգային կառավարում</string>
     <string name="settings_library_operations_notifications">Գրադարանի կառավարում և պահուստավորում</string>
 </resources>

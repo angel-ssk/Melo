@@ -1,4 +1,4 @@
-Rhythm v5.3 - Stable Update
+Melo v5.3 - Stable Update
 
 • Add track error checker toggle and API fixes
 • Improve LAN server discovery and Jellyfin parsing
@@ -7,4 +7,4 @@ Rhythm v5.3 - Stable Update
 • Major fixes to Media Scan
 • Many more improvements...
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

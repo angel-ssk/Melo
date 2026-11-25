@@ -1,4 +1,4 @@
-Rhythm v5.1 - Stable Update
+Melo v5.1 - Stable Update
 
 • Added Song-Specific Lyrics Preferences and Custom LRC File Management
 • Fixed: Premature signaling of Instrumental lyrics #442
@@ -8,4 +8,4 @@ Rhythm v5.1 - Stable Update
 • Major optimizations made
 • Fixed Stats and Equalizer opening lag
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

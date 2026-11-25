@@ -1,6 +1,6 @@
-Rhythm v5.5 - Stable Update
+Melo v5.5 - Stable Update
 
-• Rhythm Go offline downloads & local server discovery
+• Melo Go offline downloads & local server discovery
 • Adaptive Two-Pane layouts for tablets & foldables
 • Unified gesture customization for player, mini-player & lyrics
 • Revamped queue with swipe-to-dismiss & drag-and-drop
@@ -8,4 +8,4 @@ Rhythm v5.5 - Stable Update
 • Instant backward seeking with 10s back-buffer caching
 • Multi-artist delimiter fixes & playback stability
 
-Thanks for using Rhythm ;)
+Thanks for using Melo ;)

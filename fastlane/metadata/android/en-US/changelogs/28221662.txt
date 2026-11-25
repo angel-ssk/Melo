@@ -1,4 +1,4 @@
-Rhythm Stable - Major Feature Update
+Melo Stable - Major Feature Update
 
 What's New:
 
@@ -17,7 +17,7 @@ Added: Play All & Shuffle (Library)
 Improved: Backup & Restore (Settings)
 Improved: Updated licensing information (About)
 Improved: Playlist item view (Library)
-Improved: Bottom Navigation Bar (RhythmNavigation)
+Improved: Bottom Navigation Bar (MeloNavigation)
 Improved: Library now remembers your last active tab (Library)
 Improved: Hide bottom actions by default (Player)
 Improved: Polished UI (System)
@@ -29,6 +29,6 @@ Fixed: ANR when app is idle or not playing music (MediaPlaybackService)
 Fixed: Lyrics View getting reset after every track change (Player)
 Fixed: Playback crash on Android 16 (System Crash)
 Fixed: Issues when updating using Updater (AppUpdater)
-Fixed: Reinstalling Rhythm skips On-Boarding and Media Scanning after launching (System)
+Fixed: Reinstalling Melo skips On-Boarding and Media Scanning after launching (System)
 Lots of miscellaneous changes..
 Many more optimizations & improvements...
