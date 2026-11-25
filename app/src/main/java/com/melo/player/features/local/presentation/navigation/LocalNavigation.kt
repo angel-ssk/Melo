@@ -181,6 +181,11 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateDp
@@ -1526,14 +1531,21 @@ private fun LocalNavigationContent(
                                         // Use first visible library tab based on user's tab order
                                         val libraryRoute =
                                             Screen.Library.createRoute(firstVisibleLibraryTab)
+                                        val pentagonHome = com.melo.player.shared.presentation.components.icons.MaterialSymbolIcon("pentagon")
+                                        val libraryMusic = com.melo.player.shared.presentation.components.icons.MaterialSymbolIcon("library_music")
+                                        val settingsIcon = com.melo.player.shared.presentation.components.icons.MaterialSymbolIcon("settings")
                                         val items = listOf(
                                              Triple(
                                                  Screen.Home.route, context.getString(R.string.common_home),
-                                                 Pair(MeloIcons.HomeFilled, MeloIcons.Home)
+                                                 Pair(pentagonHome, pentagonHome)
                                              ),
                                              Triple(
                                                  libraryRoute, context.getString(R.string.common_library),
-                                                 Pair(MeloIcons.Navigation.Library, MeloIcons.Navigation.LibraryOutlined)
+                                                 Pair(libraryMusic, libraryMusic)
+                                             ),
+                                             Triple(
+                                                 Screen.Settings.route, context.getString(R.string.settings_title),
+                                                 Pair(settingsIcon, settingsIcon)
                                              )
                                          )
 
@@ -1541,6 +1553,7 @@ private fun LocalNavigationContent(
                                              val isSelected = when (route) {
                                                  Screen.Home.route -> currentRoute == Screen.Home.route
                                                  libraryRoute -> currentRoute.startsWith("library")
+                                                 Screen.Settings.route -> currentRoute == Screen.Settings.route
                                                  else -> false
                                              }
 
@@ -1644,12 +1657,26 @@ private fun LocalNavigationContent(
                                                         ),
                                                         label = "iconCrossfade_$title"
                                                     ) { selected ->
-                                                        Icon(
-                                                            imageVector = if (selected) selectedIcon else unselectedIcon,
-                                                            contentDescription = title,
-                                                            tint = iconColor,
-                                                            modifier = Modifier.size(24.dp)
-                                                        )
+                                                        Column(
+                                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                                            verticalArrangement = Arrangement.Center
+                                                        ) {
+                                                            Icon(
+                                                                imageVector = if (selected) selectedIcon else unselectedIcon,
+                                                                contentDescription = title,
+                                                                tint = iconColor,
+                                                                modifier = Modifier.size(22.dp)
+                                                            )
+                                                            if (title == context.getString(R.string.common_home)) {
+                                                                Box(
+                                                                    modifier = Modifier
+                                                                        .width(12.dp)
+                                                                        .height(2.dp)
+                                                                        .clip(ExpressiveShapes.Full)
+                                                                        .background(iconColor)
+                                                                )
+                                                            }
+                                                        }
                                                     }
 
                                                     AnimatedVisibility(
@@ -1708,6 +1735,20 @@ private fun LocalNavigationContent(
                                     label = "search_scale"
                                 )
                                 
+                                // Nine-piece Melo cookie, rotating slowly clockwise.
+                                val cookieShape = com.melo.player.shared.presentation.components.common
+                                    .rememberExpressiveShape("COOKIE_9")
+                                val cookieRotation by rememberInfiniteTransition(label = "searchCookie")
+                                    .animateFloat(
+                                        initialValue = 0f,
+                                        targetValue = 360f,
+                                        animationSpec = infiniteRepeatable(
+                                            animation = tween(14000, easing = LinearEasing),
+                                            repeatMode = RepeatMode.Restart
+                                        ),
+                                        label = "searchCookieRotation"
+                                    )
+
                                 FilledIconButton(
                                     onClick = {
                                         HapticUtils.performHapticFeedback(
@@ -1727,13 +1768,14 @@ private fun LocalNavigationContent(
                                         containerColor = MaterialTheme.colorScheme.primary,
                                         contentColor = MaterialTheme.colorScheme.onPrimary
                                     ),
-                                    shape = ExpressiveShapes.Full,
+                                    shape = cookieShape,
                                     interactionSource = searchInteractionSource,
                                     modifier = Modifier
-                                        .size(MusicDimensions.bottomNavigationHeight) // Match height of navigation bar
+                                        .size(MusicDimensions.bottomNavigationHeight)
                                         .graphicsLayer {
                                             scaleX = searchScale
                                             scaleY = searchScale
+                                            rotationZ = cookieRotation
                                         }
                                 ) {
                                     Icon(

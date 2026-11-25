@@ -582,19 +582,6 @@ fun HomeScreen(
                     )
                 )
             }
-            if (showSettings) {
-                add(
-                    HeaderAction(
-                        icon = MeloIcons.Settings,
-                        contentDescription = context.getString(R.string.home_settings_cd),
-                        onClick = {
-                            HapticUtils.performHapticFeedback(context, haptics, HapticType.HEAVY)
-                            onSettingsClick()
-                        }
-                    )
-                )
-            }
-
             // Profile is always available as its own top-right icon.
             add(
                 HeaderAction(
