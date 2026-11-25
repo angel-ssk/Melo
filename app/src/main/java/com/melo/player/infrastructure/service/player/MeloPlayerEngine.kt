@@ -822,14 +822,6 @@ class MeloPlayerEngine(
         val incomingPlayer = playerB
         val targetVolume = userVolume
 
-        // Start decoding the incoming track immediately at zero volume. Waiting
-        // until after the swap to call play() left a silent gap ("stuck" track)
-        // when the outgoing player reached its end before Player B was ready.
-        incomingPlayer.volume = 0f
-        if (outgoingPlayer.playWhenReady && incomingPlayer.playbackState != Player.STATE_IDLE) {
-            incomingPlayer.play()
-        }
-
         val outgoingMediaItemCount = outgoingPlayer.mediaItemCount
         val currentOutgoingIndex = outgoingPlayer.currentMediaItemIndex
             .takeIf { it in 0 until outgoingMediaItemCount }
@@ -846,7 +838,7 @@ class MeloPlayerEngine(
                     ?: currentOutgoingIndex
                 else -> currentOutgoingIndex
             }
-            incomingPlayer.setMediaItems(fullQueue, incomingQueueIndex, 0L)
+            incomingPlayer.setMediaItems(fullQueue, incomingQueueIndex, incomingPlayer.currentPosition)
             if (outgoingPlayer.shuffleModeEnabled) {
                 extractShuffleIndices(outgoingPlayer)?.let { indices ->
                     incomingPlayer.setShuffleOrder(MeloShuffleOrder(indices))
@@ -857,6 +849,14 @@ class MeloPlayerEngine(
         incomingPlayer.repeatMode = outgoingPlayer.repeatMode
         incomingPlayer.shuffleModeEnabled = outgoingPlayer.shuffleModeEnabled
         incomingPlayer.playbackParameters = outgoingPlayer.playbackParameters
+
+        // Only now that the incoming queue is finalised, start it silently so it
+        // is already decoding before the outgoing track ends (no gap), without
+        // being reset to position 0 by setMediaItems afterwards.
+        incomingPlayer.volume = 0f
+        if (outgoingPlayer.playWhenReady && incomingPlayer.playbackState != Player.STATE_IDLE) {
+            incomingPlayer.play()
+        }
 
         outgoingPlayer.removeListener(masterPlayerListener)
 
