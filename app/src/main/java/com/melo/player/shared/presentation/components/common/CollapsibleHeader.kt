@@ -213,7 +213,7 @@ fun CollapsibleHeaderScreen(
                             
                             if (shouldShowIcon) {
                                 androidx.compose.foundation.Image(
-                                    painter = androidx.compose.ui.res.painterResource(id = com.melo.player.R.drawable.melo_splash_logo),
+                                    painter = androidx.compose.ui.res.painterResource(id = com.melo.player.R.drawable.melo_app_icon),
                                     contentDescription = stringResource(R.string.collapsibleheader_app_icon),
                                     modifier = Modifier.size((48 + (36 - 28) * (1 - collapsedFraction)).dp)
                                 )

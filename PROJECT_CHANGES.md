@@ -26,6 +26,14 @@
 - **Imágenes de artistas en línea**: nueva opción en Ajustes → Integraciones (`online_artist_artwork`). Deezer + YouTube Music + respaldo iTunes Search sin clave API.
 - **Traducción ES**: la pestaña “Liked” se muestra como **Favoritos**.
 
-## 5. Firma
+## 5. Correcciones y optimizaciones posteriores
+
+- **Crash de arranque**: los logos internos se cargaban con `painterResource` desde `layer-list`, que Compose no soporta. Se usan PNG directos vía Coil; el squircle queda solo para launcher y «Acerca de», y la ola M sin fondo para onboarding, carga y pantallas internas.
+- **Notificaciones**: `ic_notification` reemplazado por la ola M (antes seguía el icono del proyecto original).
+- **Tema**: `Esquema personalizado` con **Melo Predeterminado** es el valor inicial; los colores dinámicos de Material You vienen desactivados para que el morado se aplique desde el primer arranque sin cambiar de modo.
+- **Sliders**: corregido el patrón que recreaba el `SliderState` en cada cambio de preferencia (el de crossfade volvía a 0,5 s al arrastrar). Aplica a los 14 archivos de ajustes que usaban el mismo patrón; el slider de progreso externo solo sigue a la reproducción cuando no se está arrastrando.
+- **Rendimiento**: cachés de imágenes y concurrencia adaptadas al tipo de dispositivo (`isLowRam` / `memoryClass`); blur de fondos desactivado en dispositivos con poca RAM en letras, álbum y artista. Build flags ya optimizados (paralelo, caché, configuración y R8).
+
+## 6. Firma
 
 - Keystore en `.config/melo-release.jks` (alias `melo`), configurado en `.config/keystore.properties`. Ambos ignorados por Git.

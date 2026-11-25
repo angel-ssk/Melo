@@ -552,14 +552,13 @@ fun MiniPlayerArtworkSizeSheet(
                 .padding(horizontal = 24.dp)
                 .padding(bottom = 24.dp)
         ) {
-            val sizeSliderState = remember(tempSize) {
+            val sizeSliderState = remember {                
                 SliderState(
                     value = tempSize.toFloat(),
                     steps = 31,
                     trackRange = 40f..72f
                 )
             }
-            sizeSliderState.value = tempSize.toFloat()
             Slider(
                 state = sizeSliderState,
                 onValueChange = { tempSize = it.toInt() },
@@ -615,14 +614,13 @@ fun MiniPlayerCornerRadiusSheet(
                 .padding(horizontal = 24.dp)
                 .padding(bottom = 24.dp)
         ) {
-            val radiusSliderState = remember(tempRadius) {
+            val radiusSliderState = remember {                
                 SliderState(
                     value = tempRadius.toFloat(),
                     steps = 27,
                     trackRange = 0f..28f
                 )
             }
-            radiusSliderState.value = tempRadius.toFloat()
             Slider(
                 state = radiusSliderState,
                 onValueChange = { tempRadius = it.toInt() },

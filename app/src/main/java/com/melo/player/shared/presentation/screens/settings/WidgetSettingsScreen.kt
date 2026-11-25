@@ -725,14 +725,13 @@ fun WidgetCornerRadiusSheet(
                 .padding(horizontal = 24.dp)
                 .padding(bottom = 24.dp)
         ) {
-            val tempRadiusSliderState = remember(tempRadius) {
+            val tempRadiusSliderState = remember {                
                 SliderState(
                     value = tempRadius.toFloat(),
                     steps = 59,
                     trackRange = 0f..60f
                 )
             }
-            tempRadiusSliderState.value = tempRadius.toFloat()
             Slider(
                 state = tempRadiusSliderState,
                 onValueChange = { tempRadius = it.toInt() },

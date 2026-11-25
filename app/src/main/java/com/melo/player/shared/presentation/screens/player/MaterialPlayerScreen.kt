@@ -1762,8 +1762,8 @@ fun MaterialPlayerScreen(
                                             AsyncImage(
                                                 model = ImageRequest.Builder(context)
                                                     .data(song.artworkUri)
-                                                    .placeholder(com.melo.player.R.drawable.melo_logo)
-                                                    .error(com.melo.player.R.drawable.melo_logo)
+                                                    .placeholder(com.melo.player.R.drawable.melo_app_icon)
+                                                    .error(com.melo.player.R.drawable.melo_app_icon)
                                                     .build(),
                                                 contentDescription = stringResource(R.string.album_artwork_description, song.title),
                                                 contentScale = ContentScale.Crop,
@@ -1856,7 +1856,7 @@ fun MaterialPlayerScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Icon(
-                                                painter = painterResource(id = com.melo.player.R.drawable.melo_logo),
+                                                painter = painterResource(id = com.melo.player.R.drawable.melo_app_icon),
                                                 contentDescription = stringResource(R.string.album_artwork_description, song.title),
                                                 tint = MaterialTheme.colorScheme.primary.copy(
                                                     alpha = 0.7f
@@ -1899,7 +1899,7 @@ fun MaterialPlayerScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        painter = painterResource(id = com.melo.player.R.drawable.melo_logo),
+                                        painter = painterResource(id = com.melo.player.R.drawable.melo_app_icon),
                                         contentDescription = stringResource(R.string.cd_no_song_playing),
                                         tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                                         modifier = Modifier.size(120.dp)

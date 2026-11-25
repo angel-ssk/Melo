@@ -416,7 +416,7 @@ fun ExternalPlaybackBottomSheet(
                         .padding(horizontal = 20.dp)
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.melo_splash_logo),
+                        painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                         contentDescription = stringResource(R.string.updates_melo_logo_cd),
                         modifier = Modifier.size(50.dp)
                     )
@@ -635,7 +635,8 @@ fun ExternalPlaybackBottomSheet(
                                 )
                             } else {
                                 val seekSliderState = remember { SliderState(value = displayedProgress) }
-                                seekSliderState.value = displayedProgress
+                                // Follow playback, but never override the user's own drag.
+                                if (!isScrubbing) seekSliderState.value = displayedProgress
                                 Slider(
                                     state = seekSliderState,
                                     onValueChange = { newProgress ->

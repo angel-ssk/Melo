@@ -66,6 +66,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.melo.player.R
+import com.melo.player.MeloApplication
 import com.melo.player.shared.presentation.components.player.PlayingEqIcon
 import com.melo.player.shared.presentation.components.player.formatDuration
 import com.melo.player.shared.presentation.components.AudioQualityIcon
@@ -353,7 +354,7 @@ fun ArtistDetailScreen(
 
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             Box(modifier = Modifier.fillMaxSize()) {
-                if (albumScreenGradientBlur) {
+                if (albumScreenGradientBlur && !MeloApplication.isLowRam) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

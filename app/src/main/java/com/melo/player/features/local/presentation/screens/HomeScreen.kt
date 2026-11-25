@@ -174,6 +174,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import coil.compose.rememberAsyncImagePainter
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
@@ -1228,7 +1229,7 @@ private fun StreamingHomeWelcomeContent(
                     horizontalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.melo_splash_logo),
+                        painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                         contentDescription = stringResource(R.string.updates_melo_logo_cd),
                         modifier = Modifier.size(100.dp)
                     )

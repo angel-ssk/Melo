@@ -52,6 +52,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.melo.player.R
+import com.melo.player.MeloApplication
 
 import com.melo.player.shared.data.model.Album
 import com.melo.player.shared.data.model.Artist
@@ -433,7 +434,7 @@ fun AlbumDetailScreen(
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             Box(modifier = Modifier.fillMaxSize()) {
                 // Full-screen blurred backdrop (like FullScreenLyricsView)
-                if (albumScreenGradientBlur) {
+                if (albumScreenGradientBlur && !MeloApplication.isLowRam) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

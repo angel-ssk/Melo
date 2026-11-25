@@ -39,10 +39,13 @@ abstract class MeloDatabase : RoomDatabase() {
                 db.execSQL("""
                     CREATE TABLE IF NOT EXISTS `artists` (
                         `id` TEXT NOT NULL, 
-                        `name` TEXT NOT NULL, 
+                        
+ame` TEXT NOT NULL, 
                         `artworkUri` TEXT, 
-                        `numberOfAlbums` INTEGER NOT NULL, 
-                        `numberOfTracks` INTEGER NOT NULL, 
+                        
+umberOfAlbums` INTEGER NOT NULL, 
+                        
+umberOfTracks` INTEGER NOT NULL, 
                         `groupByAlbumArtist` INTEGER NOT NULL, 
                         PRIMARY KEY(`id`)
                     )
@@ -102,7 +105,8 @@ abstract class MeloDatabase : RoomDatabase() {
                 db.execSQL("""
                     CREATE TABLE IF NOT EXISTS `playlists` (
                         `id` TEXT NOT NULL, 
-                        `name` TEXT NOT NULL, 
+                        
+ame` TEXT NOT NULL, 
                         `dateCreated` INTEGER NOT NULL, 
                         `dateModified` INTEGER NOT NULL, 
                         `artworkUri` TEXT, 

@@ -44,6 +44,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
+import coil.compose.rememberAsyncImagePainter
 import com.melo.player.R
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
@@ -204,7 +205,7 @@ class CrashActivity : AppCompatActivity() {
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.melo_splash_logo),
+                                        painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                                         contentDescription = stringResource(R.string.updates_melo_logo_cd),
                                         modifier = Modifier.size(48.dp)
                                     )
@@ -414,7 +415,7 @@ class CrashActivity : AppCompatActivity() {
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Image(
-                                        painter = painterResource(id = R.drawable.melo_splash_logo),
+                                        painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                                         contentDescription = stringResource(R.string.updates_melo_logo_cd),
                                         modifier = Modifier.size(80.dp)
                                     )

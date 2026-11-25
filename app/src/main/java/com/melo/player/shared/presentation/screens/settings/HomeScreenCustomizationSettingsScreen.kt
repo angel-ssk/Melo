@@ -409,14 +409,13 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = MaterialTheme.colorScheme.primary
                                         )
-                                        val recentlyPlayedSliderState = remember(recentlyPlayedCount) {
+                                        val recentlyPlayedSliderState = remember {                                            
                                             SliderState(
                                                 value = recentlyPlayedCount.toFloat(),
                                                 steps = 8,
                                                 trackRange = 3f..12f
                                             )
                                         }
-                                        recentlyPlayedSliderState.value = recentlyPlayedCount.toFloat()
                                         Slider(
                                             state = recentlyPlayedSliderState,
                                             onValueChange = {
@@ -453,14 +452,13 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = MaterialTheme.colorScheme.primary
                                         )
-                                        val artistsSliderState = remember(artistsCount) {
+                                        val artistsSliderState = remember {                                            
                                             SliderState(
                                                 value = artistsCount.toFloat(),
                                                 steps = 15,
                                                 trackRange = 4f..20f
                                             )
                                         }
-                                        artistsSliderState.value = artistsCount.toFloat()
                                         Slider(
                                             state = artistsSliderState,
                                             onValueChange = {
@@ -497,14 +495,13 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = MaterialTheme.colorScheme.primary
                                         )
-                                        val newReleasesSliderState = remember(newReleasesCount) {
+                                        val newReleasesSliderState = remember {                                            
                                             SliderState(
                                                 value = newReleasesCount.toFloat(),
                                                 steps = 15,
                                                 trackRange = 4f..20f
                                             )
                                         }
-                                        newReleasesSliderState.value = newReleasesCount.toFloat()
                                         Slider(
                                             state = newReleasesSliderState,
                                             onValueChange = {
@@ -541,14 +538,13 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = MaterialTheme.colorScheme.primary
                                         )
-                                        val recentlyAddedSliderState = remember(recentlyAddedCount) {
+                                        val recentlyAddedSliderState = remember {                                            
                                             SliderState(
                                                 value = recentlyAddedCount.toFloat(),
                                                 steps = 15,
                                                 trackRange = 4f..20f
                                             )
                                         }
-                                        recentlyAddedSliderState.value = recentlyAddedCount.toFloat()
                                         Slider(
                                             state = recentlyAddedSliderState,
                                             onValueChange = {
@@ -585,14 +581,13 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                             style = MaterialTheme.typography.bodyMedium,
                                             color = MaterialTheme.colorScheme.primary
                                         )
-                                        val recommendedSliderState = remember(recommendedCount) {
+                                        val recommendedSliderState = remember {                                            
                                             SliderState(
                                                 value = recommendedCount.toFloat(),
                                                 steps = 5,
                                                 trackRange = 2f..8f
                                             )
                                         }
-                                        recommendedSliderState.value = recommendedCount.toFloat()
                                         Slider(
                                             state = recommendedSliderState,
                                             onValueChange = {
@@ -731,14 +726,13 @@ fun HomeScreenCustomizationSettingsScreen(onBackClick: () -> Unit) {
                                                 style = MaterialTheme.typography.bodyMedium,
                                                 color = MaterialTheme.colorScheme.primary
                                             )
-                                            val discoverSliderState = remember(discoverItemCount) {
+                                            val discoverSliderState = remember {                                                
                                                 SliderState(
                                                     value = discoverItemCount.toFloat(),
                                                     steps = 8,
                                                     trackRange = 3f..12f
                                                 )
                                             }
-                                            discoverSliderState.value = discoverItemCount.toFloat()
                                             Slider(
                                                 state = discoverSliderState,
                                                 onValueChange = {
@@ -1027,7 +1021,7 @@ fun HomeSettingsSliderCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            val sliderState = remember(valueRange, steps) {
+            val sliderState = remember {                
                 SliderState(
                     value = value,
                     steps = steps,
@@ -1117,7 +1111,7 @@ fun HomeSettingsSliderRow(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        val sliderState = remember(valueRange, steps) {
+        val sliderState = remember {            
             SliderState(
                 value = value,
                 steps = steps,

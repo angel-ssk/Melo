@@ -64,6 +64,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import coil.compose.rememberAsyncImagePainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -261,7 +262,7 @@ fun MediaScanLoader(
                         // .scale(breathingScale)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.melo_splash_logo),
+                        painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                         contentDescription = null,
                         modifier = Modifier.size(76.dp)
                     )

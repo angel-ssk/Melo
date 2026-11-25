@@ -126,6 +126,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
+import coil.compose.rememberAsyncImagePainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -756,7 +757,7 @@ fun OnboardingScreen(
                         modifier = Modifier.align(Alignment.CenterStart)
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.melo_splash_logo),
+                            painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                             contentDescription = null,
                             modifier = Modifier.size(32.dp)
                         )
@@ -4629,7 +4630,7 @@ fun EnhancedFullTourPromptContent(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.melo_splash_logo),
+                        painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                         contentDescription = context.getString(R.string.updates_melo_logo_cd),
                         modifier = Modifier.size(64.dp)
                     )
@@ -4785,7 +4786,7 @@ fun EnhancedFullTourPromptContent(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.melo_splash_logo),
+                    painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                     contentDescription = context.getString(R.string.updates_melo_logo_cd),
                     modifier = Modifier.size(80.dp)
                 )
@@ -9439,7 +9440,7 @@ private fun AppModeChoiceHeader(
     Layout(
         content = {
             Image(
-                painter = painterResource(id = R.drawable.melo_splash_logo),
+                painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                 contentDescription = stringResource(R.string.updates_melo_logo_cd),
                 modifier = Modifier.size(logoSize)
             )

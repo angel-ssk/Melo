@@ -1129,7 +1129,6 @@ fun MediaScanSettingsScreen(onBackClick: () -> Unit) {
                                             trackRange = 0f..300f
                                         )
                                     }
-                                    mediaScanSliderState.value = currentSeconds
                                     Slider(
                                         state = mediaScanSliderState,
                                         onValueChange = { value ->

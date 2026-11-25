@@ -873,7 +873,7 @@ class AppSettings private constructor(context: Context) {
     private val _floatingNavigationBar = MutableStateFlow(prefs.getBoolean(KEY_FLOATING_NAVIGATION_BAR, true))
     val floatingNavigationBar: StateFlow<Boolean> = _floatingNavigationBar.asStateFlow()
     
-    private val _useDynamicColors = MutableStateFlow(prefs.getBoolean(KEY_USE_DYNAMIC_COLORS, true))
+    private val _useDynamicColors = MutableStateFlow(prefs.getBoolean(KEY_USE_DYNAMIC_COLORS, false))
     val useDynamicColors: StateFlow<Boolean> = _useDynamicColors.asStateFlow()
     
     // Artist Separator Settings
@@ -899,7 +899,7 @@ class AppSettings private constructor(context: Context) {
     private val _customFont = MutableStateFlow(prefs.getString(KEY_CUSTOM_FONT, "Geom") ?: "Geom")
     val customFont: StateFlow<String> = _customFont.asStateFlow()
     
-    private val _colorSource = MutableStateFlow(prefs.getString(KEY_COLOR_SOURCE, "MONET") ?: "MONET")
+    private val _colorSource = MutableStateFlow(prefs.getString(KEY_COLOR_SOURCE, "CUSTOM") ?: "CUSTOM")
     val colorSource: StateFlow<String> = _colorSource.asStateFlow()
     
     private val _extractedAlbumColors = MutableStateFlow(prefs.getString(KEY_EXTRACTED_ALBUM_COLORS, null))

@@ -30,6 +30,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
+import coil.compose.rememberAsyncImagePainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -111,7 +112,7 @@ fun UpdateBottomSheet(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.melo_logo),
+                                painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                                 contentDescription = context.getString(R.string.cd_melo_logo),
                                 modifier = Modifier.size(45.dp)
                             )

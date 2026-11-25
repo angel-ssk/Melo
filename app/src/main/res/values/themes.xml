@@ -4,8 +4,8 @@
     <!-- Splash screen starting theme (SplashScreen compat library — Android 12+) -->
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <!-- launcher_bg adapts to the app theme (white in light, dark in night) -->
-        <item name="windowSplashScreenBackground">@color/launcher_bg</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/melo_logo</item>
+        <item name="windowSplashScreenBackground">@color/splash_bg</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/melo_app_icon</item>
         <item name="windowSplashScreenAnimationDuration">10</item>
         <item name="postSplashScreenTheme">@style/Theme.Melo</item>
     </style>

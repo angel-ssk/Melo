@@ -233,7 +233,7 @@ fun AboutScreen(
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Image(
-                                painter = painterResource(id = com.melo.player.R.drawable.melo_splash_logo),
+                                painter = coil.compose.rememberAsyncImagePainter(model = com.melo.player.R.drawable.melo_app_icon),
                                 contentDescription = context.getString(R.string.updates_melo_logo_cd),
                                 modifier = Modifier.size(82.dp)
                             )

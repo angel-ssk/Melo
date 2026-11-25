@@ -956,14 +956,13 @@ private fun PlaybackQuickSettingsCard(
                                 color = MaterialTheme.colorScheme.primary
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            val crossfadeSliderState = remember(crossfadeDuration) {
+                            val crossfadeSliderState = remember {                                
                                 SliderState(
                                     value = crossfadeDuration,
                                     steps = 8,
                                     trackRange = 1f..10f
                                 )
                             }
-                            crossfadeSliderState.value = crossfadeDuration
                             Slider(
                                 state = crossfadeSliderState,
                                 onValueChange = {
@@ -1211,14 +1210,13 @@ private fun PlaybackPitchCard(
                 
                 Spacer(modifier = Modifier.height(8.dp))
                 
-                val pitchSliderState = remember(selectedPitch) {
+                val pitchSliderState = remember {                    
                     SliderState(
                         value = selectedPitch,
                         steps = 54,
                         trackRange = 0.25f..3.0f
                     )
                 }
-                pitchSliderState.value = selectedPitch
                 Slider(
                     state = pitchSliderState,
                     onValueChange = { newValue ->
@@ -1391,13 +1389,12 @@ private fun AudioEffectsCard(
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary
                             )
-                            val bassBoostSliderState = remember(bassBoostStrength) {
+                            val bassBoostSliderState = remember {                                
                                 SliderState(
                                     value = bassBoostStrength.toFloat(),
                                     trackRange = 0f..1000f
                                 )
                             }
-                            bassBoostSliderState.value = bassBoostStrength.toFloat()
                             Slider(
                                 state = bassBoostSliderState,
                                 onValueChange = { onBassBoostStrengthChange(it.toInt()) },
@@ -1455,13 +1452,12 @@ private fun AudioEffectsCard(
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.primary
                             )
-                            val virtualizerSliderState = remember(virtualizerStrength) {
+                            val virtualizerSliderState = remember {                                
                                 SliderState(
                                     value = virtualizerStrength.toFloat(),
                                     trackRange = 0f..1000f
                                 )
                             }
-                            virtualizerSliderState.value = virtualizerStrength.toFloat()
                             Slider(
                                 state = virtualizerSliderState,
                                 onValueChange = { onVirtualizerStrengthChange(it.toInt()) },

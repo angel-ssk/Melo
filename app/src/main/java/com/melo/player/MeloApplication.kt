@@ -48,6 +48,10 @@ class MeloApplication : Application(), ImageLoaderFactory {
         // Using a static reference is safe for Application class
         lateinit var instance: MeloApplication
             private set
+
+        /** True on low-RAM devices: used to skip expensive blur/ambient effects. */
+        var isLowRam: Boolean = false
+            private set
     }
     
     private var anrWatchdog: ANRWatchdog? = null
@@ -56,7 +60,8 @@ class MeloApplication : Application(), ImageLoaderFactory {
         super.onCreate()
         
         instance = this
-        
+        isLowRam = (getSystemService(android.content.Context.ACTIVITY_SERVICE) as android.app.ActivityManager).isLowRamDevice
+
         Log.d(TAG, "═══════════════════════════════════════════════════")
         Log.d(TAG, "MeloApplication onCreate")
         Log.d(TAG, "Build Type: ${BuildConfig.BUILD_TYPE}")
@@ -135,11 +140,22 @@ class MeloApplication : Application(), ImageLoaderFactory {
      * cache at 25% of heap, which is far too large for an offline music app — bound both explicitly.
      */
     override fun newImageLoader(): ImageLoader {
+        // Adapt image-caching and concurrency to the device class: low-RAM devices
+        // get smaller caches and fewer parallel decodes to avoid GC pressure/jank,
+        // while high-end devices keep larger caches for fewer network hits.
+        val activityManager = getSystemService(android.content.Context.ACTIVITY_SERVICE) as android.app.ActivityManager
+        val lowRam = activityManager.isLowRamDevice
+        val memoryClassMb = activityManager.memoryClass
+        val maxRequests = if (lowRam) 6 else if (memoryClassMb >= 256) 20 else 12
+        val maxRequestsPerHost = if (lowRam) 2 else 4
+        val memoryCachePercent = if (lowRam) 0.10 else if (memoryClassMb >= 256) 0.18 else 0.14
+        val diskCacheBytes = if (lowRam) 64L * 1024 * 1024 else 128L * 1024 * 1024
+
         val imageOkHttpClient = com.melo.player.features.streaming.data.provider.UserTrustManager
             .buildUserTrustingHttpClientBuilder()
             .dispatcher(Dispatcher().apply {
-                maxRequests = 16
-                maxRequestsPerHost = 4
+                this.maxRequests = maxRequests
+                this.maxRequestsPerHost = maxRequestsPerHost
             })
             .build()
 
@@ -153,16 +169,16 @@ class MeloApplication : Application(), ImageLoaderFactory {
             }
             .memoryCache {
                 MemoryCache.Builder(this)
-                    .maxSizePercent(0.15) // 15% of app heap (default is 25%)
+                    .maxSizePercent(memoryCachePercent)
                     .build()
             }
             .diskCache {
                 DiskCache.Builder()
                     .directory(cacheDir.resolve("image_cache"))
-                    .maxSizeBytes(128L * 1024 * 1024) // 128 MB (default is ~2% of disk)
+                    .maxSizeBytes(diskCacheBytes)
                     .build()
             }
-            .crossfade(true)
+            .crossfade(!lowRam)
             .build()
     }
     

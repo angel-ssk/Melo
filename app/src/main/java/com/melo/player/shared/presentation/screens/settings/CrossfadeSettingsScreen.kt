@@ -190,14 +190,15 @@ fun CrossfadeSettingsScreen(
                                 Column(modifier = Modifier.fillMaxWidth()) {
                                     Text(stringResource(R.string.settings_crossfade_duration_help))
                                     Spacer(modifier = Modifier.height(8.dp))
-                                    val crossfadeSliderState = remember(crossfadeDuration) {
+                                    // Keep a single SliderState instance: recreating it on every
+                                    // preference update aborted the drag and snapped back to 0.5s.
+                                    val crossfadeSliderState = remember {
                                         SliderState(
                                             value = crossfadeDuration,
                                             steps = 22,
                                             trackRange = 0.5f..12f
                                         )
                                     }
-                                    crossfadeSliderState.value = crossfadeDuration
                                     Slider(
                                         state = crossfadeSliderState,
                                         onValueChange = {

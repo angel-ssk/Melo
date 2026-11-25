@@ -65,6 +65,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import coil.compose.rememberAsyncImagePainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -406,7 +407,7 @@ class MainActivity : AppCompatActivity() {
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                                     ) {
                                         Image(
-                                            painter = painterResource(id = R.drawable.melo_splash_logo),
+                                            painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
                                             contentDescription = stringResource(R.string.cd_melo_logo),
                                             modifier = Modifier.size(56.dp)
                                         )

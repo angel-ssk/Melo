@@ -80,7 +80,7 @@ fun ViperSliderRow(
             )
         }
 
-        val sliderState = remember(valueRange) {
+        val sliderState = remember {            
             SliderState(value = clamped, trackRange = valueRange)
         }
         sliderState.value = clamped

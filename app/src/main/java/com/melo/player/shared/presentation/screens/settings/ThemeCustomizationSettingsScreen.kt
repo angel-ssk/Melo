@@ -1008,13 +1008,12 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            val festiveThemeIntensitySliderState = remember(festiveThemeIntensity) {
+                            val festiveThemeIntensitySliderState = remember {                                
                                 SliderState(
                                     value = festiveThemeIntensity,
                                     trackRange = 0.1f..1f
                                 )
                             }
-                            festiveThemeIntensitySliderState.value = festiveThemeIntensity
                             Slider(
                                 state = festiveThemeIntensitySliderState,
                                 onValueChange = { appSettings.setFestiveThemeIntensity(it) },
@@ -1045,13 +1044,12 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            val festiveSnowflakeSizeSliderState = remember(festiveSnowflakeSize) {
+                            val festiveSnowflakeSizeSliderState = remember {                                
                                 SliderState(
                                     value = festiveSnowflakeSize,
                                     trackRange = 0.5f..2.0f
                                 )
                             }
-                            festiveSnowflakeSizeSliderState.value = festiveSnowflakeSize
                             Slider(
                                 state = festiveSnowflakeSizeSliderState,
                                 onValueChange = { appSettings.setFestiveSnowflakeSize(it) },

@@ -258,14 +258,13 @@ fun CacheSizeDialog(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     val cacheSliderSteps = ((2048 - 64) / 64) - 1
-                    val cacheSliderState = remember(cacheSliderSteps) {
+                    val cacheSliderState = remember {                        
                         SliderState(
                             value = selectedSizeMB,
                             steps = cacheSliderSteps,
                             trackRange = 64f..2048f
                         )
                     }
-                    cacheSliderState.value = selectedSizeMB
                     Slider(
                         state = cacheSliderState,
                         onValueChange = { newValue ->

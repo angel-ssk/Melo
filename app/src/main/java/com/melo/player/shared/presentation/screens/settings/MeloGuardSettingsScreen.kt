@@ -532,14 +532,13 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                 }
                             }
                             Spacer(modifier = Modifier.height(12.dp))
-                            val auraAgeSliderState = remember(auraAge) {
+                            val auraAgeSliderState = remember {                                
                                 SliderState(
                                     value = auraAge.toFloat(),
                                     steps = 71,
                                     trackRange = 8f..80f
                                 )
                             }
-                            auraAgeSliderState.value = auraAge.toFloat()
                             Slider(
                                 state = auraAgeSliderState,
                                 onValueChange = {
@@ -668,14 +667,13 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                             )
                                         }
                                     }
-                                    val alertThresholdSliderState = remember(alertThresholdMinutes) {
+                                    val alertThresholdSliderState = remember {                                        
                                         SliderState(
                                             value = maxOf(alertThresholdMinutes, 15).toFloat(),
                                             steps = 344,
                                             trackRange = 15f..360f
                                         )
                                     }
-                                    alertThresholdSliderState.value = maxOf(alertThresholdMinutes, 15).toFloat()
                                     Slider(
                                         state = alertThresholdSliderState,
                                         onValueChange = {
@@ -738,14 +736,13 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                             )
                                         }
                                     }
-                                    val warningTimeoutSliderState = remember(warningTimeoutMinutes) {
+                                    val warningTimeoutSliderState = remember {                                        
                                         SliderState(
                                             value = warningTimeoutMinutes.toFloat(),
                                             steps = 28,
                                             trackRange = 1f..30f
                                         )
                                     }
-                                    warningTimeoutSliderState.value = warningTimeoutMinutes.toFloat()
                                     Slider(
                                         state = warningTimeoutSliderState,
                                         onValueChange = {
@@ -808,14 +805,13 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                             )
                                         }
                                     }
-                                    val postTimeoutCooldownSliderState = remember(postTimeoutCooldownMinutes) {
+                                    val postTimeoutCooldownSliderState = remember {                                        
                                         SliderState(
                                             value = postTimeoutCooldownMinutes.toFloat(),
                                             steps = 28,
                                             trackRange = 1f..30f
                                         )
                                     }
-                                    postTimeoutCooldownSliderState.value = postTimeoutCooldownMinutes.toFloat()
                                     Slider(
                                         state = postTimeoutCooldownSliderState,
                                         onValueChange = {
@@ -878,14 +874,13 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                             )
                                         }
                                     }
-                                    val breakResumeSliderState = remember(breakResumeMinutes) {
+                                    val breakResumeSliderState = remember {                                        
                                         SliderState(
                                             value = breakResumeMinutes.toFloat(),
                                             steps = 118,
                                             trackRange = 1f..120f
                                         )
                                     }
-                                    breakResumeSliderState.value = breakResumeMinutes.toFloat()
                                     Slider(
                                         state = breakResumeSliderState,
                                         onValueChange = {
@@ -1083,13 +1078,12 @@ fun MeloGuardSettingsScreen(onBackClick: () -> Unit) {
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Spacer(modifier = Modifier.height(10.dp))
-                                    val manualVolumeThresholdSliderState = remember(manualVolumeThreshold) {
+                                    val manualVolumeThresholdSliderState = remember {                                        
                                         SliderState(
                                             value = manualVolumeThreshold,
                                             trackRange = 0.40f..0.95f
                                         )
                                     }
-                                    manualVolumeThresholdSliderState.value = manualVolumeThreshold
                                     Slider(
                                         state = manualVolumeThresholdSliderState,
                                         onValueChange = {

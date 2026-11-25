@@ -724,14 +724,13 @@ fun PlayerCustomizationSettingsScreen(onBackClick: () -> Unit) {
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp)
             ) {
-                val radiusSliderState = remember(tempRadius) {
+                val radiusSliderState = remember {                    
                     SliderState(
                         value = tempRadius.toFloat(),
                         steps = 39,
                         trackRange = 0f..40f
                     )
                 }
-                radiusSliderState.value = tempRadius.toFloat()
                 Slider(
                     state = radiusSliderState,
                     onValueChange = { tempRadius = it.toInt() },
@@ -807,14 +806,13 @@ fun PlayerCustomizationSettingsScreen(onBackClick: () -> Unit) {
                     .padding(horizontal = 24.dp)
                     .padding(bottom = 24.dp)
             ) {
-                val intensitySliderState = remember(tempIntensity) {
+                val intensitySliderState = remember {                    
                     SliderState(
                         value = tempIntensity,
                         steps = 39,
                         trackRange = 0.0f..1.0f
                     )
                 }
-                intensitySliderState.value = tempIntensity
                 Slider(
                     state = intensitySliderState,
                     onValueChange = { tempIntensity = it },

@@ -69,6 +69,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.luminance
 import kotlinx.coroutines.delay
 import com.melo.player.R
+import com.melo.player.MeloApplication
 import androidx.compose.ui.res.stringResource
 import java.util.Locale
 import com.melo.player.util.windowScreenWidthDp
@@ -267,7 +268,7 @@ fun FullScreenLyricsView(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .blur(56.dp)
+                        .then(if (MeloApplication.isLowRam) Modifier else Modifier.blur(56.dp))
                         .alpha(0.68f)
                 ) {
                     // Blurred base cover art
