@@ -408,7 +408,9 @@ class MainActivity : AppCompatActivity() {
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                                     ) {
-                                        com.melo.player.shared.presentation.components.common.MeloWaveLoader(
+                                        Image(
+                                            painter = rememberAsyncImagePainter(model = R.drawable.melo_foreground),
+                                            contentDescription = stringResource(R.string.cd_melo_logo),
                                             modifier = Modifier.size(56.dp)
                                         )
                                         Text(

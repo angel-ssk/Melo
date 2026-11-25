@@ -180,6 +180,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.ui.draw.alpha
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.LinearEasing
@@ -1657,6 +1658,11 @@ private fun LocalNavigationContent(
                                                         ),
                                                         label = "iconCrossfade_$title"
                                                     ) { selected ->
+                                                        val lineAlpha by animateFloatAsState(
+                                                            targetValue = if (selected && title == context.getString(R.string.common_home)) 1f else 0f,
+                                                            animationSpec = tween(220),
+                                                            label = "homeLineAlpha"
+                                                        )
                                                         Column(
                                                             horizontalAlignment = Alignment.CenterHorizontally,
                                                             verticalArrangement = Arrangement.Center
@@ -1665,17 +1671,16 @@ private fun LocalNavigationContent(
                                                                 imageVector = if (selected) selectedIcon else unselectedIcon,
                                                                 contentDescription = title,
                                                                 tint = iconColor,
-                                                                modifier = Modifier.size(22.dp)
+                                                                modifier = Modifier.size(28.dp)
                                                             )
-                                                            if (title == context.getString(R.string.common_home)) {
-                                                                Box(
-                                                                    modifier = Modifier
-                                                                        .width(12.dp)
-                                                                        .height(2.dp)
-                                                                        .clip(ExpressiveShapes.Full)
-                                                                        .background(iconColor)
-                                                                )
-                                                            }
+                                                            Box(
+                                                                modifier = Modifier
+                                                                    .width(14.dp)
+                                                                    .height(3.dp)
+                                                                    .clip(ExpressiveShapes.Full)
+                                                                    .background(iconColor)
+                                                                    .alpha(lineAlpha)
+                                                            )
                                                         }
                                                     }
 
@@ -1749,38 +1754,45 @@ private fun LocalNavigationContent(
                                         label = "searchCookieRotation"
                                     )
 
-                                FilledIconButton(
-                                    onClick = {
-                                        HapticUtils.performHapticFeedback(
-                                            context,
-                                            haptic,
-                                            HapticType.HEAVY
-                                        )
-                                        navController.navigate(Screen.Search.route) {
-                                            popUpTo(navController.graph.findStartDestination().id) {
-                                                saveState = true
-                                            }
-                                            launchSingleTop = true
-                                            restoreState = true
-                                        }
-                                    },
-                                    colors = IconButtonDefaults.filledIconButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                        contentColor = MaterialTheme.colorScheme.onPrimary
-                                    ),
-                                    shape = cookieShape,
-                                    interactionSource = searchInteractionSource,
+                                Box(
                                     modifier = Modifier
                                         .size(MusicDimensions.bottomNavigationHeight)
                                         .graphicsLayer {
                                             scaleX = searchScale
                                             scaleY = searchScale
-                                            rotationZ = cookieRotation
                                         }
+                                        .clickable(
+                                            interactionSource = searchInteractionSource,
+                                            indication = null
+                                        ) {
+                                            HapticUtils.performHapticFeedback(
+                                                context,
+                                                haptic,
+                                                HapticType.HEAVY
+                                            )
+                                            navController.navigate(Screen.Search.route) {
+                                                popUpTo(navController.graph.findStartDestination().id) {
+                                                    saveState = true
+                                                }
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
+                                        },
+                                    contentAlignment = Alignment.Center
                                 ) {
+                                    // Only the expressive nine-piece shape rotates;
+                                    // the magnifier stays perfectly still.
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .clip(cookieShape)
+                                            .background(MaterialTheme.colorScheme.primary)
+                                            .graphicsLayer { rotationZ = cookieRotation }
+                                    )
                                     Icon(
                                         imageVector = MeloIcons.Search,
                                         contentDescription = stringResource(R.string.cd_search),
+                                        tint = MaterialTheme.colorScheme.onPrimary,
                                         modifier = Modifier.size(25.dp)
                                     )
                                 }
