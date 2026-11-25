@@ -184,6 +184,7 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_FLOATING_NAVIGATION_BAR = "floating_navigation_bar"
         private const val KEY_USE_DYNAMIC_COLORS = "use_dynamic_colors"
         private const val KEY_HIGH_REFRESH_MOTION = "high_refresh_motion"
+        private const val KEY_WAVE_GRADIENT = "wave_gradient"
         private const val KEY_PROFILE_NAME = "profile_name"
         private const val KEY_PROFILE_USERNAME = "profile_username"
         private const val KEY_PROFILE_PHOTO_PATH = "profile_photo_path"
@@ -883,6 +884,15 @@ class AppSettings private constructor(context: Context) {
     /** Fast, frame-rate-independent motion tuned for 120 Hz+ displays. */
     private val _highRefreshMotion = MutableStateFlow(prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true))
     val highRefreshMotion: StateFlow<Boolean> = _highRefreshMotion.asStateFlow()
+
+    /** Blurred brand gradient backdrop; can be switched off for the flat one. */
+    private val _waveGradient = MutableStateFlow(prefs.getBoolean(KEY_WAVE_GRADIENT, true))
+    val waveGradient: StateFlow<Boolean> = _waveGradient.asStateFlow()
+
+    fun setWaveGradient(enabled: Boolean) {
+        prefs.edit { putBoolean(KEY_WAVE_GRADIENT, enabled) }
+        _waveGradient.value = enabled
+    }
 
     private val _profileName = MutableStateFlow(prefs.getString(KEY_PROFILE_NAME, "Melo") ?: "Melo")
     val profileName: StateFlow<String> = _profileName.asStateFlow()
@@ -5596,6 +5606,7 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _floatingNavigationBar.value = prefs.getBoolean(KEY_FLOATING_NAVIGATION_BAR, true)
         _useDynamicColors.value = prefs.getBoolean(KEY_USE_DYNAMIC_COLORS, false)
         _highRefreshMotion.value = prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true)
+        _waveGradient.value = prefs.getBoolean(KEY_WAVE_GRADIENT, true)
         _customColorScheme.value = prefs.getString(KEY_CUSTOM_COLOR_SCHEME, "Default") ?: "Default"
         _customFont.value = prefs.getString(KEY_CUSTOM_FONT, "Geom") ?: "Geom"
         

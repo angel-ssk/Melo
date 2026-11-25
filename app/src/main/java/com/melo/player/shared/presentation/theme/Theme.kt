@@ -303,8 +303,8 @@ fun MeloTheme(
         val expressiveScheme = if (expressiveColors) {
             if (darkTheme) {
                 baseScheme.copy(
-                    background = baseScheme.surfaceContainerLowest,
-                    surface = baseScheme.surfaceContainerLowest,
+                    background = MeloDarkSurface,
+                    surface = MeloDarkSurface,
                     surfaceContainerLowest = baseScheme.surfaceContainerLowest,
                     surfaceContainerLow = baseScheme.surfaceContainerLow,
                     surfaceContainer = baseScheme.surfaceContainer,
@@ -313,8 +313,8 @@ fun MeloTheme(
                 )
             } else {
                 baseScheme.copy(
-                    background = baseScheme.surfaceContainerLow,
-                    surface = baseScheme.surfaceContainerLow,
+                    background = MeloLightSurface,
+                    surface = MeloLightSurface,
                     surfaceContainerLowest = Color.White,
                     surfaceContainerLow = baseScheme.surfaceContainerLow,
                     surfaceContainer = Color.White,

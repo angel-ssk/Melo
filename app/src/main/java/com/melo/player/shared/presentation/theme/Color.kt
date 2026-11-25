@@ -133,7 +133,11 @@ val WarningDark = Color(0xFFFFB74D) // Light orange for dark theme
 // Material 3 Preset Theme Seeds
 // ============================================
 
-val PresetDefaultSeed = Color(0xFF6750A4)
+/** Melo brand purple, taken from the launcher artwork. */
+val PresetDefaultSeed = Color(0xFF523B8D)
+val MeloWaveAccent = Color(0xFFE9DBFC)
+val MeloDarkSurface = Color(0xFF14121B)
+val MeloLightSurface = Color(0xFFF8F5FC)
 val PresetWarmSeed = Color(0xFFFF6B35)
 val PresetCoolSeed = Color(0xFF1E88E5)
 val PresetForestSeed = Color(0xFF2E7D32)

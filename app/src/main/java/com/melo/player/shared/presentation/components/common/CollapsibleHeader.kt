@@ -50,6 +50,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -87,6 +89,7 @@ fun CollapsibleHeaderScreen(
     scrollBehaviorKey: String? = null, // Key for preserving scroll behavior state
     showAppIcon: Boolean = false,
     onAppIconClick: () -> Unit = {},
+    showWaveWatermark: Boolean = false,
     iconVisibilityMode: Int = 0, // 0=Both, 1=Expanded Only, 2=Collapsed Only
     headerDisplayMode: Int = 1, // 0=Icon Only, 1=Name Only, 2=Both
     alwaysCollapsed: Boolean = false, // Whether to start with header collapsed (override for specific screens)
@@ -161,11 +164,24 @@ fun CollapsibleHeaderScreen(
                 Spacer(modifier = Modifier.height(10.dp)) // Add more padding before the header starts
                 LargeTopAppBar(
                     title = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
-                            modifier = Modifier.padding(start = 14.dp)
-                        ) {
+                        Box(contentAlignment = Alignment.CenterStart) {
+                            if (showWaveWatermark) {
+                                androidx.compose.foundation.Image(
+                                    painter = painterResource(com.melo.player.R.drawable.ic_melo_wave),
+                                    contentDescription = null,
+                                    colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+                                        MaterialTheme.colorScheme.primary
+                                    ),
+                                    modifier = Modifier
+                                        .size(150.dp)
+                                        .alpha(0.07f)
+                                )
+                            }
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                modifier = Modifier.padding(start = 14.dp)
+                            ) {
                             // Determine visibility based on scroll state
                             // collapsedFraction: 0 = fully expanded, 1 = fully collapsed
                             val isExpanded = collapsedFraction < 0.5f
@@ -237,6 +253,7 @@ fun CollapsibleHeaderScreen(
                                     overflow = TextOverflow.Ellipsis
                                 )
                             }
+                        }
                         }
                     },
                     navigationIcon = {

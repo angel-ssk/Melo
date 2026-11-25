@@ -2574,6 +2574,8 @@
     <string name="profile_unique_songs">Songs heard</string>
     <string name="profile_sessions">Sessions</string>
     <string name="profile_no_stats">Start listening to see your stats</string>
+    <string name="settings_wave_gradient">Melo Wave background</string>
+    <string name="settings_wave_gradient_desc">Blurred brand gradient. Turn off for the simplified background.</string>
     <string name="settings_high_refresh_motion">High refresh motion</string>
     <string name="settings_high_refresh_motion_desc">Smooth, frame-rate independent animations up to 120 Hz+ on any device</string>
     <string name="settings_motion_section">Motion</string>

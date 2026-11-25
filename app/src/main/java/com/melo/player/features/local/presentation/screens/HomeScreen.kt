@@ -564,6 +564,7 @@ fun HomeScreen(
         headerDisplayMode = headerDisplayMode,
         alwaysCollapsed = false,
         showAppIcon = showAppIcon,
+        showWaveWatermark = false,
         iconVisibilityMode = iconVisibilityMode,
         headerActions = buildList {
             val showReorder = !isLandscapeTablet
@@ -626,6 +627,11 @@ fun HomeScreen(
             )
         },
     ) { modifier ->
+        val waveGradient by appSettings.waveGradient.collectAsState()
+        com.melo.player.shared.presentation.components.common.MeloWaveGradientBackdrop(
+            enabled = waveGradient,
+            modifier = modifier
+        ) {
         if (isStreamingMode) {
             StreamingHomeBody(
                 modifier = modifier
@@ -696,6 +702,7 @@ fun HomeScreen(
                     musicViewModel.refreshLibrary(showMediaScanLoader = false)
                 }
             )
+        }
         }
     }
 }

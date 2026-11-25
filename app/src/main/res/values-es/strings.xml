@@ -2761,6 +2761,8 @@
     <string name="profile_unique_songs">Canciones escuchadas</string>
     <string name="profile_sessions">Sesiones</string>
     <string name="profile_no_stats">Empieza a escuchar música para ver tus estadísticas</string>
+    <string name="settings_wave_gradient">Fondo Melo Wave</string>
+    <string name="settings_wave_gradient_desc">Degradado de marca con desenfoque. Desactívalo para usar el fondo simplificado.</string>
     <string name="settings_high_refresh_motion">Alta tasa de refresco</string>
     <string name="settings_high_refresh_motion_desc">Animaciones fluidas e independientes de los fotogramas, hasta 120 Hz+ en cualquier dispositivo</string>
     <string name="settings_motion_section">Movimiento</string>

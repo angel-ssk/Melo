@@ -242,6 +242,7 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
     val extractedAlbumColors by appSettings.extractedAlbumColors.collectAsState()
     val expressiveColors by appSettings.expressiveColors.collectAsState()
     val themeIntensity by appSettings.themeIntensity.collectAsState()
+    val waveGradient by appSettings.waveGradient.collectAsState()
     val floatingNavigationBar by appSettings.floatingNavigationBar.collectAsState()
 
     // Font states
@@ -518,6 +519,13 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
                         context.getString(R.string.settings_expressive_colors_desc),
                         toggleState = expressiveColors,
                         onToggleChange = { appSettings.setExpressiveColors(it) }
+                    ),
+                    SettingItem(
+                        MaterialSymbolIcon("blur_on"),
+                        context.getString(R.string.settings_wave_gradient),
+                        context.getString(R.string.settings_wave_gradient_desc),
+                        toggleState = waveGradient,
+                        onToggleChange = { appSettings.setWaveGradient(it) }
                     )
                 )
             ),
