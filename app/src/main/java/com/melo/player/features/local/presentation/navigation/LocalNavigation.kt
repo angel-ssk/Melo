@@ -234,6 +234,7 @@ sealed class Screen(val route: String) {
         fun createRoute(tab: LibraryTab = LibraryTab.SONGS): String = "library?tab=${tab.name.lowercase()}"
     }
     object Player : Screen("player")
+    object Profile : Screen("profile")
     object Settings : Screen("settings")
     object AddToPlaylist : Screen("add_to_playlist")
     object PlaylistDetail : Screen("playlist/{playlistId}") {
@@ -2049,6 +2050,9 @@ private fun LocalNavigationContent(
                                 // Navigate to the settings screen
                                 navigateToTopLevel(Screen.Settings.route)
                             },
+                            onNavigateToProfile = {
+                                navController.navigate(Screen.Profile.route)
+                            },
                             onNavigateToLibrary = {
                                 // Navigate to library with playlists tab selected
                                 navController.navigate(Screen.Library.createRoute(LibraryTab.PLAYLISTS)) {
@@ -2128,6 +2132,12 @@ private fun LocalNavigationContent(
                                 streamingMusicViewModel.playQueue(queue, 0, true)
                             }
                         )
+                }
+
+                composable(Screen.Profile.route) {
+                    com.melo.player.shared.presentation.screens.ProfileScreen(
+                        onBackClick = { navController.popBackStack() }
+                    )
                 }
 
                 composable(

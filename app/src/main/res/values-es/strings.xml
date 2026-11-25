@@ -2751,6 +2751,15 @@
     <string name="about_copy_system_info_desc">Copia todos los detalles de la versión y del hardware al portapapeles</string>
     <string name="about_copied_format">%1$s copiado!</string>
     <string name="api_deezer_desc">Imágenes de artistas y portadas de álbumes gratuitas; no requieren configuración</string>
+    <string name="profile_title">Perfil</string>
+    <string name="profile_edit_name">Editar nombre</string>
+    <string name="profile_choose_photo">Elegir foto</string>
+    <string name="profile_melo_stats">Melo estadísticas</string>
+    <string name="profile_listening_time">Tiempo escuchando</string>
+    <string name="profile_top_song">Más reproducida</string>
+    <string name="profile_unique_songs">Canciones escuchadas</string>
+    <string name="profile_sessions">Sesiones</string>
+    <string name="profile_no_stats">Empieza a escuchar música para ver tus estadísticas</string>
     <string name="settings_high_refresh_motion">Alta tasa de refresco</string>
     <string name="settings_high_refresh_motion_desc">Animaciones fluidas e independientes de los fotogramas, hasta 120 Hz+ en cualquier dispositivo</string>
     <string name="settings_motion_section">Movimiento</string>

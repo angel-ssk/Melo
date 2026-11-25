@@ -146,8 +146,8 @@ object ImageUtils {
         
         // Use a simple drawable placeholder instead of generating one dynamically
         // This avoids expensive file I/O operations on the main thread
-        placeholder(R.drawable.melo_app_icon)
-        error(R.drawable.melo_app_icon)
+        placeholder(R.drawable.melo_foreground)
+        error(R.drawable.melo_foreground)
         
         // Add memory caching with a safe key
         val safeKey = when {

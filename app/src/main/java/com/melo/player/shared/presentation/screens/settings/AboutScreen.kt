@@ -379,114 +379,27 @@ fun AboutScreen(
 
                 DeveloperCard(
                     name = "Anjishnu Nandi",
+                    githubUsername = "cromaguy",
+                    avatarUrl = "https://github.com/cromaguy.png",
+                    supportUrl = "https://ko-fi.com/anjishnunandi",
+                    teamTitle = "Creador de Rhythm",
+                    teamDescription = "Autor del proyecto original del que deriva Melo.",
+                    openUrl = openUrl
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                DeveloperCard(
+                    name = "Angel",
                     githubUsername = "angel-ssk",
                     avatarUrl = "https://github.com/angel-ssk.png",
-                    supportUrl = "https://ko-fi.com/anjishnunandi",
-                    teamTitle = context.getString(R.string.settings_about_team_chromahub),
-                    teamDescription = context.getString(R.string.settings_about_team_desc),
+                    supportUrl = "https://github.com/angel-ssk",
+                    teamTitle = "Creador de Melo",
+                    teamDescription = "Mantenedor y creador de Melo.",
                     openUrl = openUrl
                 )
             }
 
-            item {
-                val maintainerItems = remember(context, haptics) {
-                    listOf(
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Izzy",
-                            role = "Manages updates on IzzyOnDroid",
-                            githubUsername = "IzzySoft",
-                            avatarUrl = "https://github.com/IzzySoft.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "linsui",
-                            role = "Manages updates on F-Droid",
-                            githubUsername = "linsui",
-                            avatarUrl = "https://github.com/linsui.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Licaon_Kter",
-                            role = "Manages updates on F-Droid",
-                            githubUsername = "licaon-kter",
-                            avatarUrl = "https://github.com/licaon-kter.png"
-                        )
-                    )
-                }
-                Material3SettingsGroup(
-                    title = context.getString(R.string.about_community_group_maintainers),
-                    items = maintainerItems,
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                val collaboratorItems = remember(context, haptics) {
-                    listOf(
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "theovilardo",
-                            role = "Guide & PixelPlayer's Lead Dev",
-                            githubUsername = "theovilardo",
-                            avatarUrl = "https://github.com/theovilardo.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Nick",
-                            role = "Guide & Gramophone's Maintainer",
-                            githubUsername = "nift4",
-                            avatarUrl = "https://github.com/nift4.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "vivi",
-                            role = "Guide & Vivi Music's Lead Dev",
-                            githubUsername = "vivizzz007",
-                            avatarUrl = "https://github.com/vivizzz007.png"
-                        ),
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "Alex",
-                            role = "Lyrically API's Lead Dev",
-                            githubUsername = "Paxsenix0",
-                            avatarUrl = "https://github.com/Paxsenix0.png"
-                        )
-                    )
-                }
-                Material3SettingsGroup(
-                    title = context.getString(R.string.about_community_group_collaborators),
-                    items = collaboratorItems,
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                val designTestingItems = remember(context, haptics) {
-                    listOf(
-                        createCommunityMemberItem(
-                            context = context,
-                            haptics = haptics,
-                            name = "itzKane",
-                            role = "UI Concept Designer",
-                            githubUsername = "soykane",
-                            avatarUrl = "https://github.com/soykane.png"
-                        )
-                    )
-                }
-                Material3SettingsGroup(
-                    title = context.getString(R.string.about_community_group_design_testing),
-                    items = designTestingItems,
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-            }
 
 
 

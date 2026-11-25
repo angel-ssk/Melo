@@ -174,6 +174,7 @@ private fun StatsPageContent(
             StatsTimeRange.TODAY -> now - 24L * 60L * 60L * 1000L
             StatsTimeRange.WEEK -> now - 7L * 24L * 60L * 60L * 1000L
             StatsTimeRange.MONTH -> now - 30L * 24L * 60L * 60L * 1000L
+            StatsTimeRange.YEAR -> now - 365L * 24L * 60L * 60L * 1000L
             StatsTimeRange.ALL_TIME -> now
         }
         previousSummary = if (range != StatsTimeRange.ALL_TIME) {
@@ -388,6 +389,7 @@ private fun ListeningOverviewCard(
                 StatsTimeRange.TODAY -> "yesterday"
                 StatsTimeRange.WEEK -> "last week"
                 StatsTimeRange.MONTH -> "last month"
+                StatsTimeRange.YEAR -> "last year"
                 StatsTimeRange.ALL_TIME -> ""
             }
             

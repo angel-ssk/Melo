@@ -265,6 +265,7 @@ fun HomeScreen(
     onSkipNext: () -> Unit = {},
     onSearchClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
+    onNavigateToProfile: () -> Unit = {},
     onNavigateToLibrary: () -> Unit = {},
     onAddToQueue: (Song) -> Unit = {},
     onAddSongToPlaylist: (Song, String) -> Unit = { _, _ -> },
@@ -563,6 +564,7 @@ fun HomeScreen(
         headerDisplayMode = headerDisplayMode,
         alwaysCollapsed = false,
         showAppIcon = showAppIcon,
+        onAppIconClick = onNavigateToProfile,
         iconVisibilityMode = iconVisibilityMode,
         headerActions = buildList {
             val showReorder = !isLandscapeTablet
@@ -652,6 +654,7 @@ fun HomeScreen(
                 onViewAllArtists = onViewAllArtists,
                 onSearchClick = onSearchClick,
                 onSettingsClick = onSettingsClick,
+                onNavigateToProfile = onNavigateToProfile,
                 onNavigateToLibrary = onNavigateToLibrary,
                 onNavigateToPlaylist = onNavigateToPlaylist,
                 onNavigateToStats = onNavigateToStats,
@@ -1377,6 +1380,7 @@ private fun ModernScrollableContent(
     onViewAllArtists: () -> Unit,
     onSearchClick: () -> Unit,
     onSettingsClick: () -> Unit = {},
+    onNavigateToProfile: () -> Unit = {},
     onNavigateToLibrary: () -> Unit = {},
     onNavigateToPlaylist: (String) -> Unit = {},
     onNavigateToStats: () -> Unit = {},

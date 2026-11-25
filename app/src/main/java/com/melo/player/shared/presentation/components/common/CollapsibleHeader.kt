@@ -8,8 +8,10 @@ package com.melo.player.shared.presentation.components.common
 import com.melo.player.shared.presentation.components.icons.MeloIcons
 import com.melo.player.shared.presentation.components.icons.Icon
 import com.melo.player.shared.presentation.components.icons.MaterialSymbolIcon
+import coil.compose.rememberAsyncImagePainter
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,6 +86,7 @@ fun CollapsibleHeaderScreen(
     headerContentSpacing: Dp = 8.dp,
     scrollBehaviorKey: String? = null, // Key for preserving scroll behavior state
     showAppIcon: Boolean = false,
+    onAppIconClick: () -> Unit = {},
     iconVisibilityMode: Int = 0, // 0=Both, 1=Expanded Only, 2=Collapsed Only
     headerDisplayMode: Int = 1, // 0=Icon Only, 1=Name Only, 2=Both
     alwaysCollapsed: Boolean = false, // Whether to start with header collapsed (override for specific screens)
@@ -213,9 +216,14 @@ fun CollapsibleHeaderScreen(
                             
                             if (shouldShowIcon) {
                                 androidx.compose.foundation.Image(
-                                    painter = androidx.compose.ui.res.painterResource(id = com.melo.player.R.drawable.melo_app_icon),
+                                    painter = rememberAsyncImagePainter(model = com.melo.player.R.drawable.melo_foreground),
                                     contentDescription = stringResource(R.string.collapsibleheader_app_icon),
-                                    modifier = Modifier.size((48 + (36 - 28) * (1 - collapsedFraction)).dp)
+                                    modifier = Modifier
+                                        .size((48 + (36 - 28) * (1 - collapsedFraction)).dp)
+                                        .clickable(
+                                            interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                                            indication = null
+                                        ) { onAppIconClick() }
                                 )
                             }
                             if (shouldShowTitle) {

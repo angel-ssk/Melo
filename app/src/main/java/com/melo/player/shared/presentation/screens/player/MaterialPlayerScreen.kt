@@ -157,6 +157,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
+import coil.compose.rememberAsyncImagePainter
 import com.melo.player.R
 import com.melo.player.shared.data.model.PlaybackLocation
 import com.melo.player.shared.data.model.Playlist
@@ -1762,8 +1763,8 @@ fun MaterialPlayerScreen(
                                             AsyncImage(
                                                 model = ImageRequest.Builder(context)
                                                     .data(song.artworkUri)
-                                                    .placeholder(com.melo.player.R.drawable.melo_app_icon)
-                                                    .error(com.melo.player.R.drawable.melo_app_icon)
+                                                    .placeholder(com.melo.player.R.drawable.melo_foreground)
+                                                    .error(com.melo.player.R.drawable.melo_foreground)
                                                     .build(),
                                                 contentDescription = stringResource(R.string.album_artwork_description, song.title),
                                                 contentScale = ContentScale.Crop,
@@ -1856,7 +1857,7 @@ fun MaterialPlayerScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Icon(
-                                                painter = painterResource(id = com.melo.player.R.drawable.melo_app_icon),
+                                                painter = rememberAsyncImagePainter(model = com.melo.player.R.drawable.melo_foreground),
                                                 contentDescription = stringResource(R.string.album_artwork_description, song.title),
                                                 tint = MaterialTheme.colorScheme.primary.copy(
                                                     alpha = 0.7f
@@ -1899,7 +1900,7 @@ fun MaterialPlayerScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        painter = painterResource(id = com.melo.player.R.drawable.melo_app_icon),
+                                        painter = rememberAsyncImagePainter(model = com.melo.player.R.drawable.melo_foreground),
                                         contentDescription = stringResource(R.string.cd_no_song_playing),
                                         tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                                         modifier = Modifier.size(120.dp)

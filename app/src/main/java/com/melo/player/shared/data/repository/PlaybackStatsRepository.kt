@@ -38,6 +38,7 @@ enum class StatsTimeRange(val displayName: String, val daysBack: Int) {
     TODAY("Today", 1),
     WEEK("This Week", 7),
     MONTH("This Month", 30),
+    YEAR("This Year", 365),
     ALL_TIME("All Time", Int.MAX_VALUE);
     
     fun resolveBounds(
@@ -56,6 +57,9 @@ enum class StatsTimeRange(val displayName: String, val daysBack: Int) {
             }
             MONTH -> {
                 now.atZone(zoneId).toLocalDate().minusDays(29).atStartOfDay(zoneId).toInstant().toEpochMilli()
+            }
+            YEAR -> {
+                now.atZone(zoneId).minusYears(1).toLocalDate().atStartOfDay(zoneId).toInstant().toEpochMilli()
             }
             ALL_TIME -> null
         }

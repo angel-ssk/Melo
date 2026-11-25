@@ -2564,6 +2564,15 @@
     <string name="about_copy_system_info_desc">Copy all version and hardware details to clipboard</string>
     <string name="about_copied_format">%1$s copied!</string>
     <string name="api_deezer_desc">Artist images and album artwork</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_edit_name">Edit name</string>
+    <string name="profile_choose_photo">Choose photo</string>
+    <string name="profile_melo_stats">Melo stats</string>
+    <string name="profile_listening_time">Listening time</string>
+    <string name="profile_top_song">Most played</string>
+    <string name="profile_unique_songs">Songs heard</string>
+    <string name="profile_sessions">Sessions</string>
+    <string name="profile_no_stats">Start listening to see your stats</string>
     <string name="settings_high_refresh_motion">High refresh motion</string>
     <string name="settings_high_refresh_motion_desc">Smooth, frame-rate independent animations up to 120 Hz+ on any device</string>
     <string name="settings_motion_section">Motion</string>

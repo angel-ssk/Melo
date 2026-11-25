@@ -184,6 +184,8 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_FLOATING_NAVIGATION_BAR = "floating_navigation_bar"
         private const val KEY_USE_DYNAMIC_COLORS = "use_dynamic_colors"
         private const val KEY_HIGH_REFRESH_MOTION = "high_refresh_motion"
+        private const val KEY_PROFILE_NAME = "profile_name"
+        private const val KEY_PROFILE_PHOTO_PATH = "profile_photo_path"
         private const val KEY_CUSTOM_COLOR_SCHEME = "custom_color_scheme"
         private const val KEY_CUSTOM_FONT = "custom_font"
         private const val KEY_COLOR_SOURCE = "color_source" // ALBUM_ART, MONET, or CUSTOM
@@ -880,6 +882,22 @@ class AppSettings private constructor(context: Context) {
     /** Fast, frame-rate-independent motion tuned for 120 Hz+ displays. */
     private val _highRefreshMotion = MutableStateFlow(prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true))
     val highRefreshMotion: StateFlow<Boolean> = _highRefreshMotion.asStateFlow()
+
+    private val _profileName = MutableStateFlow(prefs.getString(KEY_PROFILE_NAME, "Melo") ?: "Melo")
+    val profileName: StateFlow<String> = _profileName.asStateFlow()
+
+    private val _profilePhotoPath = MutableStateFlow(prefs.getString(KEY_PROFILE_PHOTO_PATH, null))
+    val profilePhotoPath: StateFlow<String?> = _profilePhotoPath.asStateFlow()
+
+    fun setProfileName(name: String) {
+        prefs.edit { putString(KEY_PROFILE_NAME, name) }
+        _profileName.value = name
+    }
+
+    fun setProfilePhotoPath(path: String?) {
+        prefs.edit { putString(KEY_PROFILE_PHOTO_PATH, path) }
+        _profilePhotoPath.value = path
+    }
     
     // Artist Separator Settings
     private val _artistSeparatorEnabled = MutableStateFlow(prefs.getBoolean(KEY_ARTIST_SEPARATOR_ENABLED, true))

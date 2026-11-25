@@ -40,6 +40,12 @@
 - **Alta tasa de refresco**: nueva opción en Modo básico → Movimiento, activa por defecto, con `MeloHighRefreshMotionScheme` (springs de corta duración e independientes de la tasa de fotogramas).
 - **Actualizaciones**: el updater consulta `angel-ssk/Melo`, muestra versión y novedades del release y descarga el APK dentro de la app.
 
-## 7. Firma
+## 7. Perfil y créditos
+
+- **Acerca de**: solo Anjishnu Nandi (creador de Rhythm) y Angel (creador de Melo, con avatar de GitHub); eliminados el resto de colaboradores.
+- **Perfil**: nueva pantalla accesible desde el logo de la esquina superior izquierda. Foto de perfil (selector de galería), nombre editable y Melo estadísticas con tiempo de escucha, canción más reproducida, canciones y sesiones en Hoy/Semana/Mes/Año. Diseño tipo tarjeta con fondo difuminado en Material 3 Expressive.
+- Añadido el rango `YEAR` al repositorio de estadísticas.
+
+## 8. Firma
 
 - Keystore en `.config/melo-release.jks` (alias `melo`), configurado en `.config/keystore.properties`. Ambos ignorados por Git.
