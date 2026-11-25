@@ -674,6 +674,24 @@ fun ExpressivePlayerScreen(
             } catch (_: Exception) { null }
         }
     }
+    // When an animated Canvas exists, derive the palette from it so the blur,
+    // buttons and title match the artwork that is actually on screen.
+    val canvasColor = produceState<Color?>(null, canvasArtwork?.preferredAnimationUrl) {
+        val url = canvasArtwork?.preferredAnimationUrl ?: return@produceState
+        value = withContext(Dispatchers.IO) {
+            try {
+                val bitmap = loadArtworkBitmap(context, android.net.Uri.parse(url), 96)
+                if (bitmap != null) {
+                    val extracted = ColorExtractor.extractColorsFromBitmap(bitmap)
+                    val seed = extracted?.seedColor?.takeIf { it != 0 }
+                        ?: extracted?.primary
+                    if (seed != null) Color(seed) else null
+                } else null
+            } catch (_: Exception) {
+                null
+            }
+        }
+    }
     val defaultSongColor = remember(currentTrack?.title, currentTrack?.artist) {
         if (currentTrack != null) {
             val seed = kotlin.math.abs(currentTrack.title.hashCode() * 31 + currentTrack.artist.hashCode())
@@ -681,7 +699,7 @@ fun ExpressivePlayerScreen(
             Color(android.graphics.Color.HSVToColor(floatArrayOf(hue, 0.70f, 0.60f)))
         } else null
     }
-    val artColor = artworkColor.value ?: defaultSongColor
+    val artColor = canvasColor.value ?: artworkColor.value ?: defaultSongColor
     // Album-derived control/title colour with a contrast guard.
     val albumControlColor = artColor?.let { c ->
         val f = if (c.luminance() > 0.6f) 0.55f else 1f
@@ -1062,6 +1080,15 @@ fun ExpressivePlayerScreen(
                             contentDescription = null, contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize().blur(150.dp)
                         )
+                        if (canvasArtwork?.preferredAnimationUrl != null && !MeloApplication.isLowRam) {
+                            CanvasArtworkPlayer(
+                                primaryUrl = canvasArtwork.animated,
+                                fallbackUrl = canvasArtwork.videoUrl,
+                                isPlaying = isPlaying,
+                                alwaysPlay = true,
+                                modifier = Modifier.fillMaxSize().blur(150.dp)
+                            )
+                        }
                         if (artColor != null && !MeloApplication.isLowRam) {
                             Box(
                                 modifier = Modifier

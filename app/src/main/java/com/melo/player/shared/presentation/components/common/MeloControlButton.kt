@@ -228,7 +228,7 @@ fun MeloPlayButton(
             onClick()
         },
         modifier = modifier.height(size),
-        shape = RoundedCornerShape(size / 2 - animCorner),
+        shape = RoundedCornerShape((size * 0.30f) - animCorner),
         color = containerColor,
         contentColor = contentColor,
         interactionSource = interactionSource
@@ -303,7 +303,7 @@ fun MeloCompactButton(
                 scaleX = animScale
                 scaleY = animScale
             },
-        shape = RoundedCornerShape(size / 2 - animCorner),
+        shape = RoundedCornerShape((size * 0.30f) - animCorner),
         color = animBg,
         contentColor = contentColor,
         interactionSource = interactionSource
