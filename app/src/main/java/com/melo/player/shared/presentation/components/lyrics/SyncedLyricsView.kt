@@ -54,9 +54,9 @@ private suspend fun LazyListState.animateToSyncedItemWithCatchUp(
     if (lastIndex < 0) return
     val safeTargetIndex = targetIndex.coerceIn(0, lastIndex)
 
-    // Jump straight to the active line. A pre-position step used to show the
-    // previous line briefly, and animated scrolls get cancelled on line change.
-    scrollToItem(safeTargetIndex, scrollOffset = scrollOffset)
+    // Smoothly glide to the active line. No pre-position step, so the previous
+    // line is never shown; the short tween keeps the change from feeling abrupt.
+    animateScrollToItem(safeTargetIndex, scrollOffset = scrollOffset)
 }
 
 private fun buildSyncedLyricsItems(lines: List<LyricLine>): List<SyncedLyricsItem> {

@@ -299,12 +299,14 @@ fun MeloTheme(
             else -> getCustomColorScheme(customColorScheme, darkTheme, themeIntensity)
         }
 
-        // Apply Expressive Color Set
+        // Apply Expressive Color Set. When the album artwork is the colour source,
+        // keep the album-derived surfaces so changing tracks really repaints the UI.
+        val albumDriven = colorSource == "ALBUM_ART" && extractedAlbumColorsJson != null
         val expressiveScheme = if (expressiveColors) {
             if (darkTheme) {
                 baseScheme.copy(
-                    background = MeloDarkSurface,
-                    surface = MeloDarkSurface,
+                    background = if (albumDriven) baseScheme.surfaceContainerLowest else MeloDarkSurface,
+                    surface = if (albumDriven) baseScheme.surfaceContainerLowest else MeloDarkSurface,
                     surfaceContainerLowest = baseScheme.surfaceContainerLowest,
                     surfaceContainerLow = baseScheme.surfaceContainerLow,
                     surfaceContainer = baseScheme.surfaceContainer,
@@ -313,8 +315,8 @@ fun MeloTheme(
                 )
             } else {
                 baseScheme.copy(
-                    background = MeloLightSurface,
-                    surface = MeloLightSurface,
+                    background = if (albumDriven) baseScheme.surfaceContainerLow else MeloLightSurface,
+                    surface = if (albumDriven) baseScheme.surfaceContainerLow else MeloLightSurface,
                     surfaceContainerLowest = Color.White,
                     surfaceContainerLow = baseScheme.surfaceContainerLow,
                     surfaceContainer = Color.White,

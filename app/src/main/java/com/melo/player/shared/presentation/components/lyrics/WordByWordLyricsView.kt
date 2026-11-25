@@ -78,9 +78,8 @@ private suspend fun LazyListState.animateToLyricItemWithCatchUp(
     if (lastIndex < 0) return
     val safeTargetIndex = targetIndex.coerceIn(0, lastIndex)
 
-    // Go straight to the active line; animated scrolls are cancelled when the
-    // next line arrives and can leave the previous one visible.
-    scrollToItem(index = safeTargetIndex, scrollOffset = scrollOffset)
+    // Short glide to the active line (no pre-position, so no backward bounce).
+    animateScrollToItem(index = safeTargetIndex, scrollOffset = scrollOffset)
 }
 
 /**
