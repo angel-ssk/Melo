@@ -97,6 +97,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.melo.player.R
+import com.melo.player.MeloApplication
 import com.melo.player.shared.presentation.components.bottomsheets.ExtraControlBottomSheet
 import com.melo.player.shared.presentation.components.bottomsheets.AddToPlaylistBottomSheet
 import com.melo.player.shared.presentation.components.bottomsheets.PlaybackBottomSheet
@@ -681,6 +682,11 @@ fun ExpressivePlayerScreen(
         } else null
     }
     val artColor = artworkColor.value ?: defaultSongColor
+    // Album-derived control/title colour with a contrast guard.
+    val albumControlColor = artColor?.let { c ->
+        val f = if (c.luminance() > 0.6f) 0.55f else 1f
+        Color(c.red * f, c.green * f, c.blue * f, 1f)
+    } ?: Color.White
     // Ambient contrast handling: maintain visibility against backdrop
     val ambientTextColor = if ((artColor?.luminance() ?: 0f) > 0.65f) Color.Black else Color.White
 
@@ -739,7 +745,7 @@ fun ExpressivePlayerScreen(
         animationSpec = tween(400, easing = FastOutSlowInEasing), label = "lyricsScrimColor"
     )
     val onSurfaceColor by animateColorAsState(
-        targetValue = if (useAccentBackground) accentFg else if (isBackdropEnabled) ambientTextColor else MaterialTheme.colorScheme.onSurface,
+        targetValue = if (useAccentBackground) accentFg else if (isBackdropEnabled) albumControlColor else MaterialTheme.colorScheme.onSurface,
         animationSpec = tween(400), label = "onSurfaceColor"
     )
     val onSurfaceVariantColor by animateColorAsState(
@@ -760,8 +766,9 @@ fun ExpressivePlayerScreen(
         },
         animationSpec = tween(400), label = "surfaceContainerColor"
     )
+    // Buttons and progress follow the playing album's colour.
     val primaryColor by animateColorAsState(
-        targetValue = if (useAccentBackground) accentFg else if (isBackdropEnabled) Color.White else MaterialTheme.colorScheme.primary,
+        targetValue = if (useAccentBackground) accentFg else if (isBackdropEnabled) albumControlColor else MaterialTheme.colorScheme.primary,
         animationSpec = tween(400), label = "canvasPrimaryColor"
     )
     val isCompactWidth = windowScreenWidthDp() < 360
@@ -1055,6 +1062,13 @@ fun ExpressivePlayerScreen(
                             contentDescription = null, contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize().blur(150.dp)
                         )
+                        if (artColor != null && !MeloApplication.isLowRam) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(artColor.copy(alpha = 0.18f))
+                            )
+                        }
                         val useHorizontalBackdrop = isLandscapeTablet || isTabletImmersiveLyrics
                         Box(
                             modifier = (if (useHorizontalBackdrop) Modifier.fillMaxWidth(0.5f).fillMaxHeight()

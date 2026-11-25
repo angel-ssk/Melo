@@ -10,6 +10,8 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import com.melo.player.shared.presentation.components.icons.Icon
+import com.melo.player.shared.presentation.components.icons.MeloIcons
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -238,12 +240,11 @@ fun MeloPlayButton(
             if (showBuffering) {
                 PlaybackBufferingLoader(Modifier.size(40.dp), contentColor)
             } else {
-                Text(
-                    text = if (isPlaying) "Pause" else "Play",
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
-                    color = contentColor
+                Icon(
+                    imageVector = if (isPlaying) MeloIcons.Player.Pause else MeloIcons.Player.Play,
+                    contentDescription = if (isPlaying) "Pause" else "Play",
+                    tint = contentColor,
+                    modifier = Modifier.size(36.dp)
                 )
             }
         }
