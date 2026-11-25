@@ -14,6 +14,10 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MotionScheme
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -238,6 +242,28 @@ fun getAlbumArtColorScheme(
     }
 }
 
+/**
+ * Motion scheme with short, spring-based specs: animations stay smooth because
+ * Compose drives them per frame, so they scale to 90/120/144/165 Hz displays
+ * without being tied to a fixed frame duration.
+ */
+object MeloHighRefreshMotionScheme : MotionScheme {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> defaultEffectsSpec(): FiniteAnimationSpec<T> =
+        spring<Float>(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessHigh) as FiniteAnimationSpec<T>
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> defaultSpatialSpec(): FiniteAnimationSpec<T> =
+        spring<Float>(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMedium) as FiniteAnimationSpec<T>
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> fastEffectsSpec(): FiniteAnimationSpec<T> = tween<T>(durationMillis = 120)
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> fastSpatialSpec(): FiniteAnimationSpec<T> = tween<T>(durationMillis = 140)
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> slowEffectsSpec(): FiniteAnimationSpec<T> = tween<T>(durationMillis = 260)
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> slowSpatialSpec(): FiniteAnimationSpec<T> = tween<T>(durationMillis = 320)
+}
+
 @Composable
 fun MeloTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -251,6 +277,7 @@ fun MeloTheme(
     extractedAlbumColorsJson: String? = null,
     expressiveColors: Boolean = true,
     themeIntensity: String = "STANDARD",
+    highRefreshMotion: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -351,7 +378,7 @@ fun MeloTheme(
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
     MaterialTheme(
         colorScheme = colorScheme,
-        motionScheme = MotionScheme.expressive(),
+        motionScheme = if (highRefreshMotion) MeloHighRefreshMotionScheme else MotionScheme.standard(),
         typography = typography,
         shapes = Shapes,
         content = content

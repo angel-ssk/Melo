@@ -34,6 +34,12 @@
 - **Sliders**: corregido el patrón que recreaba el `SliderState` en cada cambio de preferencia (el de crossfade volvía a 0,5 s al arrastrar). Aplica a los 14 archivos de ajustes que usaban el mismo patrón; el slider de progreso externo solo sigue a la reproducción cuando no se está arrastrando.
 - **Rendimiento**: cachés de imágenes y concurrencia adaptadas al tipo de dispositivo (`isLowRam` / `memoryClass`); blur de fondos desactivado en dispositivos con poca RAM en letras, álbum y artista. Build flags ya optimizados (paralelo, caché, configuración y R8).
 
-## 6. Firma
+## 6. Traducción y movimiento
+
+- **Español completo**: 2911 de 2911 cadenas traducidas (antes faltaban 485; 336 recuperadas del fork anterior y 149 traducidas).
+- **Alta tasa de refresco**: nueva opción en Modo básico → Movimiento, activa por defecto, con `MeloHighRefreshMotionScheme` (springs de corta duración e independientes de la tasa de fotogramas).
+- **Actualizaciones**: el updater consulta `angel-ssk/Melo`, muestra versión y novedades del release y descarga el APK dentro de la app.
+
+## 7. Firma
 
 - Keystore en `.config/melo-release.jks` (alias `melo`), configurado en `.config/keystore.properties`. Ambos ignorados por Git.

@@ -183,6 +183,7 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_AMOLED_THEME = "amoled_theme"
         private const val KEY_FLOATING_NAVIGATION_BAR = "floating_navigation_bar"
         private const val KEY_USE_DYNAMIC_COLORS = "use_dynamic_colors"
+        private const val KEY_HIGH_REFRESH_MOTION = "high_refresh_motion"
         private const val KEY_CUSTOM_COLOR_SCHEME = "custom_color_scheme"
         private const val KEY_CUSTOM_FONT = "custom_font"
         private const val KEY_COLOR_SOURCE = "color_source" // ALBUM_ART, MONET, or CUSTOM
@@ -875,6 +876,10 @@ class AppSettings private constructor(context: Context) {
     
     private val _useDynamicColors = MutableStateFlow(prefs.getBoolean(KEY_USE_DYNAMIC_COLORS, false))
     val useDynamicColors: StateFlow<Boolean> = _useDynamicColors.asStateFlow()
+
+    /** Fast, frame-rate-independent motion tuned for 120 Hz+ displays. */
+    private val _highRefreshMotion = MutableStateFlow(prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true))
+    val highRefreshMotion: StateFlow<Boolean> = _highRefreshMotion.asStateFlow()
     
     // Artist Separator Settings
     private val _artistSeparatorEnabled = MutableStateFlow(prefs.getBoolean(KEY_ARTIST_SEPARATOR_ENABLED, true))
@@ -2634,6 +2639,11 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
     fun setUseDynamicColors(use: Boolean) {
         prefs.edit { putBoolean(KEY_USE_DYNAMIC_COLORS, use) }
         _useDynamicColors.value = use
+    }
+
+    fun setHighRefreshMotion(enabled: Boolean) {
+        prefs.edit { putBoolean(KEY_HIGH_REFRESH_MOTION, enabled) }
+        _highRefreshMotion.value = enabled
     }
     
     fun setAmoledTheme(amoled: Boolean) {
@@ -5558,6 +5568,7 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _amoledTheme.value = prefs.getBoolean(KEY_AMOLED_THEME, false)
         _floatingNavigationBar.value = prefs.getBoolean(KEY_FLOATING_NAVIGATION_BAR, true)
         _useDynamicColors.value = prefs.getBoolean(KEY_USE_DYNAMIC_COLORS, false)
+        _highRefreshMotion.value = prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true)
         _customColorScheme.value = prefs.getString(KEY_CUSTOM_COLOR_SCHEME, "Default") ?: "Default"
         _customFont.value = prefs.getString(KEY_CUSTOM_FONT, "Geom") ?: "Geom"
         

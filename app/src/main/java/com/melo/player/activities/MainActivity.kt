@@ -217,6 +217,7 @@ class MainActivity : AppCompatActivity() {
             val extractedAlbumColors by appSettings.extractedAlbumColors.collectAsState()
             val expressiveColors by appSettings.expressiveColors.collectAsState()
             val themeIntensity by appSettings.themeIntensity.collectAsState()
+            val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
             val appMode by appSettings.appMode.collectAsState()
             
             // Determine the theme based on settings
@@ -240,7 +241,8 @@ class MainActivity : AppCompatActivity() {
                 colorSource = colorSource,
                 extractedAlbumColorsJson = extractedAlbumColors,
                 expressiveColors = expressiveColors,
-                themeIntensity = themeIntensity
+                themeIntensity = themeIntensity,
+                highRefreshMotion = highRefreshMotion
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

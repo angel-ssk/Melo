@@ -2564,6 +2564,9 @@
     <string name="about_copy_system_info_desc">Copy all version and hardware details to clipboard</string>
     <string name="about_copied_format">%1$s copied!</string>
     <string name="api_deezer_desc">Artist images and album artwork</string>
+    <string name="settings_high_refresh_motion">High refresh motion</string>
+    <string name="settings_high_refresh_motion_desc">Smooth, frame-rate independent animations up to 120 Hz+ on any device</string>
+    <string name="settings_motion_section">Motion</string>
     <string name="settings_online_artist_artwork">Find artist images online</string>
     <string name="settings_online_artist_artwork_desc">Look up artwork for artists with no image using online services</string>
     <string name="api_lrclib_desc">Line-by-line synchronized lyrics</string>

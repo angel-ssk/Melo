@@ -171,6 +171,7 @@ fun PerformanceSettingsScreen(onBackClick: () -> Unit) {
     // Collect settings states
     val batterySaverEnabled by appSettings.batterySaverEnabled.collectAsState()
     val batterySaverMode by appSettings.batterySaverMode.collectAsState()
+    val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
     
     val batterySaverDisableHaptics by appSettings.batterySaverDisableHaptics.collectAsState()
     val batterySaverEnableOffload by appSettings.batterySaverEnableOffload.collectAsState()
@@ -257,6 +258,32 @@ fun PerformanceSettingsScreen(onBackClick: () -> Unit) {
                 .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            item(key = "motion_section") {
+                Text(
+                    text = stringResource(R.string.settings_motion_section),
+                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold),
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
+                )
+                Material3SettingsGroup(
+                    title = null,
+                    items = listOf(
+                        toMaterial3SettingsItem(
+                            context = context,
+                            hapticFeedback = haptic,
+                            item = SettingItem(
+                                icon = MaterialSymbolIcon("speed"),
+                                title = stringResource(R.string.settings_high_refresh_motion),
+                                description = context.getString(R.string.settings_high_refresh_motion_desc),
+                                toggleState = highRefreshMotion,
+                                onToggleChange = { enabled -> appSettings.setHighRefreshMotion(enabled) }
+                            )
+                        )
+                    ),
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer
+                )
+            }
+
             item(key = "options_section") {
                 AnimatedVisibility(
                     visible = batterySaverEnabled,
