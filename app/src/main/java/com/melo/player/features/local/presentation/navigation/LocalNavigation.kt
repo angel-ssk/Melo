@@ -1658,11 +1658,7 @@ private fun LocalNavigationContent(
                                                         ),
                                                         label = "iconCrossfade_$title"
                                                     ) { selected ->
-                                                        val lineAlpha by animateFloatAsState(
-                                                            targetValue = if (selected && title == context.getString(R.string.common_home)) 1f else 0f,
-                                                            animationSpec = tween(220),
-                                                            label = "homeLineAlpha"
-                                                        )
+                                                        val isHomeItem = title == context.getString(R.string.common_home)
                                                         Column(
                                                             horizontalAlignment = Alignment.CenterHorizontally,
                                                             verticalArrangement = Arrangement.Center
@@ -1673,14 +1669,22 @@ private fun LocalNavigationContent(
                                                                 tint = iconColor,
                                                                 modifier = Modifier.size(28.dp)
                                                             )
-                                                            Box(
-                                                                modifier = Modifier
-                                                                    .width(14.dp)
-                                                                    .height(3.dp)
-                                                                    .clip(ExpressiveShapes.Full)
-                                                                    .background(iconColor)
-                                                                    .alpha(lineAlpha)
-                                                            )
+                                                            // This marker belongs only to the Home item.
+                                                            if (isHomeItem) {
+                                                                val lineAlpha by animateFloatAsState(
+                                                                    targetValue = if (selected) 1f else 0f,
+                                                                    animationSpec = tween(220),
+                                                                    label = "homeLineAlpha"
+                                                                )
+                                                                Box(
+                                                                    modifier = Modifier
+                                                                        .width(14.dp)
+                                                                        .height(3.dp)
+                                                                        .clip(ExpressiveShapes.Full)
+                                                                        .background(iconColor)
+                                                                        .alpha(lineAlpha)
+                                                                )
+                                                            }
                                                         }
                                                     }
 
@@ -1746,7 +1750,7 @@ private fun LocalNavigationContent(
                                 val cookieRotation by rememberInfiniteTransition(label = "searchCookie")
                                     .animateFloat(
                                         initialValue = 0f,
-                                        targetValue = 360f,
+                                        targetValue = if (com.melo.player.MeloApplication.isLowRam) 0f else 360f,
                                         animationSpec = infiniteRepeatable(
                                             animation = tween(14000, easing = LinearEasing),
                                             repeatMode = RepeatMode.Restart

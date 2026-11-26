@@ -1078,7 +1078,9 @@ fun ExpressivePlayerScreen(
                         AsyncImage(
                             model = ImageRequest.Builder(context).data(artworkUri).size(128, 128).build(),
                             contentDescription = null, contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize().blur(150.dp)
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .then(if (MeloApplication.isLowRam) Modifier else Modifier.blur(96.dp))
                         )
                         if (canvasArtwork?.preferredAnimationUrl != null && !MeloApplication.isLowRam) {
                             CanvasArtworkPlayer(
@@ -1086,7 +1088,7 @@ fun ExpressivePlayerScreen(
                                 fallbackUrl = canvasArtwork.videoUrl,
                                 isPlaying = isPlaying,
                                 alwaysPlay = true,
-                                modifier = Modifier.fillMaxSize().blur(150.dp)
+                                modifier = Modifier.fillMaxSize().blur(96.dp)
                             )
                         }
                         if (artColor != null && !MeloApplication.isLowRam) {
