@@ -838,7 +838,7 @@ class MeloPlayerEngine(
                     ?: currentOutgoingIndex
                 else -> currentOutgoingIndex
             }
-            incomingPlayer.setMediaItems(fullQueue, incomingQueueIndex, incomingPlayer.currentPosition)
+            incomingPlayer.setMediaItems(fullQueue, incomingQueueIndex, 0L)
             if (outgoingPlayer.shuffleModeEnabled) {
                 extractShuffleIndices(outgoingPlayer)?.let { indices ->
                     incomingPlayer.setShuffleOrder(MeloShuffleOrder(indices))
@@ -850,13 +850,9 @@ class MeloPlayerEngine(
         incomingPlayer.shuffleModeEnabled = outgoingPlayer.shuffleModeEnabled
         incomingPlayer.playbackParameters = outgoingPlayer.playbackParameters
 
-        // Only now that the incoming queue is finalised, start it silently so it
-        // is already decoding before the outgoing track ends (no gap), without
-        // being reset to position 0 by setMediaItems afterwards.
+        // Keep the incoming player silent until the crossfade loop drives its
+        // volume. Starting it here made the same track jump at the beginning.
         incomingPlayer.volume = 0f
-        if (outgoingPlayer.playWhenReady && incomingPlayer.playbackState != Player.STATE_IDLE) {
-            incomingPlayer.play()
-        }
 
         outgoingPlayer.removeListener(masterPlayerListener)
 
@@ -884,6 +880,8 @@ class MeloPlayerEngine(
 
         playerB.pauseAtEndOfMediaItems = true
         playerA.pauseAtEndOfMediaItems = false
+        // Never let the incoming player be audible before the fade starts.
+        playerA.volume = 0f
 
         playerA.addListener(masterPlayerListener)
         if (playerA.playWhenReady) {

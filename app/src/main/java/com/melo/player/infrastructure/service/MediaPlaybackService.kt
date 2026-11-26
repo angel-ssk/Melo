@@ -2308,7 +2308,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
             )
 
             val computedSkipPrevious = if (isSkipPrevious) true else targetIndex < currentWindowIndex
-            val skipDuration = (appSettings.crossfadeDuration.value * 1000).toInt().coerceIn(500, 2000)
+            val skipDuration = (appSettings.crossfadeDuration.value * 1000).toInt().coerceIn(500, 1200)
             val settings = TransitionSettings(
                 mode = TransitionMode.OVERLAP,
                 durationMs = skipDuration,
