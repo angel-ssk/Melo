@@ -119,7 +119,7 @@ fun WordByWordLyricsView(
     val context = LocalContext.current
     var maxSeenPlaybackTime by remember(wordByWordLyrics) { mutableLongStateOf(0L) }
     val effectivePlaybackTime = remember(currentPlaybackTime) {
-        if (abs(currentPlaybackTime - maxSeenPlaybackTime) > 1500L) {
+        if (abs(currentPlaybackTime - maxSeenPlaybackTime) > 1000L) {
             maxSeenPlaybackTime = currentPlaybackTime
             currentPlaybackTime
         } else {

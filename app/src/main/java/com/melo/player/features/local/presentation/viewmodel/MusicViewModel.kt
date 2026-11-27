@@ -2007,7 +2007,11 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 delay(2000) // Debounce window
                 val lastScan = appSettings.lastScanTimestamp.value
                 val cachedCount = _songs.value.size
-                if (repository.isLibraryStale(lastScan, cachedCount)) {
+                // MediaStore cursor queries must not run on the Main dispatcher (#646).
+                val isStale = withContext(Dispatchers.IO) {
+                    repository.isLibraryStale(lastScan, cachedCount)
+                }
+                if (isStale) {
                     Log.d(TAG, "MediaStore changed and library is stale. Performing full refresh.")
                     performMediaStoreRefresh()
                 } else {
@@ -2180,7 +2184,11 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 delay(2000) // Debounce window
                 val lastScan = appSettings.lastScanTimestamp.value
                 val cachedCount = _songs.value.size
-                if (repository.isLibraryStale(lastScan, cachedCount)) {
+                // MediaStore cursor queries must not run on the Main dispatcher (#646).
+                val isStale = withContext(Dispatchers.IO) {
+                    repository.isLibraryStale(lastScan, cachedCount)
+                }
+                if (isStale) {
                     Log.d(TAG, "MediaStore changed and library is stale. Performing full refresh.")
                     performMediaStoreRefresh()
                 } else {
@@ -4674,7 +4682,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
                 _progress.value = currentProgress.coerceIn(0f, 1f)
             }
 
-            maybeBroadcastBluetoothLyricsLine(controller)
+            maybeBroadcastBluetoothLyricsLine(controller, effectivePosition)
         }
     }
 
@@ -4692,7 +4700,7 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         return _currentSong.value?.duration?.takeIf { it > 0 } ?: 0L
     }
 
-    private fun maybeBroadcastBluetoothLyricsLine(controller: MediaController) {
+    private fun maybeBroadcastBluetoothLyricsLine(controller: MediaController, monotonicPositionMs: Long) {
         val song = _currentSong.value ?: return
         val currentLyricsVal = _currentLyrics.value
         
@@ -4732,12 +4740,12 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
         val lyricLine = resolveCurrentSyncedLyricLine(
             syncedLyrics = currentLyricsVal?.syncedLyrics,
-            currentPositionMs = controller.currentPosition,
+            currentPositionMs = monotonicPositionMs,
             syncOffsetMs = _lyricsTimeOffset.value.toLong()
         )
 
         // Determine active lyric index
-        val effectivePosition = (controller.currentPosition + _lyricsTimeOffset.value.toLong()).coerceAtLeast(0L)
+        val effectivePosition = (monotonicPositionMs + _lyricsTimeOffset.value.toLong()).coerceAtLeast(0L)
         val activeIndex = if (cachedParsedSyncedLyrics.isNotEmpty()) {
             cachedParsedSyncedLyrics.indexOfLast { it.timestamp <= effectivePosition }
         } else {
@@ -5529,7 +5537,8 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun playSongFromSearch(song: Song, searchContextSongs: List<Song>) {
-        val contextSongs = if (searchContextSongs.isNotEmpty()) searchContextSongs else _songs.value
+        // Never expand a filtered search/genre list to the whole library (#684).
+        val contextSongs = if (searchContextSongs.isNotEmpty()) searchContextSongs else listOf(song)
         val startIndex = contextSongs.indexOfFirst { it.id == song.id }
         val keepShuffle = appSettings.keepShuffleOnSelection.value && _isShuffleEnabled.value
 

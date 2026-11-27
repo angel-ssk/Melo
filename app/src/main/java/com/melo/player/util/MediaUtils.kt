@@ -3702,6 +3702,19 @@ object MediaUtils {
         }
     }
 
+    /** Reads embedded lyrics through a scoped-storage content:// URI (#687). */
+    fun readLyricsViaTagLib(context: android.content.Context, uri: android.net.Uri): String? {
+        return try {
+            context.contentResolver.openFileDescriptor(uri, "r")?.use { fd ->
+                val metadata = TagLib.getMetadata(fd.detachFd())
+                extractLyricsFromPropertyMap(metadata?.propertyMap ?: emptyMap())
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "TAGLIB: Failed to read lyrics via Uri", e)
+            null
+        }
+    }
+
     /**
      * Extracts lyrics from a TagLib property map supporting Vorbis comments, MP4 atoms, ID3, and WMA tags.
      */

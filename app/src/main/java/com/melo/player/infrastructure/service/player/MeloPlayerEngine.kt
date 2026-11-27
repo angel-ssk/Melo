@@ -184,20 +184,20 @@ class MeloPlayerEngine(
     private val focusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
         when (focusChange) {
             AudioManager.AUDIOFOCUS_LOSS -> {
-                Log.d(TAG, "AudioFocus LOSS. Pausing both players.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "AudioFocus LOSS. Pausing both players.")
                 isFocusLossPause = false
                 playerA.playWhenReady = false
                 playerB.playWhenReady = false
                 abandonAudioFocus()
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                Log.d(TAG, "AudioFocus LOSS_TRANSIENT. Pausing.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "AudioFocus LOSS_TRANSIENT. Pausing.")
                 isFocusLossPause = true
                 playerA.playWhenReady = false
                 playerB.playWhenReady = false
             }
             AudioManager.AUDIOFOCUS_GAIN -> {
-                Log.d(TAG, "AudioFocus GAIN. Resuming if paused by loss.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "AudioFocus GAIN. Resuming if paused by loss.")
                 if (isFocusLossPause) {
                     isFocusLossPause = false
                     playerA.playWhenReady = true
@@ -227,11 +227,11 @@ class MeloPlayerEngine(
         
         override fun onAudioSessionIdChanged(audioSessionId: Int) {
             _activeAudioSessionId.value = audioSessionId
-            Log.d(TAG, "Audio session ID changed: $audioSessionId")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Audio session ID changed: $audioSessionId")
         }
         
         override fun onTracksChanged(tracks: androidx.media3.common.Tracks) {
-            Log.d(TAG, "Tracks changed")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Tracks changed")
             val format = tracks.getFirstSelectedTrackFormatByType(C.TRACK_TYPE_AUDIO) ?: (masterPlayer as? ExoPlayer)?.audioFormat
             if (format != null) {
                 val info = ReplayGainUtil.parse(format)
@@ -247,7 +247,7 @@ class MeloPlayerEngine(
         override fun onVolumeChanged(volume: Float) {
             if (!transitionRunning && !isInternalVolumeAdjustment) {
                 userVolume = volume
-                Log.d(TAG, "User volume updated: $userVolume")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "User volume updated: $userVolume")
             }
         }
     }
@@ -357,7 +357,7 @@ class MeloPlayerEngine(
         _activeAudioSessionId.value = playerA.audioSessionId
 
         isReleased = false
-        Log.d(TAG, "MeloPlayerEngine initialized. SessionA=${playerA.audioSessionId}, initialVolume=$initVolume, speed=$initSpeed, pitch=$initPitch")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "MeloPlayerEngine initialized. SessionA=${playerA.audioSessionId}, initialVolume=$initVolume, speed=$initSpeed, pitch=$initPitch")
 
         // Reactively update track selection parameters when settings change
         scope.launch {
@@ -653,7 +653,7 @@ class MeloPlayerEngine(
         if (::playerB.isInitialized) {
             playerB.pauseAtEndOfMediaItems = !enabled
         }
-        Log.d(TAG, "Gapless playback ${if (enabled) "enabled" else "disabled"}")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Gapless playback ${if (enabled) "enabled" else "disabled"}")
     }
 
     fun setSkipSilenceEnabled(enabled: Boolean) {
@@ -663,7 +663,7 @@ class MeloPlayerEngine(
         if (::playerB.isInitialized) {
             playerB.skipSilenceEnabled = enabled
         }
-        Log.d(TAG, "Skip silence ${if (enabled) "enabled" else "disabled"}")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Skip silence ${if (enabled) "enabled" else "disabled"}")
     }
 
     /**
@@ -682,7 +682,7 @@ class MeloPlayerEngine(
         startPositionMs: Long = 0L
     ) {
         try {
-            Log.d(TAG, "prepareNext called for ${mediaItem.mediaId} (targetIndex=$targetIndex, queueSize=${fullQueue?.size ?: 1})")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "prepareNext called for ${mediaItem.mediaId} (targetIndex=$targetIndex, queueSize=${fullQueue?.size ?: 1})")
             ReplayGainCache.get(mediaItem.mediaId)?.let { cachedInfo ->
                 playerBReplayGain.setTags(cachedInfo)
             }
@@ -710,7 +710,7 @@ class MeloPlayerEngine(
             playerB.prepare()
             playerB.volume = 0f
             playerB.pause()
-            Log.d(TAG, "Player B prepared, paused, volume=0")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Player B prepared, paused, volume=0")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to prepare next player", e)
         }
@@ -742,7 +742,7 @@ class MeloPlayerEngine(
     @Synchronized
     fun snapCompleteTransition() {
         if (!transitionRunning) return
-        Log.d(TAG, "snapCompleteTransition: force-completing active transition")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "snapCompleteTransition: force-completing active transition")
         transitionRunning = false
         transitionJob?.cancel()
         if (::playerB.isInitialized) {
@@ -764,7 +764,7 @@ class MeloPlayerEngine(
         val wasTransitioning = transitionRunning
         transitionRunning = false
         if (::playerB.isInitialized && playerB.mediaItemCount > 0) {
-            Log.d(TAG, "Cancelling next player")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Cancelling next player")
             playerB.stop()
             playerB.clearMediaItems()
         }
@@ -791,7 +791,7 @@ class MeloPlayerEngine(
             try {
                 performOverlapTransition(settings)
             } catch (_: CancellationException) {
-                Log.d(TAG, "Transition cancelled before completion.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Transition cancelled before completion.")
             } catch (e: Exception) {
                 Log.e(TAG, "Error performing transition", e)
                 playerA.volume = userVolume
@@ -1040,7 +1040,7 @@ class MeloPlayerEngine(
         if (::playerBReplayGain.isInitialized) {
             applyReplayGainSettingsOnProcessor(playerBReplayGain, enabled)
         }
-        Log.d(TAG, "Replay Gain settings applied on both player processors: enabled=$enabled")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Replay Gain settings applied on both player processors: enabled=$enabled")
         updateTrackSelectionParameters()
     }
 
@@ -1101,11 +1101,11 @@ class MeloPlayerEngine(
         val params = PlaybackParameters(speed, pitch)
         if (playerA.playbackParameters != params) {
             playerA.playbackParameters = params
-            Log.d(TAG, "Applied playback parameters on playerA: speed=$speed, pitch=$pitch")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Applied playback parameters on playerA: speed=$speed, pitch=$pitch")
         }
         if (playerB.playbackParameters != params) {
             playerB.playbackParameters = params
-            Log.d(TAG, "Applied playback parameters on playerB: speed=$speed, pitch=$pitch")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Applied playback parameters on playerB: speed=$speed, pitch=$pitch")
         }
     }
 
@@ -1121,7 +1121,7 @@ class MeloPlayerEngine(
             if (playerB.trackSelectionParameters != paramsB) {
                 playerB.trackSelectionParameters = paramsB
             }
-            Log.d(TAG, "Updated track selection parameters: offloadActive=${appSettings.isAudioOffloadActive.value}, crossfadeEnabled=${appSettings.crossfade.value}, eqEnabled=${appSettings.equalizerEnabled.value}, viperActive=${viperProcessor?.isEnabled() == true}, bassEnabled=${appSettings.bassBoostEnabled.value}, virtualizerEnabled=${appSettings.virtualizerEnabled.value}, monoAudioEnabled=${appSettings.monoAudioEnabled.value}, speed=${appSettings.playbackSpeed.value}, pitch=${appSettings.playbackPitch.value}")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Updated track selection parameters: offloadActive=${appSettings.isAudioOffloadActive.value}, crossfadeEnabled=${appSettings.crossfade.value}, eqEnabled=${appSettings.equalizerEnabled.value}, viperActive=${viperProcessor?.isEnabled() == true}, bassEnabled=${appSettings.bassBoostEnabled.value}, virtualizerEnabled=${appSettings.virtualizerEnabled.value}, monoAudioEnabled=${appSettings.monoAudioEnabled.value}, speed=${appSettings.playbackSpeed.value}, pitch=${appSettings.playbackPitch.value}")
         }
     }
 
@@ -1142,8 +1142,9 @@ class MeloPlayerEngine(
             playerB.removeAnalyticsListener(analyticsListenerB)
             playerB.release()
         }
+        com.melo.player.infrastructure.audio.MeloAudioProcessor.clearBufferPools()
         isReleased = true
-        Log.d(TAG, "MeloPlayerEngine released.")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "MeloPlayerEngine released.")
     }
 
     fun getCurrentAudioFormat(): androidx.media3.common.Format? =

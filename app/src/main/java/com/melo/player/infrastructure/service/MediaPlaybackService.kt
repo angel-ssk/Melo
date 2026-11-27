@@ -1672,8 +1672,8 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
                         albumId = ""
                     )
                 }
-                updateFavoritesPlaylist(songId = songId, song = song, isAdding = isAdding)
-
+                // Playlists are owned by the ViewModel/Room. Only notify it; writing the
+                // legacy JSON snapshot here would clobber rapid playlist edits (#414).
                 val notifyIntent = Intent("com.melo.player.action.FAVORITE_CHANGED").apply {
                     setPackage(packageName)
                 }
@@ -1687,37 +1687,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         }
     }
 
-    private fun updateFavoritesPlaylist(songId: String, song: Song?, isAdding: Boolean) {
-        try {
-            val playlistsJson = appSettings.playlists.value
-            if (playlistsJson.isNullOrEmpty()) return
-            
-            val type = object : TypeToken<List<Playlist>>() {}.type
-            val playlists: MutableList<Playlist> = GsonUtils.gson.fromJson(playlistsJson, type)
-            
-            val favoritesPlaylist = playlists.find { it.id == "1" && it.name == "Liked" } ?: return
-            val existingSongs = favoritesPlaylist.songs
-            val updatedSongs = when {
-                isAdding && song != null && existingSongs.none { it.id == songId } -> existingSongs + song
-                isAdding -> existingSongs
-                else -> existingSongs.filterNot { it.id == songId }
-            }
 
-            if (updatedSongs == existingSongs) return
-
-            val updatedPlaylist = favoritesPlaylist.copy(
-                songs = updatedSongs,
-                dateModified = System.currentTimeMillis()
-            )
-
-            val updatedPlaylists = playlists.map { if (it.id == "1") updatedPlaylist else it }
-            appSettings.setPlaylists(GsonUtils.gson.toJson(updatedPlaylists))
-            Log.d(TAG, "Updated Liked playlist: ${if (isAdding) "added" else "removed"} song $songId")
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating favorites playlist", e)
-        }
-    }
-    
     private fun updateCustomLayout() {
         try {
             // Create a new instance of the favorite command to avoid reference issues

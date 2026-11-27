@@ -738,11 +738,15 @@ fun SingleCardExplorerContent(
                                         if (isSelectionMode) {
                                             onSongSelectionToggle(song)
                                         } else {
-                                            val songIndex = pathFolderSongs.indexOfFirst {
+                                            // Play in folder context, including songs in nested disc folders.
+                                            val queue = if (currentPath != null) {
+                                                findSongsInFolder(currentPath, songPathMap, songs, context)
+                                            } else pathFolderSongs
+                                            val songIndex = queue.indexOfFirst {
                                                 it.id == song.id || (it.path != null && it.path == song.path)
                                             }
                                             if (songIndex >= 0) {
-                                                onPlayQueueFromIndex(pathFolderSongs, songIndex)
+                                                onPlayQueueFromIndex(queue, songIndex)
                                             } else {
                                                 onPlayQueueFromIndex(listOf(song), 0)
                                             }
@@ -1511,8 +1515,13 @@ fun getDirectoryContentsOptimized(
             directoriesWithSongs.sorted().forEach { subdirPath ->
                 val subdirName = File(subdirPath).name
                 val songCount = subdirectorySongCounts[subdirPath] ?: 0
+
+                // Keep the MediaStore fallback inside the whitelist too (#703).
+                val whitelistAllows = mediaScanMode != MediaScanMode.WHITELIST ||
+                    whitelistedFolders.isEmpty() ||
+                    whitelistedFolders.any { wl -> isFolderRelevantToWhitelist(subdirPath, wl) }
                 
-                if (songCount > 0) {
+                if (songCount > 0 && whitelistAllows) {
                     items.add(ExplorerItem(
                         name = subdirName,
                         path = subdirPath,

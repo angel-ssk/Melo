@@ -74,6 +74,12 @@ abstract class MeloAudioProcessor : AudioProcessor {
                 }
             }
         }
+
+        /** Drop retained buffers so high-res tracks don't pin large arrays/direct buffers. */
+        fun clearBufferPools() {
+            synchronized(bufferPool) { bufferPool.clear() }
+            synchronized(byteBufferPool) { byteBufferPool.clear() }
+        }
     }
     
     private var inputAudioFormat: AudioProcessor.AudioFormat = AudioProcessor.AudioFormat.NOT_SET

@@ -75,7 +75,7 @@ class TransitionController(
     }
 
     private fun setState(newState: TransitionState) {
-        Log.d(TAG, "Transition state: $currentState -> $newState")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Transition state: $currentState -> $newState")
         currentState = newState
         
         if (newState == TransitionState.IDLE) {
@@ -117,7 +117,7 @@ class TransitionController(
                 pendingScheduleMediaItem = null
                 val player = engine.masterPlayer
                 if (itemToSchedule != null && (player.isPlaying || player.playWhenReady)) {
-                    Log.d(TAG, "Transition finished. Rescheduling transition for track: ${itemToSchedule.mediaId}")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Transition finished. Rescheduling transition for track: ${itemToSchedule.mediaId}")
                     scheduleTransitionFor(itemToSchedule)
                 }
             }
@@ -138,7 +138,7 @@ class TransitionController(
 
     /** Re-attaches the listener when MeloPlayerEngine swaps players */
     private val swapListener: (Player) -> Unit = { newPlayer ->
-        Log.d(TAG, "Controller detected player swap. Moving listener.")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Controller detected player swap. Moving listener.")
         transitionListener?.let { listener ->
             currentObservedPlayer?.removeListener(listener)
             currentObservedPlayer = newPlayer
@@ -162,11 +162,11 @@ class TransitionController(
     fun initialize() {
         if (transitionListener != null) return
 
-        Log.d(TAG, "Initializing TransitionController...")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Initializing TransitionController...")
 
         transitionListener = object : Player.Listener {
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-                Log.d(TAG, "onMediaItemTransition: ${mediaItem?.mediaId} (reason=$reason)")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "onMediaItemTransition: ${mediaItem?.mediaId} (reason=$reason)")
                 engine.setPauseAtEndOfMediaItems(false)
 
                 if (mediaItem != null) {
@@ -177,7 +177,7 @@ class TransitionController(
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 val job = transitionSchedulerJob
                 if (isPlaying && (job == null || job.isCompleted)) {
-                    Log.d(TAG, "Playback resumed. Checking if transition needs scheduling.")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Playback resumed. Checking if transition needs scheduling.")
                     engine.masterPlayer.currentMediaItem?.let { scheduleTransitionFor(it) }
                 }
             }
@@ -185,10 +185,10 @@ class TransitionController(
             override fun onTimelineChanged(timeline: Timeline, reason: Int) {
                 if (reason == Player.TIMELINE_CHANGE_REASON_PLAYLIST_CHANGED) {
                     if (isInDestructiveState()) {
-                        Log.d(TAG, "Timeline changed (reason=$reason). Ignore cancellation since transitioning.")
+                        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Timeline changed (reason=$reason). Ignore cancellation since transitioning.")
                         return
                     }
-                    Log.d(TAG, "Timeline changed (reason=$reason). Cancelling pending transition.")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Timeline changed (reason=$reason). Cancelling pending transition.")
                     invalidateScheduledTransitions()
                     transitionSchedulerJob?.cancel()
                     engine.cancelNext()
@@ -198,10 +198,10 @@ class TransitionController(
 
             override fun onRepeatModeChanged(repeatMode: Int) {
                 if (isInDestructiveState()) {
-                    Log.d(TAG, "Repeat mode changed. Ignore cancellation since transitioning.")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Repeat mode changed. Ignore cancellation since transitioning.")
                     return
                 }
-                Log.d(TAG, "Repeat mode changed to $repeatMode. Rescheduling transition.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Repeat mode changed to $repeatMode. Rescheduling transition.")
                 invalidateScheduledTransitions()
                 transitionSchedulerJob?.cancel()
                 engine.cancelNext()
@@ -214,7 +214,7 @@ class TransitionController(
                 reason: Int
             ) {
                 if (reason == Player.DISCONTINUITY_REASON_SEEK) {
-                    Log.d(TAG, "onPositionDiscontinuity: SEEK detected. Old pos=${oldPosition.positionMs}, New pos=${newPosition.positionMs}")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "onPositionDiscontinuity: SEEK detected. Old pos=${oldPosition.positionMs}, New pos=${newPosition.positionMs}")
                     handleSeek(newPosition.positionMs)
                 }
             }
@@ -226,7 +226,7 @@ class TransitionController(
 
         scope.launch {
             appSettings.crossfade.collect { enabled ->
-                Log.d(TAG, "Crossfade setting changed: $enabled")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Crossfade setting changed: $enabled")
                 if (!isInDestructiveState()) {
                     if (enabled) {
                         engine.masterPlayer.currentMediaItem?.let { scheduleTransitionFor(it) }
@@ -239,7 +239,7 @@ class TransitionController(
         }
         scope.launch {
             appSettings.crossfadeDuration.collect { duration ->
-                Log.d(TAG, "Crossfade duration changed: $duration s")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Crossfade duration changed: $duration s")
                 if (!isInDestructiveState() && appSettings.crossfade.value && !appSettings.basicMode.value) {
                     engine.masterPlayer.currentMediaItem?.let { scheduleTransitionFor(it) }
                 }
@@ -247,7 +247,7 @@ class TransitionController(
         }
         scope.launch {
             appSettings.crossfadeRepeatOne.collect { repeatOne ->
-                Log.d(TAG, "Crossfade repeat-one setting changed: $repeatOne")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Crossfade repeat-one setting changed: $repeatOne")
                 if (!isInDestructiveState() && appSettings.crossfade.value && !appSettings.basicMode.value) {
                     engine.masterPlayer.currentMediaItem?.let { scheduleTransitionFor(it) }
                 }
@@ -268,7 +268,7 @@ class TransitionController(
      */
     private fun scheduleTransitionFor(currentMediaItem: MediaItem) {
         if (currentState == TransitionState.TRANSITIONING) {
-            Log.d(TAG, "Cannot schedule immediately while actively transitioning; stashing ${currentMediaItem.mediaId} for post-transition.")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Cannot schedule immediately while actively transitioning; stashing ${currentMediaItem.mediaId} for post-transition.")
             pendingScheduleMediaItem = currentMediaItem
             return
         }
@@ -282,23 +282,23 @@ class TransitionController(
             // Wait for any active transition to finish
             while (engine.isTransitionRunning()) {
                 if (!isActive || !isLatestSchedule(generation, expectedMediaId)) {
-                    Log.d(TAG, "Aborting stale schedule while waiting for active transition to finish.")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Aborting stale schedule while waiting for active transition to finish.")
                     return@launch
                 }
-                Log.d(TAG, "Waiting for active transition to finish...")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Waiting for active transition to finish...")
                 delay(500)
             }
 
             val player = engine.masterPlayer
             if (!isLatestSchedule(generation, expectedMediaId, player)) {
-                Log.d(TAG, "Aborting stale schedule before transition preparation.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Aborting stale schedule before transition preparation.")
                 return@launch
             }
 
             val repeatMode = player.repeatMode
 
             if (repeatMode == Player.REPEAT_MODE_ONE && !appSettings.crossfadeRepeatOne.value) {
-                Log.d(TAG, "Repeat-one active and crossfade-for-repeat-one disabled. Skipping transition.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Repeat-one active and crossfade-for-repeat-one disabled. Skipping transition.")
                 if (currentState != TransitionState.TRANSITIONING) {
                     engine.cancelNext()
                 }
@@ -314,7 +314,7 @@ class TransitionController(
             
             // Get the next window index using ExoPlayer's timeline (shuffle-aware)
             if (timeline.isEmpty || currentWindowIndex == C.INDEX_UNSET) {
-                Log.d(TAG, "Timeline is empty or current index is unset. No transition.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Timeline is empty or current index is unset. No transition.")
                 engine.cancelNext()
                 return@launch
             }
@@ -327,7 +327,7 @@ class TransitionController(
                 player.shuffleModeEnabled
             )
             
-            Log.d(TAG, "Current index: $currentWindowIndex, Next index (shuffle-aware): $nextIndex, Shuffle enabled: ${player.shuffleModeEnabled}")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Current index: $currentWindowIndex, Next index (shuffle-aware): $nextIndex, Shuffle enabled: ${player.shuffleModeEnabled}")
 
             // Resolve the next media item based on repeat mode and timeline
             val nextMediaItem = when {
@@ -337,7 +337,7 @@ class TransitionController(
             }
 
             if (nextMediaItem == null) {
-                Log.d(TAG, "No next track (repeat=$repeatMode). No transition.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "No next track (repeat=$repeatMode). No transition.")
                 if (currentState != TransitionState.TRANSITIONING) {
                     engine.cancelNext()
                 }
@@ -346,14 +346,14 @@ class TransitionController(
             }
 
             if (!isLatestSchedule(generation, expectedMediaId, player)) {
-                Log.d(TAG, "Aborting stale schedule before preparing next track.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Aborting stale schedule before preparing next track.")
                 return@launch
             }
 
             // Check if crossfade is globally enabled
             val isCrossfadeEnabled = appSettings.crossfade.value
             if (!isCrossfadeEnabled) {
-                Log.d(TAG, "Crossfade globally disabled. Using default gap.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Crossfade globally disabled. Using default gap.")
                 engine.setPauseAtEndOfMediaItems(false)
                 return@launch
             }
@@ -374,7 +374,7 @@ class TransitionController(
                 null
             }
 
-            Log.d(TAG, "Preparing next track: ${nextMediaItem.mediaId} at targetIndex=$targetIdx (queueSize=${fullQueue.size})")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Preparing next track: ${nextMediaItem.mediaId} at targetIndex=$targetIdx (queueSize=${fullQueue.size})")
             setState(TransitionState.PREPARING)
             engine.prepareNext(
                 mediaItem = nextMediaItem,
@@ -391,7 +391,7 @@ class TransitionController(
             )
 
             if (settings.mode == TransitionMode.NONE || settings.durationMs <= 0) {
-                Log.d(TAG, "Transition disabled or zero duration.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Transition disabled or zero duration.")
                 engine.setPauseAtEndOfMediaItems(false)
                 return@launch
             }
@@ -400,7 +400,7 @@ class TransitionController(
             var duration = player.duration
             while ((duration == C.TIME_UNSET || duration <= 0) && isActive) {
                 if (!isLatestSchedule(generation, expectedMediaId, player)) {
-                    Log.d(TAG, "Aborting stale schedule while waiting for duration.")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Aborting stale schedule while waiting for duration.")
                     return@launch
                 }
                 delay(500)
@@ -427,7 +427,7 @@ class TransitionController(
 
             val transitionPoint = (duration - effectiveDuration - leadTimeMs).coerceAtLeast(0L)
 
-            Log.d(TAG, "Scheduled crossfade at ${transitionPoint}ms (trackDur: $duration, leadTime: ${leadTimeMs}ms). Fade: ${effectiveDuration}ms")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Scheduled crossfade at ${transitionPoint}ms (trackDur: $duration, leadTime: ${leadTimeMs}ms). Fade: ${effectiveDuration}ms")
 
             // Handle case where we're already past the transition point
             if (transitionPoint <= player.currentPosition) {
@@ -439,7 +439,7 @@ class TransitionController(
                         engine.setPauseAtEndOfMediaItems(true)
                         engine.performTransition(settings.copy(durationMs = adjustedDuration.toInt()))
                     } else {
-                        Log.d(TAG, "Skipping immediate trigger for stale schedule.")
+                        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Skipping immediate trigger for stale schedule.")
                     }
                 } else {
                     Log.w(TAG, "Too close to end (${remaining}ms left). Skipping to avoid glitch.")
@@ -451,7 +451,7 @@ class TransitionController(
             // Adaptive polling — sleep longer when far from transition point
             while (player.currentPosition < transitionPoint && isActive) {
                 if (!isLatestSchedule(generation, expectedMediaId, player)) {
-                    Log.d(TAG, "Aborting stale schedule while polling transition point.")
+                    if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Aborting stale schedule while polling transition point.")
                     return@launch
                 }
                 val remaining = transitionPoint - player.currentPosition
@@ -469,12 +469,12 @@ class TransitionController(
 
             if (isActive && isLatestSchedule(generation, expectedMediaId, player)) {
                 setState(TransitionState.TRANSITIONING)
-                Log.d(TAG, "FIRING TRANSITION NOW!")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "FIRING TRANSITION NOW!")
                 engine.setPauseAtEndOfMediaItems(true)
                 engine.performTransition(settings.copy(durationMs = effectiveDuration.toInt()))
                 watchForTransitionCompletion(generation)
             } else {
-                Log.d(TAG, "Job cancelled before firing.")
+                if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Job cancelled before firing.")
                 engine.setPauseAtEndOfMediaItems(false)
             }
         }
@@ -485,12 +485,12 @@ class TransitionController(
         val mediaItem = player.currentMediaItem ?: return
 
         if (isInDestructiveState()) {
-            Log.d(TAG, "Seek during active transition. Snap-completing transition immediately.")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Seek during active transition. Snap-completing transition immediately.")
             engine.snapCompleteTransition()
             setState(TransitionState.IDLE)
         }
 
-        Log.d(TAG, "Handling seek to ${positionMs}ms for ${mediaItem.mediaId}")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Handling seek to ${positionMs}ms for ${mediaItem.mediaId}")
 
         // Cancel any pending transitions
         pendingScheduleMediaItem = null
@@ -500,7 +500,7 @@ class TransitionController(
         // Check if crossfade is globally enabled
         val isCrossfadeEnabled = appSettings.crossfade.value
         if (!isCrossfadeEnabled) {
-            Log.d(TAG, "Crossfade globally disabled. Skipping seek transition handling.")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Crossfade globally disabled. Skipping seek transition handling.")
             engine.cancelNext()
             engine.setPauseAtEndOfMediaItems(false)
             setState(TransitionState.IDLE)
@@ -510,7 +510,7 @@ class TransitionController(
         // Calculate the transition point
         val duration = player.duration
         if (duration == C.TIME_UNSET || duration <= 0) {
-            Log.d(TAG, "Duration unset. Rescheduling transition normally.")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Duration unset. Rescheduling transition normally.")
             engine.cancelNext()
             scheduleTransitionFor(mediaItem)
             return
@@ -528,19 +528,19 @@ class TransitionController(
         val transitionPoint = duration - effectiveDuration
 
         if (positionMs >= transitionPoint) {
-            Log.d(TAG, "Seek is PAST the transition point ($transitionPoint <= $positionMs). Skipping crossfade to avoid premature skip.")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Seek is PAST the transition point ($transitionPoint <= $positionMs). Skipping crossfade to avoid premature skip.")
             engine.cancelNext()
             engine.setPauseAtEndOfMediaItems(false)
             setState(TransitionState.IDLE)
         } else {
-            Log.d(TAG, "Seek is BEFORE the transition point ($positionMs < $transitionPoint). Rescheduling transition.")
+            if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Seek is BEFORE the transition point ($positionMs < $transitionPoint). Rescheduling transition.")
             engine.cancelNext()
             scheduleTransitionFor(mediaItem)
         }
     }
 
     fun cancelPendingTransition() {
-        Log.d(TAG, "cancelPendingTransition requested")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "cancelPendingTransition requested")
         pendingScheduleMediaItem = null
         invalidateScheduledTransitions()
         transitionSchedulerJob?.cancel()
@@ -550,7 +550,7 @@ class TransitionController(
     }
 
     fun setManualTransitioning() {
-        Log.d(TAG, "setManualTransitioning requested")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "setManualTransitioning requested")
         invalidateScheduledTransitions()
         transitionSchedulerJob?.cancel()
         
@@ -562,7 +562,7 @@ class TransitionController(
      * Releases the controller, removing all listeners and cancelling jobs.
      */
     fun release() {
-        Log.d(TAG, "Releasing controller.")
+        if (com.melo.player.BuildConfig.DEBUG) Log.d(TAG, "Releasing controller.")
         invalidateScheduledTransitions()
         transitionSchedulerJob?.cancel()
         transitionCompletionWatchJob?.cancel()

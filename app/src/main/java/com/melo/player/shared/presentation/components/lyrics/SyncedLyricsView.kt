@@ -141,7 +141,7 @@ fun SyncedLyricsView(
     val context = LocalContext.current
     var maxSeenPlaybackTime by remember(lyrics, parsedLyricsInput) { mutableLongStateOf(0L) }
     val effectivePlaybackTime = remember(currentPlaybackTime) {
-        if (abs(currentPlaybackTime - maxSeenPlaybackTime) > 1500L) {
+        if (abs(currentPlaybackTime - maxSeenPlaybackTime) > 1000L) {
             maxSeenPlaybackTime = currentPlaybackTime
             currentPlaybackTime
         } else {

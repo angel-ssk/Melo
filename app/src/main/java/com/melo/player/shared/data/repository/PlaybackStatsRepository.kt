@@ -783,9 +783,10 @@ class PlaybackStatsRepository internal constructor(
     
     private fun ensureLoadedFromDisk() {
         if (isLoaded) return
+        // Disk I/O must not happen while holding the in-memory lock (#701).
+        val diskEvents = readEventsFromDisk()
         synchronized(memoryLock) {
             if (isLoaded) return
-            val diskEvents = readEventsFromDisk()
             inMemoryEvents.clear()
             inMemoryEvents.addAll(diskEvents)
             isLoaded = true

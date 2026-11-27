@@ -184,11 +184,11 @@ fun UniversalSearchScreen(
         }
     }
 
-    var showFilters by remember { mutableStateOf(false) }
-    var filterSongs by remember { mutableStateOf(true) }
-    var filterAlbums by remember { mutableStateOf(true) }
-    var filterArtists by remember { mutableStateOf(true) }
-    var filterPlaylists by remember { mutableStateOf(true) }
+    var showFilters by rememberSaveable { mutableStateOf(false) }
+    var filterSongs by rememberSaveable { mutableStateOf(true) }
+    var filterAlbums by rememberSaveable { mutableStateOf(true) }
+    var filterArtists by rememberSaveable { mutableStateOf(true) }
+    var filterPlaylists by rememberSaveable { mutableStateOf(true) }
 
     var showSwitchDialog by remember { mutableStateOf(false) }
     var pendingAction: (() -> Unit)? by remember { mutableStateOf(null) }

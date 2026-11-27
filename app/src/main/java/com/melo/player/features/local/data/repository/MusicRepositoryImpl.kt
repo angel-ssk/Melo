@@ -730,6 +730,10 @@ class MusicRepository(context: Context) {
     internal val negativeArtistImageCache = Collections.synchronizedSet(LinkedHashSet<String>())
     internal val negativeAlbumImageCache = Collections.synchronizedSet(LinkedHashSet<String>())
     internal val negativeTrackArtworkCache = Collections.synchronizedSet(LinkedHashSet<String>())
+
+    /** Short-lived circuit breaker for lyrics lookups that found nothing (#656). */
+    private val lyricsFailureTimes = Collections.synchronizedMap(HashMap<String, Long>())
+    private val LYRICS_FAILURE_TTL_MS = 10L * 60 * 1000
     
     // Rate limiting for API calls
     private val lastApiCalls = mutableMapOf<String, Long>()
@@ -742,7 +746,7 @@ class MusicRepository(context: Context) {
         
         // Precompiled regex for primary artist extraction
         private val PRIMARY_ARTIST_REGEX = Regex("""(?i)\s+(feat\.|ft\.|featuring|with|and|&)\s+.*""")
-        private val DISC_FOLDER_REGEX = Regex("""/(?:cd|disc|disk)\s*\d+$""", RegexOption.IGNORE_CASE)
+        private val DISC_FOLDER_REGEX = Regex("""/(?:(?:cd|disc|disk)\s*\d+)+$""", RegexOption.IGNORE_CASE)
         private val GENERIC_DIRECTORY_NAMES = setOf(
             "download",
             "downloads",
@@ -2980,6 +2984,7 @@ class MusicRepository(context: Context) {
             // Final fallback: TagLib (handles formats that jaudiotagger cannot read)
             Log.d(TAG, "===== TRYING TAGLIB =====")
             val tagLibLyrics = filePath?.let { MediaUtils.readLyricsViaTagLib(it) }
+                ?: MediaUtils.readLyricsViaTagLib(context, songUri)
             if (!tagLibLyrics.isNullOrBlank()) {
                 Log.d(TAG, "===== FOUND LYRICS VIA TAGLIB =====")
                 val parsed = parseLyricsData(tagLibLyrics)
@@ -4620,6 +4625,14 @@ class MusicRepository(context: Context) {
         }
         
         Log.d(TAG, "===== Cache key: $cacheKey, Cache size: ${lyricsCache.size} =====")
+
+        // Circuit breaker: don't hammer all APIs again for a recent "not found" (#656).
+        if (!forceRefresh) {
+            val failedAt = lyricsFailureTimes[cacheKey] ?: 0L
+            if (failedAt > 0L && System.currentTimeMillis() - failedAt < LYRICS_FAILURE_TTL_MS) {
+                return@withContext LyricsData("No lyrics found for this song", null, null)
+            }
+        }
         
         // Check cache unless force refresh is requested
         if (!forceRefresh) {
@@ -4711,6 +4724,7 @@ class MusicRepository(context: Context) {
                     }
                     
                     lyricsCache[cacheKey] = lyricsWithSource
+                    lyricsFailureTimes.remove(cacheKey)
                     if (sourceName == "API") {
                         // Only save API-fetched lyrics to local cache
                         saveLocalLyrics(artist, title, lyricsWithSource)
@@ -4727,6 +4741,7 @@ class MusicRepository(context: Context) {
         Log.d(TAG, "No lyrics found from any source for: $artist - $title")
         val notFoundLyrics = LyricsData("No lyrics found for this song", null, null)
         lyricsCache[cacheKey] = notFoundLyrics
+        lyricsFailureTimes[cacheKey] = System.currentTimeMillis()
         return@withContext notFoundLyrics
     }
 
@@ -5900,7 +5915,7 @@ class MusicRepository(context: Context) {
 
     suspend fun createPlaylist(name: String): Playlist {
         return Playlist(
-            id = System.currentTimeMillis().toString(),
+            id = java.util.UUID.randomUUID().toString(),
             name = name
         )
     }
@@ -6213,6 +6228,7 @@ class MusicRepository(context: Context) {
             negativeArtistImageCache.clear()
             negativeAlbumImageCache.clear()
             negativeTrackArtworkCache.clear()
+            lyricsFailureTimes.clear()
             // Also clear the song in-memory cache
             cachedSongs = null
             cacheTimestamp = 0L

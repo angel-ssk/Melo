@@ -65,3 +65,17 @@
   - `LowEndJourneyBenchmarks` en `fdroid`: TTID mediano **790 ms**; P95 de frame: búsqueda **51,9 ms**, reproductor **48,2 ms**.
   - Nota: MuMu emula x86; los valores sirven como referencia comparativa, no como medida de un Tecno Spark Go real.
 - **Corrección verificada en MuMu**: con Modo básico activo, una canción con Canvas animado descargado online (Moonlight) muestra carátula estática; no se crea el ExoPlayer ni se consulta el proveedor.
+
+## 10. Melo 1.1 — mejoras portadas de Rhythm (solo aplicables a local)
+
+La mayoría de los fixes de Rhythm 5.6 ya estaban presentes en la base; se cerraron las brechas residuales:
+
+- **Biblioteca**: normalización recursiva de carpetas `CD/Disc/Disk N` para álbumes multi-disco (#692); cola del explorador con canciones de subcarpetas (#708); filtro de whitelist también en el fallback de MediaStore (#703).
+- **Observador de MediaStore**: `isLibraryStale()` se ejecuta en `Dispatchers.IO`, no en Main (#646).
+- **Letras**: umbral de progreso monótono alineado a 1000 ms en ambas vistas (#685) y el broadcast Bluetooth/widget usa la posición ya acotada; lectura de letras incrustadas vía Uri `content://` con TagLib (#687).
+- **Reproducción**: búsqueda/filtros ya no amplían la cola a toda la biblioteca (#684); iconos de repeat del widget corregidos con constantes de `Player` (#671); pools de buffers de audio liberados al cerrar el engine (#686/697); logs de transición tras `BuildConfig.DEBUG` (#697); E/S de estadísticas fuera del lock en memoria (#701).
+- **Red**: circuit breaker con TTL de 10 min para búsquedas de letras fallidas (#656).
+- **Playlists**: ids UUID para evitar colisiones por milisegundo (#414); el servicio ya no sobrescribe el JSON legacy de favoritos, deja que el ViewModel/Room sea la única fuente.
+- **Búsqueda**: filtros (canciones/álbumes/artistas/playlists) persistidos con `rememberSaveable` (#688).
+- **Ya presentes y verificados** (sin cambios): miniplayer morphing + carousel, pantalla externa en bottom sheet, escalado de widgets por altura, scoping de géneros, deduplicación de álbumes y persistencia de consulta.
+- **No portados**: ViPER4Android/Clarity/DDC/Convolver (coste CPU/RAM incompatible con gama baja) y todo lo de Rhythm Go/streaming (Melo es local-only).

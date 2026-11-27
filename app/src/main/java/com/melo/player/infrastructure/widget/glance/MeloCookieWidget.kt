@@ -412,7 +412,7 @@ private fun CornerActionBadge(
         2 -> {
             // Repeat
             val repeatIcon = when (repeatMode) {
-                1 -> R.drawable.ic_repeat_one
+                androidx.media3.common.Player.REPEAT_MODE_ONE -> R.drawable.ic_repeat_one
                 else -> R.drawable.ic_repeat
             }
             val isRepeatActive = repeatMode != 0
