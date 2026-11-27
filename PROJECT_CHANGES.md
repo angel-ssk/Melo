@@ -49,3 +49,14 @@
 ## 8. Firma
 
 - Keystore en `.config/melo-release.jks` (alias `melo`), configurado en `.config/keystore.properties`. Ambos ignorados por Git.
+
+## 9. Melo 1.0 — cierre de functions y rendimiento
+
+- **Perfil**: se accede desde el avatar de la esquina superior derecha; el logo de la izquierda ya no navega.
+- **Animaciones en segundo plano**: `MeloApplication` observa el ciclo de vida y expone `foregroundFlow`. La galleta de búsqueda, el Canvas del reproductor y las aureolas de letras se detienen al salir de la app.
+- **Experiencia ligera (Modo básico)**: nuevo interruptor en Ajustes → Modo básico → Movimiento que desactiva blur, carátulas animadas, Canvas y movimiento decorativo incluso en dispositivos potentes; se suma a la detección automática por RAM.
+- **Letras — presets y sincronización**: implementados `DEFAULT / BOUNCE / SLIDE / GLOW / KARAOKE / MINIMAL` en `WordByWordLyricsView`, seleccionables en Ajustes → Letras. El desfase manual ±0,5 s se guarda ahora en `AppSettings` y también se puede ajustar desde Ajustes → Letras.
+- **Arranque diferido**: tras la primera frame se inicializan CrashReporter, NetworkClient, LeakCanary/ANR y el recorte de caché; el tema se aplica antes para evitar parpadeos.
+- **Melo GO eliminado de la experiencia**: el onboarding ya no ofrece modo streaming ni pasos de servicio; el interruptor de Go Mode desapareció de Funciones experimentales y `setAppMode()` fuerza siempre `LOCAL`. La app es exclusivamente reproductor local.
+- **Baseline profile**: el generador cubre ahora inicio, Inicio, Biblioteca, búsqueda y reproductor, con selectores en español e inglés. Nuevos benchmarks `LowEndJourneyBenchmarks` (startup / búsqueda / reproductor) para ejecutar en los flavors `github` y `fdroid`.
+- **Pendiente de ejecutar con dispositivo**: regenerar el perfil y medir en gama baja (`connectedGithubBenchmarkAndroidTest` / `connectedFdroidBenchmarkAndroidTest`). Requiere MuMu abierto o un móvil conectado por ADB.

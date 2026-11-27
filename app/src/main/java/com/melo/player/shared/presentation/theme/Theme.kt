@@ -24,6 +24,9 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -278,6 +281,7 @@ fun MeloTheme(
     expressiveColors: Boolean = true,
     themeIntensity: String = "STANDARD",
     highRefreshMotion: Boolean = true,
+    uiScale: Float = 1f,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -377,12 +381,20 @@ fun MeloTheme(
         }
     }
 
+    val currentDensity = LocalDensity.current
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
-    MaterialTheme(
-        colorScheme = colorScheme,
-        motionScheme = if (highRefreshMotion) MeloHighRefreshMotionScheme else MotionScheme.standard(),
-        typography = typography,
-        shapes = Shapes,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalDensity provides Density(
+            currentDensity.density * uiScale,
+            currentDensity.fontScale * uiScale
+        )
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            motionScheme = if (highRefreshMotion) MeloHighRefreshMotionScheme else MotionScheme.standard(),
+            typography = typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 }

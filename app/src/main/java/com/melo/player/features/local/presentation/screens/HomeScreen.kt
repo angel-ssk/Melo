@@ -615,8 +615,9 @@ fun HomeScreen(
         },
     ) { modifier ->
         val waveGradient by appSettings.waveGradient.collectAsState()
+        val basicMode by appSettings.basicMode.collectAsState()
         com.melo.player.shared.presentation.components.common.MeloWaveGradientBackdrop(
-            enabled = waveGradient,
+            enabled = waveGradient && !basicMode,
             modifier = modifier
         ) {
         if (isStreamingMode) {

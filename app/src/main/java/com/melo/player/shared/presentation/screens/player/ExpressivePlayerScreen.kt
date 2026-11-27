@@ -306,6 +306,7 @@ fun ExpressivePlayerScreen(
     onShareFile: () -> Unit = {},
     onEditBottomButtons: () -> Unit = {}
 ) {
+    val basicMode by appSettings.basicMode.collectAsState()
     val artworkScale by animateFloatAsState(
         targetValue = if (isPlaying) 1.0f else 0.85f,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow),
@@ -524,7 +525,7 @@ fun ExpressivePlayerScreen(
         }
         val scheme = withContext(Dispatchers.IO) {
             try {
-                val bitmap = loadArtworkBitmap(context, currentArtworkUri, 128)
+                val bitmap = loadArtworkBitmap(context, currentArtworkUri, if (MeloApplication.isLowRam) 64 else 128)
                 val extracted = if (bitmap != null) {
                     ColorExtractor.extractColorsFromBitmap(bitmap)
                 } else null
@@ -657,7 +658,7 @@ fun ExpressivePlayerScreen(
         if (!isBackdropEnabled) return@produceState
         value = withContext(Dispatchers.IO) {
             try {
-                val bitmap = loadArtworkBitmap(context, artworkUri, 256)
+                val bitmap = loadArtworkBitmap(context, artworkUri, if (MeloApplication.isLowRam) 96 else 256)
                 if (bitmap != null) {
                     var r = 0L; var g = 0L; var b = 0L
                     val count = bitmap.width * bitmap.height
@@ -1082,7 +1083,7 @@ fun ExpressivePlayerScreen(
                                 .fillMaxSize()
                                 .then(if (MeloApplication.isLowRam) Modifier else Modifier.blur(96.dp))
                         )
-                        if (canvasArtwork?.preferredAnimationUrl != null && !MeloApplication.isLowRam) {
+                        if (canvasArtwork?.preferredAnimationUrl != null && !MeloApplication.isLowRam && !basicMode) {
                             CanvasArtworkPlayer(
                                 primaryUrl = canvasArtwork.animated,
                                 fallbackUrl = canvasArtwork.videoUrl,
@@ -1091,7 +1092,7 @@ fun ExpressivePlayerScreen(
                                 modifier = Modifier.fillMaxSize().blur(96.dp)
                             )
                         }
-                        if (artColor != null && !MeloApplication.isLowRam) {
+                        if (artColor != null && !MeloApplication.isLowRam && !basicMode) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -1120,7 +1121,7 @@ fun ExpressivePlayerScreen(
                                 contentDescription = null, contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize())
                             if (canvasArtwork?.preferredAnimationUrl != null) {
-                                CanvasArtworkPlayer(primaryUrl = canvasArtwork.animated, fallbackUrl = canvasArtwork.videoUrl, isPlaying = isPlaying, alwaysPlay = true, modifier = Modifier.fillMaxSize())
+                                CanvasArtworkPlayer(primaryUrl = canvasArtwork.animated, fallbackUrl = canvasArtwork.videoUrl, isPlaying = isPlaying && MeloApplication.isForeground, alwaysPlay = true, modifier = Modifier.fillMaxSize())
                             }
                         }
                         Box(modifier = Modifier.fillMaxSize().background(

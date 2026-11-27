@@ -1369,42 +1369,7 @@ fun buildSettingsSearchIndex(context: Context): List<SearchableSettingItem> {
             route = SettingsRoutes.LABS,
             parentScreen = context.getString(R.string.settings_section_advanced)
         ))
-        add(SearchableSettingItem(
-            id = "experimental_go_mode",
-            title = context.getString(R.string.exp_go_mode),
-            description = context.getString(R.string.exp_go_mode_desc),
-            keywords = listOf("go mode", "melo go", "streaming mode", "streaming navigation", "integration"),
-            icon = MaterialSymbolIcon("cloud_queue"),
-            route = SettingsRoutes.LABS,
-            parentScreen = context.getString(R.string.settings_labs)
-        ))
-        add(SearchableSettingItem(
-            id = "go_preferred_service",
-            title = context.getString(R.string.streaming_settings_preferred_service),
-            description = context.getString(R.string.streaming_settings_service_sheet_desc),
-            keywords = listOf("preferred service", "subsonic", "jellyfin", "streaming provider", "go settings"),
-            icon = MaterialSymbolIcon("cloud_queue"),
-            route = SettingsRoutes.GO_SETTINGS,
-            parentScreen = context.getString(R.string.exp_go_mode)
-        ))
-        add(SearchableSettingItem(
-            id = "go_streaming_quality",
-            title = context.getString(R.string.streaming_settings_quality),
-            description = context.getString(R.string.streaming_settings_quality_sheet_desc),
-            keywords = listOf("streaming quality", "bitrate", "audio quality", "go settings", "data usage"),
-            icon = MaterialSymbolIcon("speed"),
-            route = SettingsRoutes.GO_SETTINGS,
-            parentScreen = context.getString(R.string.exp_go_mode)
-        ))
-        add(SearchableSettingItem(
-            id = "go_cellular_streaming",
-            title = context.getString(R.string.exp_cellular_streaming),
-            description = context.getString(R.string.gosettingsscreen_enable_streaming_over_mobile),
-            keywords = listOf("cellular", "mobile data", "streaming over cellular", "mobile network", "data usage", "go settings"),
-            icon = MaterialSymbolIcon("signal_cellular_alt"),
-            route = SettingsRoutes.GO_SETTINGS,
-            parentScreen = context.getString(R.string.exp_go_mode)
-        ))
+        // Melo 1.0 is local-only: Go/streaming settings are not indexed.
         
         // ======================== THEME CUSTOMIZATION SCREEN ========================
         add(SearchableSettingItem(

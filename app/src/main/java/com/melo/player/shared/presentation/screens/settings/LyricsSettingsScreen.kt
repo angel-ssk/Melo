@@ -110,6 +110,7 @@ import com.melo.player.shared.presentation.components.common.CollapsibleHeaderSc
 import com.melo.player.shared.presentation.components.common.ButtonGroupStyle
 import com.melo.player.shared.presentation.components.common.ExpressiveScrollBar
 import com.melo.player.shared.presentation.components.common.ExpressiveButtonGroup
+import com.melo.player.shared.presentation.components.common.ExpressiveButtonGroupCompact
 import com.melo.player.shared.presentation.components.common.ExpressiveGroupButton
 import com.melo.player.shared.presentation.components.bottomsheets.StandardBottomSheetHeader
 import com.melo.player.shared.presentation.components.common.StyledProgressBar
@@ -230,6 +231,8 @@ fun LyricsSettingsScreen(onBackClick: () -> Unit) {
     val translationAutoWord by appSettings.translationAutoWord.collectAsState()
     val showLyricsTranslation by appSettings.showLyricsTranslation.collectAsState()
     val showLyricsRomanization by appSettings.showLyricsRomanization.collectAsState()
+    val lyricsAnimationPreset by appSettings.lyricsAnimationPreset.collectAsState()
+    val lyricsSyncOffset by appSettings.lyricsSyncOffsetMs.collectAsState()
 
     CollapsibleHeaderScreen(
         title = context.getString(R.string.lyrics_settings_title),
@@ -619,6 +622,102 @@ fun LyricsSettingsScreen(onBackClick: () -> Unit) {
                                             onItemClick = { index ->
                                                 HapticUtils.performHapticFeedback(context, hapticFeedback, HapticType.LIGHT)
                                                 appSettings.setPlayerLyricsTransition(index)
+                                            },
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
+                            )
+                        )
+                        add(
+                            toMaterial3SettingsItem(
+                                context = context,
+                                hapticFeedback = hapticFeedback,
+                                item = SettingItem(
+                                    icon = MaterialSymbolIcon("animation"),
+                                    title = context.getString(R.string.lyrics_preset_title),
+                                    description = context.getString(R.string.lyrics_preset_desc)
+                                ),
+                                description = {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 8.dp),
+                                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        ExpressiveButtonGroupCompact(
+                                            items = listOf(
+                                                context.getString(R.string.lyrics_preset_default),
+                                                context.getString(R.string.lyrics_preset_bounce),
+                                                context.getString(R.string.lyrics_preset_slide)
+                                            ),
+                                            selectedIndex = if (lyricsAnimationPreset in 0..2) lyricsAnimationPreset else -1,
+                                            onItemClick = { index ->
+                                                HapticUtils.performHapticFeedback(context, hapticFeedback, HapticType.LIGHT)
+                                                appSettings.setLyricsAnimationPreset(index)
+                                            },
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                        ExpressiveButtonGroupCompact(
+                                            items = listOf(
+                                                context.getString(R.string.lyrics_preset_glow),
+                                                context.getString(R.string.lyrics_preset_karaoke),
+                                                context.getString(R.string.lyrics_preset_minimal)
+                                            ),
+                                            selectedIndex = if (lyricsAnimationPreset in 3..5) lyricsAnimationPreset - 3 else -1,
+                                            onItemClick = { index ->
+                                                HapticUtils.performHapticFeedback(context, hapticFeedback, HapticType.LIGHT)
+                                                appSettings.setLyricsAnimationPreset(index + 3)
+                                            },
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
+                            )
+                        )
+                        add(
+                            toMaterial3SettingsItem(
+                                context = context,
+                                hapticFeedback = hapticFeedback,
+                                item = SettingItem(
+                                    icon = MaterialSymbolIcon("sync"),
+                                    title = context.getString(R.string.lyrics_sync_offset_title),
+                                    description = context.getString(R.string.lyrics_sync_offset_desc)
+                                ),
+                                description = {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 8.dp),
+                                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        Text(
+                                            text = context.getString(
+                                                R.string.lyrics_sync_offset_value,
+                                                String.format("%+.1fs", lyricsSyncOffset / 1000f)
+                                            ),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = MaterialTheme.colorScheme.primary
+                                        )
+                                        ExpressiveButtonGroupCompact(
+                                            items = listOf("-1.0s", "-0.5s", "-0.2s"),
+                                            selectedIndex = -1,
+                                            onItemClick = { index ->
+                                                HapticUtils.performHapticFeedback(context, hapticFeedback, HapticType.LIGHT)
+                                                appSettings.setLyricsSyncOffset(
+                                                    (lyricsSyncOffset - when (index) { 0 -> 1000L; 1 -> 500L; else -> 200L })
+                                                )
+                                            },
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                        ExpressiveButtonGroupCompact(
+                                            items = listOf("+0.2s", "+0.5s", "+1.0s"),
+                                            selectedIndex = -1,
+                                            onItemClick = { index ->
+                                                HapticUtils.performHapticFeedback(context, hapticFeedback, HapticType.LIGHT)
+                                                appSettings.setLyricsSyncOffset(
+                                                    (lyricsSyncOffset + when (index) { 0 -> 200L; 1 -> 500L; else -> 1000L })
+                                                )
                                             },
                                             modifier = Modifier.fillMaxWidth()
                                         )

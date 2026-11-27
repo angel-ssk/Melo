@@ -71,6 +71,12 @@ class BaselineProfileGenerator {
         // ── Journey 4: Navigate back to Home ─────────────────────────────────
         // Ensures the back-stack composables (HomeScreen recomposition path) are profiled.
         navigateToHome()
+
+        // ── Journey 5: Search (cookie FAB + search screen) ────────────────────
+        navigateToSearch()
+
+        // ── Journey 6: Player (mini-player → full player) ─────────────────────
+        openPlayer()
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────
@@ -88,7 +94,10 @@ class BaselineProfileGenerator {
         // Try multiple selector strategies since content descriptions may be translated
         val libraryButton = device.findObject(By.desc("Library"))
             ?: device.findObject(By.text("Library"))
+            ?: device.findObject(By.desc("Biblioteca"))
+            ?: device.findObject(By.text("Biblioteca"))
             ?: device.findObject(By.descContains("library"))
+            ?: device.findObject(By.descContains("Biblioteca"))
             ?: return
 
         libraryButton.click()
@@ -117,11 +126,46 @@ class BaselineProfileGenerator {
     private fun MacrobenchmarkScope.navigateToHome() {
         val homeButton = device.findObject(By.desc("Home"))
             ?: device.findObject(By.text("Home"))
+            ?: device.findObject(By.desc("Inicio"))
+            ?: device.findObject(By.text("Inicio"))
             ?: device.findObject(By.descContains("home"))
+            ?: device.findObject(By.descContains("Inicio"))
             ?: return
 
         homeButton.click()
         device.waitForIdle(1_500)
+    }
+
+    private fun MacrobenchmarkScope.navigateToSearch() {
+        val searchButton = device.findObject(By.desc("Search"))
+            ?: device.findObject(By.desc("Buscar"))
+            ?: device.findObject(By.descContains("search"))
+            ?: device.findObject(By.descContains("Buscar"))
+            ?: return
+        searchButton.click()
+        device.waitForIdle(1_500)
+        // Type a short query to warm the search results list.
+        val field = device.findObject(By.clazz("android.widget.EditText"))
+            ?: device.findObject(By.focusable(true))
+        field?.click()
+        device.waitForIdle(500)
+        device.findObject(By.clazz("android.widget.EditText"))?.text = "a"
+        device.waitForIdle(1_500)
+        navigateToHome()
+    }
+
+    private fun MacrobenchmarkScope.openPlayer() {
+        // Tap the first playable item to load the mini-player and full player.
+        val candidate = device.findObject(By.clickable(true)) ?: return
+        candidate.click()
+        device.waitForIdle(2_000)
+        val miniPlayer = device.findObject(By.descContains("mini"))
+            ?: device.findObject(By.descContains("reproductor"))
+        miniPlayer?.click()
+        device.waitForIdle(1_500)
+        swipeVertically(up = true)
+        swipeVertically(up = false)
+        device.waitForIdle(500)
     }
 
     private companion object {

@@ -240,7 +240,7 @@ class TransitionController(
         scope.launch {
             appSettings.crossfadeDuration.collect { duration ->
                 Log.d(TAG, "Crossfade duration changed: $duration s")
-                if (!isInDestructiveState() && appSettings.crossfade.value) {
+                if (!isInDestructiveState() && appSettings.crossfade.value && !appSettings.basicMode.value) {
                     engine.masterPlayer.currentMediaItem?.let { scheduleTransitionFor(it) }
                 }
             }
@@ -248,7 +248,7 @@ class TransitionController(
         scope.launch {
             appSettings.crossfadeRepeatOne.collect { repeatOne ->
                 Log.d(TAG, "Crossfade repeat-one setting changed: $repeatOne")
-                if (!isInDestructiveState() && appSettings.crossfade.value) {
+                if (!isInDestructiveState() && appSettings.crossfade.value && !appSettings.basicMode.value) {
                     engine.masterPlayer.currentMediaItem?.let { scheduleTransitionFor(it) }
                 }
             }

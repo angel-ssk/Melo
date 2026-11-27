@@ -282,14 +282,9 @@ fun OnboardingScreen(
     
     val visibleSteps = remember(appMode) {
         val list = mutableListOf<OnboardingStep>()
-        list.add(OnboardingStep.APP_MODE_CHOICE)
-        if (appMode == "STREAMING") {
-            list.add(OnboardingStep.STREAMING_SERVICE_CHOICE)
-            list.add(OnboardingStep.STREAMING_SETUP)
-        } else {
-            list.add(OnboardingStep.PERMISSIONS)
-            list.add(OnboardingStep.MEDIA_SCAN)
-        }
+        // Melo is a local-only music player: no streaming/Go steps.
+        list.add(OnboardingStep.PERMISSIONS)
+        list.add(OnboardingStep.MEDIA_SCAN)
         list.add(OnboardingStep.FULL_TOUR_PROMPT)
         list.add(OnboardingStep.MELO_GUARD)
         list.add(OnboardingStep.AUDIO_PLAYBACK)

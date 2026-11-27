@@ -125,6 +125,12 @@ class ExternalPlaybackActivity : ComponentActivity() {
             val expressiveColors by appSettings.expressiveColors.collectAsState()
             val themeIntensity by appSettings.themeIntensity.collectAsState()
             val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
+            val uiScaleMode by appSettings.uiScaleMode.collectAsState()
+            val uiScale = when (uiScaleMode) {
+                "COMPACT" -> 0.88f
+                "LARGE" -> 1.12f
+                else -> 1f
+            }
             val isDarkTheme = if (useSystemTheme) isSystemInDarkTheme() else darkMode
 
             MeloTheme(
@@ -139,7 +145,8 @@ class ExternalPlaybackActivity : ComponentActivity() {
                 extractedAlbumColorsJson = extractedAlbumColors,
                 expressiveColors = expressiveColors,
                 themeIntensity = themeIntensity,
-                highRefreshMotion = highRefreshMotion
+                highRefreshMotion = highRefreshMotion,
+                uiScale = uiScale
             ) {
                 ExternalPlaybackBottomSheet(
                     musicViewModel = musicViewModel,

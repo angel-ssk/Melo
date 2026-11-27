@@ -2250,7 +2250,7 @@ notificationManager.createNotificationChannel(sleepTimerChannel)
         isSkipPrevious: Boolean = false
     ): Boolean {
         try {
-            if (!appSettings.crossfade.value || !appSettings.crossfadeOnSkip.value) {
+            if (!appSettings.crossfade.value || !appSettings.crossfadeOnSkip.value || appSettings.basicMode.value) {
                 return false
             }
 

@@ -282,16 +282,6 @@ fun LabsSettingsScreen(
                             context.getString(R.string.exp_force_player_compact_mode_desc),
                             toggleState = forcePlayerCompactMode,
                             onToggleChange = { appSettings.setForcePlayerCompactMode(it) }
-                        ),
-                        SettingItem(
-                            MaterialSymbolIcon("cloud_queue"),
-                            context.getString(R.string.exp_go_mode),
-                            context.getString(R.string.exp_go_mode_desc),
-                            toggleState = appMode == "STREAMING",
-                            onToggleChange = { enabled ->
-                                appSettings.setAppMode(if (enabled) "STREAMING" else "LOCAL")
-                            },
-                            onClick = { onNavigateToGoSettings?.invoke() }
                         )
                     )
                 )

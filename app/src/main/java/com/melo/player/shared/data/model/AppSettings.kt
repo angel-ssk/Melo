@@ -185,6 +185,8 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_USE_DYNAMIC_COLORS = "use_dynamic_colors"
         private const val KEY_HIGH_REFRESH_MOTION = "high_refresh_motion"
         private const val KEY_WAVE_GRADIENT = "wave_gradient"
+        private const val KEY_UI_SCALE = "ui_scale"
+        private const val KEY_BASIC_MODE = "basic_mode"
         private const val KEY_PROFILE_NAME = "profile_name"
         private const val KEY_PROFILE_USERNAME = "profile_username"
         private const val KEY_PROFILE_PHOTO_PATH = "profile_photo_path"
@@ -614,6 +616,8 @@ class AppSettings private constructor(context: Context) {
         private const val KEY_PLAYER_MERGE_CONTROLS_TO_BOTTOM = "player_merge_controls_to_bottom" // Merge lyrics/favorite into centered bottom icon controls
         private const val KEY_PLAYER_GLASS_INTENSITY = "player_glass_intensity" // Float 0.0-2.0, glass effect opacity multiplier
         private const val KEY_PLAYER_LYRICS_TRANSITION = "player_lyrics_transition" // 0=SlideVertical, 1=Fade, 2=Scale, 3=SlideHorizontal
+        private const val KEY_LYRICS_ANIMATION_PRESET = "lyrics_animation_preset" // WordAnimationPreset ordinal
+        private const val KEY_LYRICS_SYNC_OFFSET = "lyrics_sync_offset_ms" // Manual sync offset persisted
         private const val KEY_PLAYER_LYRICS_TEXT_SIZE = "player_lyrics_text_size" // Float sp multiplier, default 1.0
         private const val KEY_PLAYER_LYRICS_ALIGNMENT = "player_lyrics_alignment" // "CENTER", "START", "END"
         private const val KEY_PLAYER_SHOW_ART_BELOW_LYRICS = "player_show_art_below_lyrics" // Boolean
@@ -888,6 +892,31 @@ class AppSettings private constructor(context: Context) {
     /** Blurred brand gradient backdrop; can be switched off for the flat one. */
     private val _waveGradient = MutableStateFlow(prefs.getBoolean(KEY_WAVE_GRADIENT, true))
     val waveGradient: StateFlow<Boolean> = _waveGradient.asStateFlow()
+
+    /** UI size: COMPACT (0.88), NORMAL (1f) or LARGE (1.12). */
+    private val _uiScaleMode = MutableStateFlow(prefs.getString(KEY_UI_SCALE, "NORMAL") ?: "NORMAL")
+    val uiScaleMode: StateFlow<String> = _uiScaleMode.asStateFlow()
+
+    /** Force the lightweight experience regardless of device class. */
+    private val _basicMode = MutableStateFlow(prefs.getBoolean(KEY_BASIC_MODE, false))
+    val basicMode: StateFlow<Boolean> = _basicMode.asStateFlow()
+
+    fun setBasicMode(enabled: Boolean) {
+        prefs.edit { putBoolean(KEY_BASIC_MODE, enabled) }
+        _basicMode.value = enabled
+    }
+
+    fun setUiScaleMode(mode: String) {
+        prefs.edit { putString(KEY_UI_SCALE, mode) }
+        _uiScaleMode.value = mode
+    }
+
+    val uiScale: Float
+        get() = when (_uiScaleMode.value) {
+            "COMPACT" -> 0.88f
+            "LARGE" -> 1.12f
+            else -> 1f
+        }
 
     fun setWaveGradient(enabled: Boolean) {
         prefs.edit { putBoolean(KEY_WAVE_GRADIENT, enabled) }
@@ -3063,8 +3092,10 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
     
     // App Mode setter methods
     fun setAppMode(mode: String) {
-        prefs.edit { putString(KEY_APP_MODE, mode) }
-        _appMode.value = mode
+        // Melo 1.0 is local-only; streaming ("Melo GO") is not available.
+        val localMode = "LOCAL"
+        prefs.edit { putString(KEY_APP_MODE, localMode) }
+        _appMode.value = localMode
     }
     
     fun setStreamingService(service: String) {
@@ -5607,6 +5638,8 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _useDynamicColors.value = prefs.getBoolean(KEY_USE_DYNAMIC_COLORS, false)
         _highRefreshMotion.value = prefs.getBoolean(KEY_HIGH_REFRESH_MOTION, true)
         _waveGradient.value = prefs.getBoolean(KEY_WAVE_GRADIENT, true)
+        _uiScaleMode.value = prefs.getString(KEY_UI_SCALE, "NORMAL") ?: "NORMAL"
+        _basicMode.value = prefs.getBoolean(KEY_BASIC_MODE, false)
         _customColorScheme.value = prefs.getString(KEY_CUSTOM_COLOR_SCHEME, "Default") ?: "Default"
         _customFont.value = prefs.getString(KEY_CUSTOM_FONT, "Geom") ?: "Geom"
         
@@ -5874,6 +5907,8 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _playerLyricsOverlayType.value = prefs.getInt(KEY_PLAYER_LYRICS_OVERLAY_TYPE, 0)
         _playerLyricsOverlayIntensity.value = prefs.getFloat(KEY_PLAYER_LYRICS_OVERLAY_INTENSITY, 0.1f)
         _playerLyricsTransition.value = prefs.getInt(KEY_PLAYER_LYRICS_TRANSITION, 2) // 2 = Scale
+        _lyricsAnimationPreset.value = prefs.getInt(KEY_LYRICS_ANIMATION_PRESET, 0)
+        _lyricsSyncOffsetMs.value = prefs.getLong(KEY_LYRICS_SYNC_OFFSET, 0L)
         _playerAmbientBackdropEnabled.value = prefs.getBoolean(KEY_PLAYER_AMBIENT_BACKDROP_ENABLED, false)
         _playerAmbientBackdropIntensity.value = prefs.getFloat(KEY_PLAYER_AMBIENT_BACKDROP_INTENSITY, 0.6f)
         _playerAmbientInfiniteZoom.value = prefs.getBoolean(KEY_PLAYER_AMBIENT_INFINITE_ZOOM, true)
@@ -6403,6 +6438,24 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
 
     private val _playerLyricsTransition = MutableStateFlow(prefs.getInt(KEY_PLAYER_LYRICS_TRANSITION, 2)) // 2 = Scale
     val playerLyricsTransition: StateFlow<Int> = _playerLyricsTransition.asStateFlow()
+
+    /** Word-by-word highlight preset (WordAnimationPreset ordinal). */
+    private val _lyricsAnimationPreset = MutableStateFlow(prefs.getInt(KEY_LYRICS_ANIMATION_PRESET, 0))
+    val lyricsAnimationPreset: StateFlow<Int> = _lyricsAnimationPreset.asStateFlow()
+
+    fun setLyricsAnimationPreset(value: Int) {
+        _lyricsAnimationPreset.value = value
+        prefs.edit { putInt(KEY_LYRICS_ANIMATION_PRESET, value) }
+    }
+
+    /** Persisted manual lyrics sync offset, in milliseconds. */
+    private val _lyricsSyncOffsetMs = MutableStateFlow(prefs.getLong(KEY_LYRICS_SYNC_OFFSET, 0L))
+    val lyricsSyncOffsetMs: StateFlow<Long> = _lyricsSyncOffsetMs.asStateFlow()
+
+    fun setLyricsSyncOffset(value: Long) {
+        _lyricsSyncOffsetMs.value = value
+        prefs.edit { putLong(KEY_LYRICS_SYNC_OFFSET, value) }
+    }
     fun setPlayerLyricsTransition(value: Int) {
         _playerLyricsTransition.value = value
         prefs.edit { putInt(KEY_PLAYER_LYRICS_TRANSITION, value) }

@@ -218,6 +218,12 @@ class MainActivity : AppCompatActivity() {
             val expressiveColors by appSettings.expressiveColors.collectAsState()
             val themeIntensity by appSettings.themeIntensity.collectAsState()
             val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
+            val uiScaleMode by appSettings.uiScaleMode.collectAsState()
+            val uiScale = when (uiScaleMode) {
+                "COMPACT" -> 0.88f
+                "LARGE" -> 1.12f
+                else -> 1f
+            }
             val appMode by appSettings.appMode.collectAsState()
             
             // Determine the theme based on settings
@@ -242,7 +248,8 @@ class MainActivity : AppCompatActivity() {
                 extractedAlbumColorsJson = extractedAlbumColors,
                 expressiveColors = expressiveColors,
                 themeIntensity = themeIntensity,
-                highRefreshMotion = highRefreshMotion
+                highRefreshMotion = highRefreshMotion,
+                uiScale = uiScale
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

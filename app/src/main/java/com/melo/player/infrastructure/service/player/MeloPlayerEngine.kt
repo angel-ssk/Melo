@@ -1055,7 +1055,7 @@ class MeloPlayerEngine(
         // Software audio effects, crossfade, and variable playback rates are incompatible
         // with hardware audio offload. If any of them is active, offload must be disabled
         // to prevent conflicts or pitch/resampling distortions on buggy OEM DSP implementations.
-        val isCrossfadeEnabled = appSettings.crossfade.value
+        val isCrossfadeEnabled = appSettings.crossfade.value && !appSettings.basicMode.value
         val isEqualizerEnabled = appSettings.equalizerEnabled.value
         val isReplayGainEnabled = appSettings.replayGain.value
         val isBassBoostEnabled = appSettings.bassBoostEnabled.value

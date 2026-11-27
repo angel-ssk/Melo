@@ -243,6 +243,7 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
     val expressiveColors by appSettings.expressiveColors.collectAsState()
     val themeIntensity by appSettings.themeIntensity.collectAsState()
     val waveGradient by appSettings.waveGradient.collectAsState()
+    val uiScaleMode by appSettings.uiScaleMode.collectAsState()
     val floatingNavigationBar by appSettings.floatingNavigationBar.collectAsState()
 
     // Font states
@@ -355,6 +356,7 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
     var showColorSourceDialog by remember { mutableStateOf(false) }
     var showThemeIntensityDialog by remember { mutableStateOf(false) }
     var showFontSourceDialog by remember { mutableStateOf(false) }
+    var showUiSizeDialog by remember { mutableStateOf(false) }
     var showFontSelectionDialog by remember { mutableStateOf(false) }
     var navigateToExpressiveShapes by remember { mutableStateOf(false) }
     
@@ -526,6 +528,16 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
                         context.getString(R.string.settings_wave_gradient_desc),
                         toggleState = waveGradient,
                         onToggleChange = { appSettings.setWaveGradient(it) }
+                    ),
+                    SettingItem(
+                        MaterialSymbolIcon("straighten"),
+                        context.getString(R.string.settings_ui_size),
+                        when (uiScaleMode) {
+                            "COMPACT" -> context.getString(R.string.ui_size_compact)
+                            "LARGE" -> context.getString(R.string.ui_size_large)
+                            else -> context.getString(R.string.ui_size_normal)
+                        },
+                        onClick = { showUiSizeDialog = true }
                     )
                 )
             ),
@@ -846,6 +858,26 @@ fun ThemeCustomizationSettingsScreen(onBackClick: () -> Unit) {
         context = context,
         haptic = haptic
     )
+
+    if (showUiSizeDialog) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showUiSizeDialog = false },
+            title = { Text(stringResource(R.string.settings_ui_size)) },
+            text = {
+                Column {
+                    listOf("COMPACT" to R.string.ui_size_compact, "NORMAL" to R.string.ui_size_normal, "LARGE" to R.string.ui_size_large)
+                        .forEach { (mode, label) ->
+                            androidx.compose.material3.TextButton(onClick = {
+                                appSettings.setUiScaleMode(mode)
+                                showUiSizeDialog = false
+                            }) { Text(stringResource(label)) }
+                        }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {}
+        )
+    }
 
     ThemeIntensityDialog(
         showDialog = showThemeIntensityDialog,

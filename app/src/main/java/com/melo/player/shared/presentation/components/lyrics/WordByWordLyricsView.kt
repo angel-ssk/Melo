@@ -28,6 +28,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -82,17 +83,14 @@ private suspend fun LazyListState.animateToLyricItemWithCatchUp(
     animateScrollToItem(index = safeTargetIndex, scrollOffset = scrollOffset)
 }
 
-/**
- * Animation presets for word-by-word highlighting
- * TODO: Implement different animation styles for word transitions
- */
+/** Animation presets for word-by-word highlighting. */
 enum class WordAnimationPreset {
-    DEFAULT,      // Standard fade and scale
-    BOUNCE,       // Bouncy spring animation (TODO: implement)
-    SLIDE,        // Slide-in from sides (TODO: implement)
-    GLOW,         // Glowing highlight effect (TODO: implement)
-    KARAOKE,      // Filling bar effect (TODO: implement)
-    MINIMAL       // Subtle color change only (TODO: implement)
+    DEFAULT,      // Fade + scale + sweep highlight
+    BOUNCE,       // Bouncy scale with enlarged active word
+    SLIDE,        // Lines slide gently in from the sides
+    GLOW,         // Soft glow on the active word
+    KARAOKE,      // Continuous sweep highlight
+    MINIMAL       // Colour-only change (lightest on low-end devices)
 }
 
 /**
@@ -106,8 +104,8 @@ fun WordByWordLyricsView(
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
     onSeek: ((Long) -> Unit)? = null,
-    syncOffset: Long = 0L, // TODO: Add UI controls for adjusting sync offset in real-time
-    animationPreset: WordAnimationPreset = WordAnimationPreset.DEFAULT, // TODO: Implement animation presets
+    syncOffset: Long = 0L,
+    animationPreset: WordAnimationPreset = WordAnimationPreset.DEFAULT,
     lyricsSource: String? = null, // Source of lyrics
     textSizeMultiplier: Float = 1.0f, // Scale factor for lyrics text size
     textAlignment: TextAlign = TextAlign.Center, // Alignment of lyrics text
@@ -390,6 +388,7 @@ fun WordByWordLyricsView(
                             onTapLyricsView = onTapLyricsView,
                             lyricBold = lyricBoldVal,
                             noAnimation = lyricNoAnimationVal,
+                            preset = animationPreset,
                             textColor = textColor,
                             activeColor = activeColor,
                             subtitleColor = subtitleColor
@@ -479,20 +478,40 @@ private fun WordByWordLyricLineItem(
     onTapLyricsView: (() -> Unit)?,
     lyricBold: Boolean,
     noAnimation: Boolean,
+    preset: WordAnimationPreset = WordAnimationPreset.DEFAULT,
     textColor: Color? = null,
     activeColor: Color? = null,
     subtitleColor: Color? = null
 ) {
-    val scale by animateFloatAsState(
-        targetValue = when {
-            isCurrentLine -> 1.08f
-            isUpcomingLine && linesAhead == 1 -> 1.02f
-            else -> 1f
-        },
-        animationSpec = if (noAnimation) snap() else spring(
+    val lineSpring: androidx.compose.animation.core.SpringSpec<Float> = when (preset) {
+        WordAnimationPreset.BOUNCE -> spring<Float>(
             dampingRatio = Spring.DampingRatioLowBouncy,
             stiffness = Spring.StiffnessVeryLow
-        ),
+        )
+        WordAnimationPreset.MINIMAL -> spring<Float>(
+            dampingRatio = Spring.DampingRatioNoBouncy,
+            stiffness = Spring.StiffnessHigh
+        )
+        else -> spring<Float>(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    }
+
+    val scale by animateFloatAsState(
+        targetValue = when {
+            isCurrentLine -> when (preset) {
+                WordAnimationPreset.BOUNCE -> 1.14f
+                WordAnimationPreset.GLOW -> 1.05f
+                WordAnimationPreset.KARAOKE -> 1.06f
+                WordAnimationPreset.SLIDE -> 1.03f
+                WordAnimationPreset.MINIMAL -> 1f
+                else -> 1.08f
+            }
+            isUpcomingLine && linesAhead == 1 && preset != WordAnimationPreset.MINIMAL -> 1.02f
+            else -> 1f
+        },
+        animationSpec = if (noAnimation) snap() else lineSpring,
         label = "lineScale"
     )
 
@@ -514,14 +533,24 @@ private fun WordByWordLyricLineItem(
 
     val animatedTranslationY by animateFloatAsState(
         targetValue = when {
+            preset == WordAnimationPreset.MINIMAL || preset == WordAnimationPreset.SLIDE -> 0f
             isUpcomingLine && linesAhead <= 3 -> (linesAhead * 6f)
             else -> 0f
         },
-        animationSpec = if (noAnimation) snap() else spring(
-            dampingRatio = Spring.DampingRatioLowBouncy,
-            stiffness = Spring.StiffnessVeryLow
-        ),
+        animationSpec = if (noAnimation) snap() else lineSpring,
         label = "lineTranslation"
+    )
+
+    val animatedTranslationX by animateFloatAsState(
+        targetValue = if (!noAnimation && preset == WordAnimationPreset.SLIDE) {
+            when {
+                isUpcomingLine -> 12f
+                distanceFromCurrent == 1 -> -12f
+                else -> 0f
+            }
+        } else 0f,
+        animationSpec = lineSpring,
+        label = "lineSlide"
     )
 
     val translationAlpha by animateFloatAsState(
@@ -544,7 +573,8 @@ private fun WordByWordLyricLineItem(
     
     val animatedProgress = remember(activeWord) { Animatable(0f) }
     LaunchedEffect(activeWord) {
-        if (duration > 0 && !noAnimation && isWordTimed) {
+        val usesSweep = preset == WordAnimationPreset.DEFAULT || preset == WordAnimationPreset.KARAOKE
+        if (duration > 0 && !noAnimation && isWordTimed && usesSweep) {
             animatedProgress.animateTo(
                 targetValue = 1f,
                 animationSpec = tween(durationMillis = duration, easing = LinearEasing)
@@ -596,7 +626,10 @@ private fun WordByWordLyricLineItem(
                 val range = wordRanges.getOrNull(wordIndex)
                 val layout = textLayoutResult
                 val sweepProgress = animatedProgress.value
-                if (isWordTimed && range != null && layout != null && !noAnimation && sweepProgress < 1f) {
+                if (isWordTimed && range != null && layout != null && !noAnimation &&
+                    sweepProgress < 1f &&
+                    (preset == WordAnimationPreset.DEFAULT || preset == WordAnimationPreset.KARAOKE)
+                ) {
                     val startChar = range.first
                     val endChar = (range.last).coerceAtMost(layout.layoutInput.text.length - 1)
                     val startRect = layout.getBoundingBox(startChar)
@@ -620,7 +653,16 @@ private fun WordByWordLyricLineItem(
                 } else {
                     SpanStyle(
                         color = baseColor,
-                        fontWeight = if (lyricBold) FontWeight.Black else FontWeight.Bold
+                        fontWeight = if (lyricBold) FontWeight.Black else FontWeight.Bold,
+                        fontSize = if (preset == WordAnimationPreset.BOUNCE && !noAnimation) {
+                            MaterialTheme.typography.headlineSmall.fontSize * textSizeMultiplier * 1.1f
+                        } else androidx.compose.ui.unit.TextUnit.Unspecified,
+                        background = if (preset == WordAnimationPreset.GLOW && !noAnimation) {
+                            baseColor.copy(alpha = 0.18f)
+                        } else androidx.compose.ui.graphics.Color.Unspecified,
+                        textDecoration = if (preset == WordAnimationPreset.SLIDE && !noAnimation) {
+                            TextDecoration.Underline
+                        } else null
                     )
                 }
             } else {
@@ -667,6 +709,7 @@ private fun WordByWordLyricLineItem(
                 scaleX = scale
                 scaleY = scale
                 alpha = opacity
+                translationX = animatedTranslationX
                 translationY = animatedTranslationY
             },
         horizontalAlignment = columnAlignment

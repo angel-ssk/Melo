@@ -6,6 +6,7 @@
 package com.melo.player
 
 import android.app.Application
+import android.app.Application.ActivityLifecycleCallbacks
 import android.content.ComponentCallbacks2
 import android.os.Build
 import android.util.Log
@@ -27,6 +28,7 @@ import com.melo.player.util.CrashReporter
 import com.melo.player.util.MediaUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -52,6 +54,18 @@ class MeloApplication : Application(), ImageLoaderFactory {
         /** True on low-RAM devices: used to skip expensive blur/ambient effects. */
         var isLowRam: Boolean = false
             private set
+
+        @Volatile
+        var isForeground: Boolean = true
+            private set
+
+        /** Observable foreground state so decorative animations can stop in the background. */
+        val foregroundFlow = MutableStateFlow(true)
+    }
+
+    private fun setForeground(value: Boolean) {
+        isForeground = value
+        foregroundFlow.value = value
     }
     
     private var anrWatchdog: ANRWatchdog? = null
@@ -61,6 +75,24 @@ class MeloApplication : Application(), ImageLoaderFactory {
         
         instance = this
         isLowRam = (getSystemService(android.content.Context.ACTIVITY_SERVICE) as android.app.ActivityManager).isLowRamDevice
+
+        // Pause decorative animations while the app is in the background.
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            private var started = 0
+            override fun onActivityStarted(activity: android.app.Activity) {
+                started++
+                setForeground(true)
+            }
+            override fun onActivityStopped(activity: android.app.Activity) {
+                started--
+                if (started <= 0) setForeground(false)
+            }
+            override fun onActivityCreated(activity: android.app.Activity, savedInstanceState: android.os.Bundle?) {}
+            override fun onActivityResumed(activity: android.app.Activity) {}
+            override fun onActivityPaused(activity: android.app.Activity) {}
+            override fun onActivitySaveInstanceState(activity: android.app.Activity, outState: android.os.Bundle) {}
+            override fun onActivityDestroyed(activity: android.app.Activity) {}
+        })
 
         Log.d(TAG, "═══════════════════════════════════════════════════")
         Log.d(TAG, "MeloApplication onCreate")
@@ -85,40 +117,43 @@ class MeloApplication : Application(), ImageLoaderFactory {
         AppCompatDelegate.setDefaultNightMode(nightMode)
         Log.d(TAG, "✓ Applied night mode: $nightMode")
         
-        // Initialize CrashReporter
-        CrashReporter.init(this)
-        Log.d(TAG, "✓ CrashReporter initialized")
-        
-        // Initialize NetworkClient with AppSettings
-        com.melo.player.network.NetworkClient.initialize(
-            AppSettings.getInstance(applicationContext)
-        )
-        Log.d(TAG, "✓ NetworkClient initialized")
-        
-        // Configure LeakCanary for debug builds
-        if (BuildConfig.DEBUG) {
-            configureLeakCanary()
-            startANRWatchdog()
+        // Deferred startup: let the first frame paint before doing non-critical work.
+        // This matters on low-RAM phones where synchronous init before Activity creation
+        // is what makes the app feel slow to open.
+        android.view.Choreographer.getInstance().postFrameCallback {
+            if (BuildConfig.DEBUG) {
+                configureLeakCanary()
+                startANRWatchdog()
+            }
+            CoroutineScope(Dispatchers.IO).launch {
+                CrashReporter.init(this@MeloApplication)
+                Log.d(TAG, "✓ CrashReporter initialized (deferred)")
+
+                com.melo.player.network.NetworkClient.initialize(settings)
+                Log.d(TAG, "✓ NetworkClient initialized (deferred)")
+
+                trimCacheOnStartup()
+            }
         }
         
         Log.d(TAG, "MeloApplication initialization complete")
-        
-        // Trim caches on startup so storage stays within the user's chosen limit
-        // even if the app was force-stopped (onDestroy trim never ran). Gated to
-        // at most once per day so low-end devices don't walk the cache directories
-        // on every single launch.
-        val trimPrefs = getSharedPreferences("cache_trim", android.content.Context.MODE_PRIVATE)
-        val lastTrimMs = trimPrefs.getLong("last_startup_trim_ms", 0L)
-        val dayMs = 24L * 60 * 60 * 1000
-        if (System.currentTimeMillis() - lastTrimMs >= dayMs) {
-            trimPrefs.edit { putLong("last_startup_trim_ms", System.currentTimeMillis()) }
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    CacheManager.autoTrimCache(applicationContext, currentMaxCacheSize())
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error during startup cache trim", e)
-                }
+    }
+
+    /**
+     * Trim caches at most once per day, off the main thread, so storage stays
+     * within the user's chosen limit even after a force-stop.
+     */
+    private suspend fun trimCacheOnStartup() {
+        try {
+            val trimPrefs = getSharedPreferences("cache_trim", android.content.Context.MODE_PRIVATE)
+            val lastTrimMs = trimPrefs.getLong("last_startup_trim_ms", 0L)
+            val dayMs = 24L * 60 * 60 * 1000
+            if (System.currentTimeMillis() - lastTrimMs >= dayMs) {
+                trimPrefs.edit { putLong("last_startup_trim_ms", System.currentTimeMillis()) }
+                CacheManager.autoTrimCache(applicationContext, currentMaxCacheSize())
             }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error during startup cache trim", e)
         }
     }
 
@@ -146,10 +181,10 @@ class MeloApplication : Application(), ImageLoaderFactory {
         val activityManager = getSystemService(android.content.Context.ACTIVITY_SERVICE) as android.app.ActivityManager
         val lowRam = activityManager.isLowRamDevice
         val memoryClassMb = activityManager.memoryClass
-        val maxRequests = if (lowRam) 6 else if (memoryClassMb >= 256) 20 else 12
+        val maxRequests = if (lowRam) 4 else if (memoryClassMb >= 256) 20 else 12
         val maxRequestsPerHost = if (lowRam) 2 else 4
-        val memoryCachePercent = if (lowRam) 0.10 else if (memoryClassMb >= 256) 0.18 else 0.14
-        val diskCacheBytes = if (lowRam) 64L * 1024 * 1024 else 128L * 1024 * 1024
+        val memoryCachePercent = if (lowRam) 0.08 else if (memoryClassMb >= 256) 0.18 else 0.14
+        val diskCacheBytes = if (lowRam) 48L * 1024 * 1024 else 128L * 1024 * 1024
 
         val imageOkHttpClient = com.melo.player.features.streaming.data.provider.UserTrustManager
             .buildUserTrustingHttpClientBuilder()

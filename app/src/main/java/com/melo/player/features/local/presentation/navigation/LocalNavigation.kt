@@ -1750,7 +1750,8 @@ private fun LocalNavigationContent(
                                 val cookieRotation by rememberInfiniteTransition(label = "searchCookie")
                                     .animateFloat(
                                         initialValue = 0f,
-                                        targetValue = if (com.melo.player.MeloApplication.isLowRam) 0f else 360f,
+                                        targetValue = if (com.melo.player.MeloApplication.isLowRam ||
+                                            !com.melo.player.MeloApplication.isForeground) 0f else 360f,
                                         animationSpec = infiniteRepeatable(
                                             animation = tween(14000, easing = LinearEasing),
                                             repeatMode = RepeatMode.Restart

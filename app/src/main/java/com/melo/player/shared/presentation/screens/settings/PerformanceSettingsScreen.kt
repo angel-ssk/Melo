@@ -172,6 +172,7 @@ fun PerformanceSettingsScreen(onBackClick: () -> Unit) {
     val batterySaverEnabled by appSettings.batterySaverEnabled.collectAsState()
     val batterySaverMode by appSettings.batterySaverMode.collectAsState()
     val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
+    val basicMode by appSettings.basicMode.collectAsState()
     
     val batterySaverDisableHaptics by appSettings.batterySaverDisableHaptics.collectAsState()
     val batterySaverEnableOffload by appSettings.batterySaverEnableOffload.collectAsState()
@@ -278,8 +279,19 @@ fun PerformanceSettingsScreen(onBackClick: () -> Unit) {
                                 toggleState = highRefreshMotion,
                                 onToggleChange = { enabled -> appSettings.setHighRefreshMotion(enabled) }
                             )
-                        )
-                    ),
+                        ),
+                        toMaterial3SettingsItem(
+                                context = context,
+                                hapticFeedback = haptic,
+                                item = SettingItem(
+                                    icon = MaterialSymbolIcon("battery_saver"),
+                                    title = stringResource(R.string.settings_basic_mode),
+                                    description = context.getString(R.string.settings_basic_mode_desc),
+                                    toggleState = basicMode,
+                                    onToggleChange = { enabled -> appSettings.setBasicMode(enabled) }
+                                )
+                            )
+                        ),
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
             }

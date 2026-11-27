@@ -151,14 +151,30 @@ fun FullScreenLyricsView(
     // Global settings for translation and romanization
     val showTranslation by appSettings.showLyricsTranslation.collectAsState()
     val showRomanization by appSettings.showLyricsRomanization.collectAsState()
+    val basicMode by appSettings.basicMode.collectAsState()
+    val foreground by com.melo.player.MeloApplication.foregroundFlow.collectAsState()
+    val motionAllowed = foreground && !basicMode && !com.melo.player.MeloApplication.isLowRam
+    val motionFactor = if (motionAllowed) 1f else 0f
+    val auraDuration1 = if (motionAllowed) 8000 else 60000
+    val auraDuration2 = if (motionAllowed) 11000 else 60000
+    val auraDuration3 = if (motionAllowed) 14000 else 60000
+    val auraDuration4 = if (motionAllowed) 12000 else 60000
+    val rotationDuration = if (motionAllowed) 38000 else 60000
+    val lyricsPreset by appSettings.lyricsAnimationPreset.collectAsState()
+    val wordPreset = com.melo.player.shared.presentation.components.lyrics.WordAnimationPreset
+        .values().getOrNull(lyricsPreset)
+        ?: com.melo.player.shared.presentation.components.lyrics.WordAnimationPreset.DEFAULT
     
     // Determine if lyrics have timestamps (synced LRC or word-by-word JSON)
     val hasSyncedLyrics = remember(lyrics) {
         lyrics?.syncedLyrics?.isNotBlank() == true || lyrics?.getWordByWordLyricsOrNull() != null
     }
 
-    // Local manual sync offset in milliseconds (real-time offset tuning!)
-    var manualSyncOffsetMs by remember { mutableLongStateOf(0L) }
+    // Manual sync offset in milliseconds (real-time tuning, persisted between sessions)
+    var manualSyncOffsetMs by remember { mutableLongStateOf(appSettings.lyricsSyncOffsetMs.value) }
+    LaunchedEffect(manualSyncOffsetMs) {
+        appSettings.setLyricsSyncOffset(manualSyncOffsetMs)
+    }
 
     // Infinite transition for organic background morphing
     val infiniteTransition = rememberInfiniteTransition(label = "BackgroundAura")
@@ -167,7 +183,7 @@ fun FullScreenLyricsView(
         initialValue = 0.9f,
         targetValue = 1.15f,
         animationSpec = infiniteRepeatable(
-            animation = tween(8000, easing = LinearOutSlowInEasing),
+            animation = tween(auraDuration1, easing = LinearOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
         ),
         label = "Orb1Scale"
@@ -177,7 +193,7 @@ fun FullScreenLyricsView(
         initialValue = 1.1f,
         targetValue = 0.85f,
         animationSpec = infiniteRepeatable(
-            animation = tween(11000, easing = FastOutSlowInEasing),
+            animation = tween(auraDuration2, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
         ),
         label = "Orb2Scale"
@@ -187,7 +203,7 @@ fun FullScreenLyricsView(
         initialValue = -80f,
         targetValue = 80f,
         animationSpec = infiniteRepeatable(
-            animation = tween(14000, easing = EaseInOutSine),
+            animation = tween(auraDuration3, easing = EaseInOutSine),
             repeatMode = RepeatMode.Reverse
         ),
         label = "Orb1X"
@@ -197,7 +213,7 @@ fun FullScreenLyricsView(
         initialValue = -120f,
         targetValue = 120f,
         animationSpec = infiniteRepeatable(
-            animation = tween(12000, easing = EaseInOutSine),
+            animation = tween(auraDuration4, easing = EaseInOutSine),
             repeatMode = RepeatMode.Reverse
         ),
         label = "Orb1Y"
@@ -208,7 +224,7 @@ fun FullScreenLyricsView(
         initialValue = 0f,
         targetValue = 360f,
         animationSpec = infiniteRepeatable(
-            animation = tween(38000, easing = LinearEasing),
+            animation = tween(rotationDuration, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "CosmicRotation"
@@ -287,7 +303,7 @@ fun FullScreenLyricsView(
                         CanvasArtworkPlayer(
                             primaryUrl = canvasArtwork.animated,
                             fallbackUrl = canvasArtwork.videoUrl,
-                            isPlaying = isPlaying,
+                            isPlaying = isPlaying && motionAllowed,
                             alwaysPlay = true,
                             modifier = Modifier.fillMaxSize()
                         )
@@ -299,11 +315,11 @@ fun FullScreenLyricsView(
                             .size(340.dp)
                             .align(Alignment.TopStart)
                             .graphicsLayer {
-                                translationX = translationX1
-                                translationY = translationY1
-                                scaleX = pulseScale1
-                                scaleY = pulseScale1
-                                rotationZ = rotationAngle
+                                translationX = translationX1 * motionFactor
+                                translationY = translationY1 * motionFactor
+                                scaleX = 1f + (pulseScale1 - 1f) * motionFactor
+                                scaleY = 1f + (pulseScale1 - 1f) * motionFactor
+                                rotationZ = rotationAngle * motionFactor
                             }
                             .background(
                                 Brush.radialGradient(
@@ -321,11 +337,11 @@ fun FullScreenLyricsView(
                             .size(420.dp)
                             .align(Alignment.BottomEnd)
                             .graphicsLayer {
-                                translationX = -translationX1 * 0.8f
-                                translationY = -translationY1 * 0.9f
-                                scaleX = pulseScale2
-                                scaleY = pulseScale2
-                                rotationZ = -rotationAngle * 1.2f
+                                translationX = -translationX1 * 0.8f * motionFactor
+                                translationY = -translationY1 * 0.9f * motionFactor
+                                scaleX = 1f + (pulseScale2 - 1f) * motionFactor
+                                scaleY = 1f + (pulseScale2 - 1f) * motionFactor
+                                rotationZ = -rotationAngle * 1.2f * motionFactor
                             }
                             .background(
                                 Brush.radialGradient(
@@ -700,6 +716,7 @@ fun FullScreenLyricsView(
                                     wordByWordLyrics = wordByWordLyrics,
                                     currentPlaybackTime = currentTimeMs,
                                     syncOffset = manualSyncOffsetMs,
+                                    animationPreset = wordPreset,
                                     modifier = Modifier.fillMaxSize(),
                                     onSeek = onLyricsSeek,
                                     lyricsSource = lyrics.source,
@@ -1018,6 +1035,7 @@ fun FullScreenLyricsView(
                                     wordByWordLyrics = wordByWordLyrics,
                                     currentPlaybackTime = currentTimeMs,
                                     syncOffset = manualSyncOffsetMs,
+                                    animationPreset = wordPreset,
                                     modifier = Modifier.fillMaxSize(),
                                     onSeek = onLyricsSeek,
                                     lyricsSource = lyrics.source,
