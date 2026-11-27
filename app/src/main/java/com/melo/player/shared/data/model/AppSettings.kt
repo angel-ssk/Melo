@@ -1255,7 +1255,9 @@ class AppSettings private constructor(context: Context) {
     val showScrollToTop: StateFlow<Boolean> = _showScrollToTop.asStateFlow()
     
     // App Mode Settings (Local vs Streaming)
-    private val _appMode = MutableStateFlow(prefs.getString(KEY_APP_MODE, "LOCAL") ?: "LOCAL")
+    private val _appMode = MutableStateFlow(
+        prefs.getString(KEY_APP_MODE, "LOCAL").let { if (it == "STREAMING") "LOCAL" else it ?: "LOCAL" }
+    )
     val appMode: StateFlow<String> = _appMode.asStateFlow()
     
     private val _streamingService = MutableStateFlow(prefs.getString(KEY_STREAMING_SERVICE, "SUBSONIC") ?: "SUBSONIC")
@@ -5640,6 +5642,11 @@ private val _autoCheckForUpdates = MutableStateFlow(prefs.getBoolean(KEY_AUTO_CH
         _waveGradient.value = prefs.getBoolean(KEY_WAVE_GRADIENT, true)
         _uiScaleMode.value = prefs.getString(KEY_UI_SCALE, "NORMAL") ?: "NORMAL"
         _basicMode.value = prefs.getBoolean(KEY_BASIC_MODE, false)
+        // Migrate any pre-existing streaming/Go preference back to local-only.
+        if (prefs.getString(KEY_APP_MODE, "LOCAL") == "STREAMING") {
+            prefs.edit { putString(KEY_APP_MODE, "LOCAL") }
+        }
+        _appMode.value = "LOCAL"
         _customColorScheme.value = prefs.getString(KEY_CUSTOM_COLOR_SCHEME, "Default") ?: "Default"
         _customFont.value = prefs.getString(KEY_CUSTOM_FONT, "Geom") ?: "Geom"
         
