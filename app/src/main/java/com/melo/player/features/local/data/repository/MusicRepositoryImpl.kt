@@ -726,10 +726,32 @@ class MusicRepository(context: Context) {
         }
     })
     
+    /** Negative cache with TTL so a failed/empty lookup isn't retried forever (#656). */
+    internal class TtlNegativeCache(private val ttlMs: Long = 30L * 60 * 1000) {
+        private val times = java.util.concurrent.ConcurrentHashMap<String, Long>()
+
+        fun contains(key: String): Boolean {
+            val markedAt = times[key] ?: return false
+            if (System.currentTimeMillis() - markedAt > ttlMs) {
+                times.remove(key, markedAt)
+                return false
+            }
+            return true
+        }
+
+        fun add(key: String) {
+            times[key] = System.currentTimeMillis()
+        }
+
+        fun clear() {
+            times.clear()
+        }
+    }
+
     // Negative caches (circuit breakers) to avoid repeated remote lookups for assets missing online
-    internal val negativeArtistImageCache = Collections.synchronizedSet(LinkedHashSet<String>())
-    internal val negativeAlbumImageCache = Collections.synchronizedSet(LinkedHashSet<String>())
-    internal val negativeTrackArtworkCache = Collections.synchronizedSet(LinkedHashSet<String>())
+    internal val negativeArtistImageCache = TtlNegativeCache()
+    internal val negativeAlbumImageCache = TtlNegativeCache()
+    internal val negativeTrackArtworkCache = TtlNegativeCache()
 
     /** Short-lived circuit breaker for lyrics lookups that found nothing (#656). */
     private val lyricsFailureTimes = Collections.synchronizedMap(HashMap<String, Long>())

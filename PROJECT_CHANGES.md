@@ -79,3 +79,4 @@ La mayoría de los fixes de Rhythm 5.6 ya estaban presentes en la base; se cerra
 - **Búsqueda**: filtros (canciones/álbumes/artistas/playlists) persistidos con `rememberSaveable` (#688).
 - **Ya presentes y verificados** (sin cambios): miniplayer morphing + carousel, pantalla externa en bottom sheet, escalado de widgets por altura, scoping de géneros, deduplicación de álbumes y persistencia de consulta.
 - **No portados**: ViPER4Android/Clarity/DDC/Convolver (coste CPU/RAM incompatible con gama baja) y todo lo de Rhythm Go/streaming (Melo es local-only).
+- **Cierre adicional de 1.1**: reproducción externa con vista de letras completa (word-by-word/LRC con salto al tocar); cachés negativas de carátulas con TTL de 30 min; `loadSummary()` de Melo Guard en `Dispatchers.IO`.

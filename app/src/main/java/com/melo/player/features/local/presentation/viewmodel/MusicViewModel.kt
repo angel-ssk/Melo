@@ -1069,10 +1069,32 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
     private val _isFetchingArtwork = MutableStateFlow(false)
     val isFetchingArtwork: StateFlow<Boolean> = _isFetchingArtwork.asStateFlow()
     
+    /** Session negative cache with TTL for failed artwork lookups (#656). */
+    internal class TtlNegativeCache(private val ttlMs: Long = 30L * 60 * 1000) {
+        private val times = java.util.concurrent.ConcurrentHashMap<String, Long>()
+
+        fun contains(key: String): Boolean {
+            val markedAt = times[key] ?: return false
+            if (System.currentTimeMillis() - markedAt > ttlMs) {
+                times.remove(key, markedAt)
+                return false
+            }
+            return true
+        }
+
+        fun add(key: String) {
+            times[key] = System.currentTimeMillis()
+        }
+
+        fun clear() {
+            times.clear()
+        }
+    }
+
     // Negative caches (circuit breakers) for background artwork fetching in the current session
-    internal val failedArtistArtworkLookups = Collections.synchronizedSet(mutableSetOf<String>())
-    internal val failedAlbumArtworkLookups = Collections.synchronizedSet(mutableSetOf<String>())
-    internal val failedTrackArtworkLookups = Collections.synchronizedSet(mutableSetOf<String>())
+    internal val failedArtistArtworkLookups = TtlNegativeCache()
+    internal val failedAlbumArtworkLookups = TtlNegativeCache()
+    internal val failedTrackArtworkLookups = TtlNegativeCache()
     
     // Audio metadata extraction state
     private val _isExtractingMetadata = MutableStateFlow(false)

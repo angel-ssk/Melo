@@ -731,7 +731,9 @@ class MediaPlaybackService : MediaLibraryService(), Player.Listener {
                                 val cooldownUntilMs = now + cooldownMinutes.toLong() * 60_000L
                                 
                                 val todaySummary = runCatching {
-                                    statsRepository.loadSummary(StatsTimeRange.TODAY)
+                                    withContext(Dispatchers.IO) {
+                                        statsRepository.loadSummary(StatsTimeRange.TODAY)
+                                    }
                                 }.getOrNull()
                                 val dbDurationMs = todaySummary?.totalDurationMs ?: 0L
                                 val currentPositionMs = player.currentPosition

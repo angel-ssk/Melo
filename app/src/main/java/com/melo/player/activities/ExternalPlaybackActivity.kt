@@ -45,6 +45,8 @@ import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.ui.graphics.Color
 import com.melo.player.shared.presentation.components.bottomsheets.MeloAdaptiveModalSheet
 import com.melo.player.shared.presentation.components.lyrics.ActiveLyricLine
+import com.melo.player.shared.presentation.components.lyrics.SyncedLyricsView
+import com.melo.player.shared.presentation.components.lyrics.WordByWordLyricsView
 import com.melo.player.shared.presentation.components.icons.Icon
 import com.melo.player.shared.presentation.components.icons.MaterialSymbolIcon
 import com.melo.player.shared.presentation.components.common.AutoScrollingTextOnDemand
@@ -590,17 +592,52 @@ fun ExternalPlaybackBottomSheet(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(52.dp)
-                            .padding(horizontal = 20.dp),
+                            .height(140.dp)
+                            .padding(horizontal = 12.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        ActiveLyricLine(
-                            lyrics = lyrics,
-                            playbackTimeMs = (
-                                (currentSong?.duration ?: 0L) * (if (isScrubbing) scrubProgress else progress)
-                                ).toLong() + lyricsTimeOffset,
-                            modifier = Modifier.fillMaxWidth()
-                        )
+                        val currentTimeMs = (
+                            (currentSong?.duration ?: 0L) * (if (isScrubbing) scrubProgress else progress)
+                            ).toLong() + lyricsTimeOffset
+                        val seekTo: (Long) -> Unit = { timeMs ->
+                            musicViewModel.seekTo((timeMs - lyricsTimeOffset).coerceAtLeast(0L))
+                        }
+                        val wordByWord = remember(lyrics?.wordByWordLyrics) {
+                            lyrics?.getWordByWordLyricsOrNull()
+                        }
+                        val synced = remember(lyrics?.syncedLyrics) {
+                            lyrics?.getSyncedLyricsOrNull()
+                        }
+
+                        when {
+                            !wordByWord.isNullOrBlank() -> WordByWordLyricsView(
+                                wordByWordLyrics = wordByWord,
+                                currentPlaybackTime = currentTimeMs,
+                                modifier = Modifier.fillMaxSize(),
+                                onSeek = seekTo,
+                                syncOffset = 0L,
+                                textSizeMultiplier = 0.85f,
+                                showTranslation = false,
+                                showRomanization = false
+                            )
+
+                            !synced.isNullOrBlank() -> SyncedLyricsView(
+                                lyrics = synced,
+                                currentPlaybackTime = currentTimeMs,
+                                modifier = Modifier.fillMaxSize(),
+                                onSeek = seekTo,
+                                syncOffset = 0L,
+                                textSizeMultiplier = 0.85f,
+                                showTranslation = false,
+                                showRomanization = false
+                            )
+
+                            else -> ActiveLyricLine(
+                                lyrics = lyrics,
+                                playbackTimeMs = currentTimeMs,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
