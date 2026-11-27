@@ -1,545 +1,2935 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#E6DFFF">
-  <meta name="description" content="Melo — reproductor de música local para Android, Material 3 Expressive, español completo y descargas verificadas.">
-  <title>Melo · Tu música, tu Melo</title>
-  <link rel="icon" href="assets/melo_icon.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,-50..200&family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Melo — Tu música, tu Melo.</title>
+  <meta name="description" content="Melo: reproductor de música 100 % local para Android con diseño Material 3 Expressive, español completo (2944/2944 cadenas) y licencia GPL-3.0-or-later." />
+  <meta name="theme-color" content="#ECE4FA" />
+
+  <link rel="icon" type="image/png" href="assets/melo_icon.png" />
+
+  <!-- Tipografías Expresivas M3 & Material Symbols Rounded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
   <style>
-    /* ======================================================================
-       Material 3 Expressive — tokens derivados del logo de Melo
-       ====================================================================== */
+    /* ==========================================================================
+       1. SISTEMA DE COLOR MATERIAL 3 EXPRESSIVE — PALETA MELO
+       ========================================================================== */
     :root {
-      --font-sans: "Nunito", system-ui, sans-serif;
-      --font-display: "Space Grotesk", "Nunito", sans-serif;
+      --font-sans: 'Nunito', system-ui, -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', 'Nunito', system-ui, sans-serif;
 
-      --primary: #523B8D;
-      --on-primary: #FFFFFF;
-      --primary-container: #E6DFFF;
-      --on-primary-container: #1B0F3C;
+      --radius-bento: 32px;
+      --radius-card: 28px;
+      --radius-inner: 20px;
+      --radius-pill: 999px;
 
-      --secondary-container: #EDE7FA;
-      --on-secondary-container: #2A2046;
+      --ease-spring: cubic-bezier(0.22, 1.25, 0.36, 1);
+      --ease-m3: cubic-bezier(0.2, 0, 0, 1);
+      --ease-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
 
-      --tertiary: #B08CFF;
-      --tertiary-container: #F0E8FF;
-      --on-tertiary-container: #2A1B4D;
+      --md-sys-color-primary: #512F8A;
+      --md-sys-color-on-primary: #FFFFFF;
+      --md-sys-color-primary-container: #EAE0FF;
+      --md-sys-color-on-primary-container: #1D0B45;
 
-      --surface: #FBF9FF;
-      --surface-low: #F4F0FF;
-      --surface-container: #ECE6FA;
-      --surface-high: #E2DAF5;
-      --surface-card: #FFFFFF;
+      --md-sys-color-secondary-container: #E7DFF5;
+      --md-sys-color-on-secondary-container: #231938;
 
-      --on-surface: #1B1727;
-      --on-surface-variant: #57516B;
-      --outline: #CFC5E6;
-      --outline-variant: #DCD4EE;
+      --md-sys-color-tertiary: #7A4684;
+      --md-sys-color-tertiary-container: #F5DCF9;
+      --md-sys-color-on-tertiary-container: #2E0D36;
 
-      --ok-bg: #D7FBE8;
-      --ok-fg: #064E29;
-      --err-bg: #FFE2E0;
-      --err-fg: #7A0E09;
+      --md-sys-color-surface: #FAF8FF;
+      --md-sys-color-surface-container-low: #F3EEFC;
+      --md-sys-color-surface-container: #ECE4FA;
+      --md-sys-color-surface-container-high: #E3D8F6;
+      --md-sys-color-surface-card: #FFFFFF;
 
-      --r-xl: 32px;
-      --r-lg: 28px;
-      --r-md: 20px;
-      --r-sm: 14px;
-      --r-pill: 999px;
+      --md-sys-color-on-surface: #1A1624;
+      --md-sys-color-on-surface-variant: #4B435E;
+      --md-sys-color-outline-variant: rgba(81, 47, 138, 0.15);
 
-      --ease-m3: cubic-bezier(.2, 0, 0, 1);
-      --ease-spring: cubic-bezier(.22, 1.2, .36, 1);
-      --shadow: 0 12px 34px rgba(82, 59, 141, .10);
+      --status-ok-bg: #D7FBE8;
+      --status-ok-fg: #064E29;
+      --status-err-bg: #FFE2E0;
+      --status-err-fg: #7A0E09;
+      --status-warn-bg: #F3E8FF;
+      --status-warn-fg: #421E7A;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --md-sys-color-primary: #D4BCFF;
+        --md-sys-color-on-primary: #35156D;
+        --md-sys-color-primary-container: #4E2C87;
+        --md-sys-color-on-primary-container: #F1E9FF;
+
+        --md-sys-color-secondary-container: #2E2640;
+        --md-sys-color-on-secondary-container: #E8DEF8;
+
+        --md-sys-color-tertiary: #EBB5F4;
+        --md-sys-color-tertiary-container: #61356A;
+        --md-sys-color-on-tertiary-container: #FCE6FF;
+
+        --md-sys-color-surface: #121018;
+        --md-sys-color-surface-container-low: #191622;
+        --md-sys-color-surface-container: #221E2D;
+        --md-sys-color-surface-container-high: #2C273B;
+        --md-sys-color-surface-card: #1C1826;
+
+        --md-sys-color-on-surface: #F0ECF9;
+        --md-sys-color-on-surface-variant: #C4BCD6;
+        --md-sys-color-outline-variant: rgba(212, 188, 255, 0.16);
+
+        --status-ok-bg: #103D27;
+        --status-ok-fg: #8CF5BA;
+        --status-err-bg: #4A1515;
+        --status-err-fg: #FFB3AF;
+        --status-warn-bg: #31214F;
+        --status-warn-fg: #E1CEFF;
+      }
     }
 
     :root[data-theme="dark"] {
-      --primary: #CBB8FF;
-      --on-primary: #261456;
-      --primary-container: #3B2A6B;
-      --on-primary-container: #EDE5FF;
-      --secondary-container: #2C2644;
-      --on-secondary-container: #E4DAFF;
-      --tertiary: #D4C1FF;
-      --tertiary-container: #342852;
-      --on-tertiary-container: #EFE7FF;
-      --surface: #12101A;
-      --surface-low: #1B1828;
-      --surface-container: #242036;
-      --surface-high: #2E2844;
-      --surface-card: #1E1A2D;
-      --on-surface: #F2EEFF;
-      --on-surface-variant: #BDB4D4;
-      --outline: #4A4260;
-      --outline-variant: #3B3452;
-      --ok-bg: #103D27;
-      --ok-fg: #8CF5BA;
-      --err-bg: #4A1515;
-      --err-fg: #FFB3AF;
-      --shadow: 0 12px 34px rgba(0, 0, 0, .32);
+      --md-sys-color-primary: #D4BCFF;
+      --md-sys-color-on-primary: #35156D;
+      --md-sys-color-primary-container: #4E2C87;
+      --md-sys-color-on-primary-container: #F1E9FF;
+
+      --md-sys-color-secondary-container: #2E2640;
+      --md-sys-color-on-secondary-container: #E8DEF8;
+
+      --md-sys-color-tertiary: #EBB5F4;
+      --md-sys-color-tertiary-container: #61356A;
+      --md-sys-color-on-tertiary-container: #FCE6FF;
+
+      --md-sys-color-surface: #121018;
+      --md-sys-color-surface-container-low: #191622;
+      --md-sys-color-surface-container: #221E2D;
+      --md-sys-color-surface-container-high: #2C273B;
+      --md-sys-color-surface-card: #1C1826;
+
+      --md-sys-color-on-surface: #F0ECF9;
+      --md-sys-color-on-surface-variant: #C4BCD6;
+      --md-sys-color-outline-variant: rgba(212, 188, 255, 0.16);
+
+      --status-ok-bg: #103D27;
+      --status-ok-fg: #8CF5BA;
+      --status-err-bg: #4A1515;
+      --status-err-fg: #FFB3AF;
+      --status-warn-bg: #31214F;
+      --status-warn-fg: #E1CEFF;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
+    /* ==========================================================================
+       2. RESET, BASE & KEYFRAMES M3 EXPRESSIVE
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
       margin: 0;
-      background: var(--surface);
-      color: var(--on-surface);
-      font-family: var(--font-sans);
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: var(--font-sans);
+      background-color: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      transition: background-color 0.35s var(--ease-m3), color 0.35s var(--ease-m3);
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      background-color: var(--md-sys-color-surface);
+    }
+
+    @keyframes m3EnterUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes dockSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes cardFilterIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes m3Ripple {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.34;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(2.8);
+        opacity: 0;
+      }
+    }
+
+    @keyframes waveShift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-40px); }
+    }
+
+    @keyframes iconPop {
+      0% { transform: scale(0.8); }
+      60% { transform: scale(1.16); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes resultPop {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .ripple-host {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .m3-ripple-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: currentColor;
+      pointer-events: none;
+      animation: m3Ripple 0.55s var(--ease-decel) forwards;
+    }
+
     .material-symbols-rounded {
-      font-family: "Material Symbols Rounded";
+      font-family: 'Material Symbols Rounded';
       font-weight: normal;
       font-style: normal;
-      font-size: 24px;
+      font-size: 22px;
       line-height: 1;
-      letter-spacing: normal;
-      text-transform: none;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       white-space: nowrap;
-      word-wrap: normal;
-      direction: ltr;
-      vertical-align: middle;
-      -webkit-font-feature-settings: "liga";
-      font-feature-settings: "liga";
-    }
-    .container { width: min(1180px, calc(100% - 36px)); margin-inline: auto; }
-    h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; letter-spacing: -.025em; margin: 0 0 .45em; }
-    h1 { font-size: clamp(2.6rem, 5.6vw, 4.4rem); }
-    h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
-    h3 { font-size: 1.18rem; }
-    p { margin: 0; color: var(--on-surface-variant); }
-    a { color: inherit; text-decoration: none; }
-    code { font-family: ui-monospace, monospace; font-size: .88em; }
-
-    /* ---------- Top app bar ---------- */
-    .topbar {
-      position: sticky; top: 0; z-index: 40;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--outline-variant);
-    }
-    .topbar-inner { display: flex; align-items: center; gap: 16px; min-height: 72px; }
-    .brand { display: flex; align-items: center; gap: 11px; }
-    .brand-logo {
-      width: 44px; height: 44px; border-radius: 16px 7px 16px 7px;
-      background: var(--primary-container); display: grid; place-items: center;
-    }
-    .brand-logo img { width: 40px; height: 40px; border-radius: 14px 6px 14px 6px; }
-    .brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.18rem; }
-    .brand-tag {
-      font-size: .68rem; font-weight: 900; letter-spacing: .08em;
-      color: var(--primary); background: var(--secondary-container);
-      padding: 3px 9px; border-radius: var(--r-pill); text-transform: uppercase;
-    }
-    nav { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; }
-    nav a {
-      padding: 9px 14px; border-radius: var(--r-pill);
-      font-size: .86rem; font-weight: 800; color: var(--on-surface-variant);
-      transition: background .2s var(--ease-m3), color .2s;
-    }
-    nav a:hover { background: var(--secondary-container); color: var(--primary); }
-    .icon-btn {
-      border: 0; background: var(--secondary-container); color: var(--primary);
-      width: 44px; height: 44px; border-radius: var(--r-pill);
-      cursor: pointer; display: grid; place-items: center;
+      user-select: none;
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      transition: font-variation-settings 0.25s ease, transform 0.28s var(--ease-spring), color 0.2s ease;
     }
 
-    /* ---------- Buttons, chips, badges ---------- */
-    .btn {
-      display: inline-flex; align-items: center; gap: 9px;
-      min-height: 48px; padding: 0 22px;
-      border-radius: var(--r-pill); border: 0; cursor: pointer;
-      font-family: var(--font-sans); font-weight: 900; font-size: .93rem;
-      transition: transform .22s var(--ease-spring), box-shadow .2s var(--ease-m3);
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn .material-symbols-rounded { font-size: 20px; }
-    .btn-primary { background: var(--primary); color: var(--on-primary); box-shadow: 0 10px 24px rgba(82,59,141,.22); }
-    .btn-tonal { background: var(--secondary-container); color: var(--on-secondary-container); }
-    .btn-outline { background: transparent; color: var(--primary); box-shadow: inset 0 0 0 1px var(--outline); }
-    .pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 6px 13px; border-radius: var(--r-pill);
-      background: var(--secondary-container); color: var(--on-secondary-container);
-      font-size: .74rem; font-weight: 900; letter-spacing: .02em;
-    }
-    .pill.lime { background: var(--tertiary-container); color: var(--on-tertiary-container); }
-    .pill .material-symbols-rounded { font-size: 16px; }
-
-    /* ---------- Hero bento ---------- */
-    .hero { padding: 34px 0 58px; }
-    .hero-bento { display: grid; grid-template-columns: 1.35fr .65fr; gap: 18px; }
-    .bento {
-      background: var(--surface-card);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--r-xl);
-      padding: 32px;
-      box-shadow: var(--shadow);
-    }
-    .bento-main { display: flex; flex-direction: column; justify-content: space-between; gap: 30px; }
-    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .hero-title { margin-top: 16px; }
-    .hero-title span { color: var(--primary); }
-    .hero-desc { max-width: 54ch; font-size: 1.02rem; }
-    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .hero-side { display: flex; flex-direction: column; gap: 18px; }
-    .tile {
-      background: var(--surface-container);
-      border-radius: var(--r-lg);
-      padding: 24px;
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .tile .material-symbols-rounded { color: var(--primary); font-size: 26px; }
-    .metric { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; line-height: 1; }
-    .metric-label { font-size: .8rem; font-weight: 800; color: var(--on-surface-variant); }
-    .tile.horizontal { flex-direction: row; align-items: center; gap: 16px; }
-
-    /* ---------- Sections ---------- */
-    .page-section { padding: 58px 0; }
-    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
-    .eyebrow {
-      display: flex; align-items: center; gap: 8px;
-      font-size: .78rem; font-weight: 900; color: var(--primary);
-      text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px;
-    }
-    .eyebrow .material-symbols-rounded { font-size: 18px; }
-    .section-subtitle { max-width: 46ch; font-size: .92rem; }
-
-    .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .feature-card {
-      background: var(--surface-card);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--r-lg);
-      padding: 26px;
-      display: flex; flex-direction: column; gap: 12px;
-      transition: transform .24s var(--ease-spring), box-shadow .2s;
-    }
-    .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-    .feature-card .icon-box {
-      width: 48px; height: 48px; border-radius: 17px 8px 17px 8px;
-      background: var(--secondary-container); color: var(--primary);
-      display: grid; place-items: center;
+    .icon-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 550, 'GRAD' 0, 'opsz' 24;
     }
 
-    /* ---------- Showcase ---------- */
-    .showcase-wrap { background: var(--surface-low); border-block: 1px solid var(--outline-variant); }
-    .shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .shot {
-      background: var(--surface-card); border: 1px solid var(--outline-variant);
-      border-radius: var(--r-lg); padding: 12px;
+    button, input {
+      font-family: inherit;
+      color: inherit;
     }
-    .shot img { border-radius: var(--r-md); }
-    .shot b { display: block; text-align: center; margin-top: 11px; font-size: .86rem; }
 
-    /* ---------- Updates ---------- */
-    .update-list { display: grid; gap: 10px; }
-    .update {
-      display: grid; grid-template-columns: 130px 1fr auto; align-items: center; gap: 20px;
-      padding: 20px 24px; border-radius: var(--r-lg);
-      background: var(--surface-card); border: 1px solid var(--outline-variant);
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
     }
-    .update h3 { margin-bottom: 3px; }
-    .update p { font-size: .9rem; }
-    .date { font-size: .78rem; font-weight: 800; color: var(--on-surface-variant); }
 
-    /* ---------- Download + verifier ---------- */
-    .download-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .apk-card, .verifier {
-      background: var(--surface-card); border: 1px solid var(--outline-variant);
-      border-radius: var(--r-xl); padding: 28px; box-shadow: var(--shadow);
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    summary:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2.5px solid var(--md-sys-color-primary);
+      outline-offset: 2px;
     }
-    .apk-top { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
-    .app-icon {
-      width: 72px; height: 72px; border-radius: 22px 10px 22px 10px;
-      background: var(--primary-container); padding: 8px; flex: none;
-    }
-    .hash-field {
-      width: 100%; margin-top: 12px; padding: 12px 14px;
-      border-radius: var(--r-sm); border: 1px solid var(--outline);
-      background: var(--surface-low); color: var(--on-surface);
-      font-family: ui-monospace, monospace; font-size: .76rem;
-    }
-    .dropzone {
-      margin-top: 14px; border: 1.5px dashed var(--outline);
-      border-radius: var(--r-md); padding: 26px; text-align: center;
-      background: var(--surface-low); cursor: pointer;
-      transition: background .2s, border-color .2s;
-    }
-    .dropzone:hover { background: var(--secondary-container); border-color: var(--primary); }
-    .dropzone .material-symbols-rounded { font-size: 38px; color: var(--primary); }
-    .hash-result { margin-top: 12px; padding: 12px 14px; border-radius: var(--r-sm); font-weight: 800; font-size: .86rem; }
-    .hash-result.ok { background: var(--ok-bg); color: var(--ok-fg); }
-    .hash-result.err { background: var(--err-bg); color: var(--err-fg); }
 
-    /* ---------- Languages + contact ---------- */
-    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
-    .lang {
-      padding: 11px 17px; border-radius: var(--r-pill);
-      background: var(--surface-container); color: var(--on-surface);
-      font-weight: 800; font-size: .87rem;
-      border: 1px solid var(--outline-variant);
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 18px;
     }
-    .lang.ok { background: var(--primary); color: var(--on-primary); border-color: transparent; }
 
-    footer { background: var(--primary-container); color: var(--on-primary-container); padding: 54px 0 26px; margin-top: 30px; }
-    .foot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-    footer p { color: inherit; opacity: .82; font-size: .9rem; }
-    footer a { text-decoration: underline; text-underline-offset: 3px; }
-    .foot-bottom { margin-top: 34px; padding-top: 18px; border-top: 1px solid currentColor; opacity: .72; font-size: .82rem; }
-
-    @media (max-width: 900px) {
-      .hero-bento, .bento-grid, .download-grid, .foot-grid { grid-template-columns: 1fr; }
-      .shots { grid-template-columns: repeat(2, 1fr); }
-      .update { grid-template-columns: 1fr; gap: 8px; }
-      nav { display: none; }
+    /* Scroll reveal */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(22px) scale(0.98);
+      transition:
+        opacity 0.55s var(--ease-decel),
+        transform 0.6s var(--ease-spring);
+      transition-delay: calc(var(--stagger, 0) * 65ms);
     }
+
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .hero-enter {
+      animation: m3EnterUp 0.65s var(--ease-spring) both;
+      animation-delay: calc(var(--stagger, 0) * 75ms);
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* ==========================================================================
+       3. TOPBAR & LOGO SIN ALTERACIONES
+       ========================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      padding: 12px 0;
+      background: color-mix(in srgb, var(--md-sys-color-surface) 90%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      transition: box-shadow 0.28s var(--ease-m3), background-color 0.28s var(--ease-m3);
+    }
+
+    .topbar.scrolled {
+      box-shadow: 0 8px 24px rgba(26, 22, 36, 0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--md-sys-color-on-surface);
+      transition: transform 0.22s var(--ease-spring);
+    }
+
+    .brand-mini:active {
+      transform: scale(0.97);
+    }
+
+    .melo-logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .melo-logo-wrap img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .melo-logo-header {
+      width: 38px;
+      height: 38px;
+    }
+
+    .melo-logo-hero {
+      width: 72px;
+      height: 72px;
+    }
+
+    .melo-logo-download {
+      width: 64px;
+      height: 64px;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .topbar-meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      color: var(--md-sys-color-on-surface);
+      font-size: 0.76rem;
+      font-weight: 700;
+      transition: transform 0.25s var(--ease-spring), background-color 0.22s ease, color 0.22s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle-btn:hover .material-symbols-rounded {
+      transform: rotate(24deg) scale(1.08);
+    }
+
+    .theme-toggle-btn:active {
+      transform: scale(0.95);
+    }
+
+    .theme-toggle-btn .material-symbols-rounded {
+      font-size: 18px;
+    }
+
+    /* ==========================================================================
+       4. SECCIONES, HERO BENTO & MÉTRICAS
+       ========================================================================== */
+    main.container {
+      padding-bottom: 18px;
+    }
+
+    section.page-section {
+      padding: 34px 0 26px;
+      scroll-margin-top: 76px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--md-sys-color-primary);
+      margin-bottom: 6px;
+    }
+
+    .section-eyebrow .material-symbols-rounded {
+      font-size: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 3.8vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+    }
+
+    .section-subtitle {
+      font-size: 0.94rem;
+      color: var(--md-sys-color-on-surface-variant);
+      max-width: 520px;
+    }
+
+    .hero-bento {
+      display: grid;
+      grid-template-columns: 1.32fr 0.95fr;
+      gap: 18px;
+    }
+
+    .bento-tile {
+      border-radius: var(--radius-bento);
+      padding: 28px;
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-m3), border-color 0.25s ease;
+    }
+
+    .bento-hero-main {
+      background: var(--md-sys-color-surface-container);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      border-radius: var(--radius-pill);
+      font-size: 0.76rem;
+      font-weight: 700;
+      background: var(--md-sys-color-surface-card);
+      color: var(--md-sys-color-on-surface);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      transition: transform 0.22s var(--ease-spring);
+    }
+
+    .pill-badge:hover {
+      transform: translateY(-1px);
+    }
+
+    .pill-badge .material-symbols-rounded {
+      font-size: 15px;
+      color: var(--md-sys-color-primary);
+    }
+
+    .pill-badge.tonal {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      border-color: transparent;
+    }
+
+    .pill-badge.tertiary {
+      background: var(--md-sys-color-tertiary-container);
+      color: var(--md-sys-color-on-tertiary-container);
+      border-color: transparent;
+    }
+
+    .hero-brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6vw, 4.3rem);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-sans);
+      font-style: italic;
+      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+      color: var(--md-sys-color-primary);
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .hero-desc {
+      font-size: 0.98rem;
+      color: var(--md-sys-color-on-surface-variant);
+      max-width: 560px;
+      margin-top: 14px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-right-col {
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 18px;
+    }
+
+    .release-highlight-tile {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .release-highlight-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent);
+    }
+
+    .release-highlight-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .giant-metric {
+      font-family: var(--font-display);
+      font-size: 2.85rem;
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+    }
+
+    .giant-metric-label {
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .mini-stat-tile {
+      background: var(--md-sys-color-surface-card);
+      padding: 20px 18px;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform 0.28s var(--ease-spring), border-color 0.22s ease, box-shadow 0.28s ease;
+    }
+
+    .mini-stat-tile:hover {
+      transform: translateY(-3px);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+    }
+
+    .mini-stat-tile:hover .material-symbols-rounded {
+      transform: scale(1.12);
+    }
+
+    .mini-stat-tile .material-symbols-rounded {
+      color: var(--md-sys-color-primary);
+      justify-content: flex-start;
+    }
+
+    .mini-stat-num {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 0.95;
+      color: var(--md-sys-color-primary);
+    }
+
+    .mini-stat-lbl {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-top: 3px;
+    }
+
+    /* ==========================================================================
+       5. BOTONES M3 & CHIPS
+       ========================================================================== */
+    .btn-m3-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: transform 0.24s var(--ease-spring), filter 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-m3-primary:hover {
+      filter: brightness(1.06);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent);
+    }
+
+    .btn-m3-primary:hover .material-symbols-rounded {
+      transform: translateY(1px) scale(1.08);
+    }
+
+    .btn-m3-primary:active {
+      transform: scale(0.96);
+    }
+
+    .btn-m3-tonal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container-high);
+      color: var(--md-sys-color-on-surface);
+      font-weight: 700;
+      font-size: 0.86rem;
+      text-decoration: none;
+      transition: transform 0.24s var(--ease-spring), background-color 0.22s ease, color 0.22s ease;
+    }
+
+    .btn-m3-tonal:hover {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      transform: translateY(-1px);
+    }
+
+    .btn-m3-tonal:active {
+      transform: scale(0.96);
+    }
+
+    .chips-scroll {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 2px 14px;
+      scrollbar-width: none;
+    }
+
+    .chips-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 15px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.84rem;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      transition: background-color 0.24s var(--ease-m3), color 0.24s ease, transform 0.24s var(--ease-spring), border-color 0.2s ease;
+    }
+
+    .filter-chip:hover {
+      background: var(--md-sys-color-surface-container-high);
+      color: var(--md-sys-color-on-surface);
+      transform: translateY(-1px);
+    }
+
+    .filter-chip:active {
+      transform: scale(0.95);
+    }
+
+    .filter-chip.active {
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border-color: transparent;
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--md-sys-color-primary) 24%, transparent);
+    }
+
+    .filter-chip.active .material-symbols-rounded {
+      font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .filter-chip .material-symbols-rounded {
+      font-size: 18px;
+    }
+
+    .chip-count {
+      font-size: 0.72rem;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .filter-chip.active .chip-count {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* ==========================================================================
+       6. FUNCIONES (BENTO GRID DENSO CON ANIMACIÓN DE FILTRO)
+       ========================================================================== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      border-radius: var(--radius-card);
+      background: var(--md-sys-color-surface-card);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: transform 0.28s var(--ease-spring), border-color 0.22s ease, box-shadow 0.28s ease;
+    }
+
+    .feature-card.filter-anim {
+      animation: cardFilterIn 0.42s var(--ease-spring) both;
+      animation-delay: calc(var(--stagger, 0) * 50ms);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 14px 30px color-mix(in srgb, var(--md-sys-color-primary) 11%, transparent);
+    }
+
+    .feature-card:hover .feature-icon-box {
+      transform: scale(1.08) rotate(-3deg);
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+    }
+
+    .feature-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .feature-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: transform 0.3s var(--ease-spring), background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 12px;
+    }
+
+    .feature-desc {
+      font-size: 0.9rem;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-top: 6px;
+      line-height: 1.55;
+    }
+
+    .tech-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tech-pill {
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container-low);
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .tech-pill.highlight {
+      background: var(--md-sys-color-tertiary-container);
+      color: var(--md-sys-color-on-tertiary-container);
+    }
+
+    /* ==========================================================================
+       7. CAPTURAS DE PANTALLA & LIGHTBOX ANIMADO
+       ========================================================================== */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .screenshot-card {
+      border-radius: var(--radius-card);
+      background: var(--md-sys-color-surface-card);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.28s var(--ease-spring), border-color 0.22s ease, box-shadow 0.28s ease;
+    }
+
+    .screenshot-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 14px 32px color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+    }
+
+    .screenshot-frame {
+      border-radius: 20px;
+      background: var(--md-sys-color-surface-container-low);
+      overflow: hidden;
+      aspect-ratio: 9 / 19.5;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      cursor: zoom-in;
+      padding: 0;
+      display: block;
+      width: 100%;
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.42s var(--ease-spring);
+    }
+
+    .screenshot-card:hover .screenshot-frame img {
+      transform: scale(1.035);
+    }
+
+    .screenshot-caption-title {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 800;
+    }
+
+    .screenshot-caption-sub {
+      font-size: 0.8rem;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-top: 2px;
+    }
+
+    .lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1300;
+      background: rgba(14, 11, 22, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.26s ease, visibility 0.26s ease;
+    }
+
+    .lightbox-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .lightbox-panel {
+      background: var(--md-sys-color-surface-card);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: 28px;
+      padding: 16px;
+      max-width: 420px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.36s var(--ease-spring);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+    }
+
+    .lightbox-backdrop.open .lightbox-panel {
+      transform: scale(1) translateY(0);
+    }
+
+    .lightbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .lightbox-img-wrap {
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--md-sys-color-surface-container-low);
+      max-height: 72vh;
+      display: grid;
+      place-items: center;
+    }
+
+    .lightbox-img-wrap img {
+      max-width: 100%;
+      max-height: 72vh;
+      width: auto;
+      height: auto;
+      display: block;
+    }
+
+    .icon-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: transform 0.22s var(--ease-spring), background-color 0.2s ease;
+    }
+
+    .icon-close-btn:hover {
+      background: var(--md-sys-color-primary-container);
+      transform: rotate(90deg);
+    }
+
+    /* ==========================================================================
+       8. ACTUALIZACIONES
+       ========================================================================== */
+    .updates-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .update-card {
+      border-radius: var(--radius-bento);
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: transform 0.28s var(--ease-spring), border-color 0.22s ease, box-shadow 0.28s ease;
+    }
+
+    .update-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 12px 28px color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+    }
+
+    .update-card.stable {
+      background: var(--md-sys-color-surface-card);
+    }
+
+    .update-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .update-version {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--md-sys-color-primary);
+    }
+
+    .update-list {
+      padding-left: 18px;
+      font-size: 0.89rem;
+      color: var(--md-sys-color-on-surface-variant);
+      display: grid;
+      gap: 6px;
+    }
+
+    .update-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+      border-top: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    /* ==========================================================================
+       9. DESCARGAS & VERIFICADOR SHA-256 CON WAVY PROGRESS M3
+       ========================================================================== */
+    .downloads-bento {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+    }
+
+    .download-main-card {
+      border-radius: var(--radius-bento);
+      background: var(--md-sys-color-surface-card);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      transition: border-color 0.25s ease, box-shadow 0.28s ease;
+    }
+
+    .download-main-card:hover {
+      border-color: color-mix(in srgb, var(--md-sys-color-primary) 42%, transparent);
+      box-shadow: 0 14px 34px color-mix(in srgb, var(--md-sys-color-primary) 9%, transparent);
+    }
+
+    .download-app-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .spec-box {
+      padding: 13px 14px;
+      border-radius: 18px;
+      background: var(--md-sys-color-surface-container-low);
+      transition: transform 0.22s var(--ease-spring), background-color 0.2s ease;
+    }
+
+    .spec-box:hover {
+      transform: translateY(-1px);
+      background: var(--md-sys-color-surface-container);
+    }
+
+    .spec-lbl {
+      font-size: 0.71rem;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface-variant);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .spec-val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-top: 3px;
+      word-break: break-word;
+    }
+
+    .sha-box {
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: var(--md-sys-color-surface-container);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .sha-text {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      color: var(--md-sys-color-on-surface);
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
+    .adb-details {
+      border-radius: 18px;
+      background: var(--md-sys-color-surface-container-low);
+      padding: 12px 16px;
+      font-size: 0.83rem;
+    }
+
+    .adb-details summary {
+      cursor: pointer;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .adb-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .adb-details[open] .adb-chevron {
+      transform: rotate(180deg);
+    }
+
+    .adb-code-row {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #171324;
+      color: #EAE0FF;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      overflow-x: auto;
+      animation: resultPop 0.25s var(--ease-spring);
+    }
+
+    .verifier-card {
+      border-radius: var(--radius-bento);
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .m3-field {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1.5px solid var(--md-sys-color-outline-variant);
+      background: var(--md-sys-color-surface-card);
+      font-size: 0.78rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .m3-field:focus {
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent);
+    }
+
+    .dropzone {
+      border: 2px dashed var(--md-sys-color-primary);
+      border-radius: 22px;
+      background: var(--md-sys-color-surface-card);
+      padding: 26px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.24s ease, transform 0.26s var(--ease-spring), border-color 0.2s ease;
+    }
+
+    .dropzone:hover {
+      background: color-mix(in srgb, var(--md-sys-color-primary-container) 45%, var(--md-sys-color-surface-card));
+      transform: translateY(-2px);
+    }
+
+    .dropzone:hover .dropzone-icon {
+      transform: translateY(-3px) scale(1.08);
+    }
+
+    .dropzone.dragover {
+      background: var(--md-sys-color-primary-container);
+      transform: scale(1.015);
+    }
+
+    .dropzone.dragover .dropzone-icon {
+      transform: translateY(-6px) scale(1.16);
+    }
+
+    /* Barra ondulada M3 Expressive para cálculo SHA-256 */
+    .wavy-progress-box {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      animation: resultPop 0.25s var(--ease-spring);
+    }
+
+    .wavy-progress-box.active {
+      display: flex;
+    }
+
+    .wavy-svg-wrap {
+      width: 100%;
+      height: 20px;
+      overflow: hidden;
+    }
+
+    .wavy-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .wavy-track-path {
+      fill: none;
+      stroke: color-mix(in srgb, var(--md-sys-color-on-primary-container) 22%, transparent);
+      stroke-width: 4;
+      stroke-linecap: round;
+    }
+
+    .wavy-active-path {
+      fill: none;
+      stroke: var(--md-sys-color-primary);
+      stroke-width: 5;
+      stroke-linecap: round;
+    }
+
+    .wavy-animating .wavy-wave-group {
+      animation: waveShift 0.65s linear infinite;
+    }
+
+    .hash-result-pill {
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .hash-result-pill.ok,
+    .hash-result-pill.err,
+    .hash-result-pill.info {
+      display: flex;
+      animation: resultPop 0.3s var(--ease-spring);
+    }
+
+    .hash-result-pill.ok {
+      background: var(--status-ok-bg);
+      color: var(--status-ok-fg);
+    }
+
+    .hash-result-pill.err {
+      background: var(--status-err-bg);
+      color: var(--status-err-fg);
+    }
+
+    .hash-result-pill.info {
+      background: var(--status-warn-bg);
+      color: var(--status-warn-fg);
+    }
+
+    /* ==========================================================================
+       10. TRADUCCIONES & CONTACTO
+       ========================================================================== */
+    .translations-bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .lang-card {
+      border-radius: var(--radius-bento);
+      background: var(--md-sys-color-surface-card);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.28s var(--ease-spring), border-color 0.22s ease;
+    }
+
+    .lang-card:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--md-sys-color-primary) 42%, transparent);
+    }
+
+    .lang-progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container);
+      overflow: hidden;
+    }
+
+    .lang-progress-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-primary);
+      transform-origin: left center;
+      transform: scaleX(0);
+      transition: transform 0.9s var(--ease-decel) 0.15s;
+    }
+
+    .lang-card.is-visible .lang-progress-fill {
+      transform: scaleX(1);
+    }
+
+    .resource-tree-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .resource-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      font-size: 0.78rem;
+      font-weight: 700;
+      transition: transform 0.22s var(--ease-spring), background-color 0.2s ease;
+    }
+
+    .resource-pill:hover {
+      transform: translateY(-2px);
+      background: var(--md-sys-color-primary-container);
+    }
+
+    .resource-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.72rem;
+      color: var(--md-sys-color-primary);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .contact-card {
+      border-radius: var(--radius-card);
+      background: var(--md-sys-color-surface-card);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      padding: 22px;
+      text-decoration: none;
+      color: var(--md-sys-color-on-surface);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: transform 0.28s var(--ease-spring), border-color 0.22s ease, box-shadow 0.28s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 12px 28px color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+    }
+
+    .contact-card:hover .contact-card-icon {
+      transform: scale(1.08);
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+    }
+
+    .contact-card:active {
+      transform: scale(0.97);
+    }
+
+    .contact-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      display: grid;
+      place-items: center;
+      transition: transform 0.28s var(--ease-spring), background-color 0.22s ease, color 0.22s ease;
+    }
+
+    /* ==========================================================================
+       11. FOOTER & DOCK FLOTANTE CENTRADO
+       ========================================================================== */
+    footer.site-footer {
+      padding: 28px 0 calc(118px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--md-sys-color-outline-variant);
+      margin-top: 20px;
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.83rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .spdx-line {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      color: var(--md-sys-color-primary);
+      font-weight: 700;
+    }
+
+    .floating-dock-wrapper {
+      position: fixed;
+      bottom: max(16px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: max-content;
+      max-width: calc(100vw - 20px);
+    }
+
+    .dock-nav-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 6px;
+      border-radius: 28px;
+      background: color-mix(in srgb, var(--md-sys-color-surface-container) 92%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      box-shadow:
+        0 10px 28px rgba(26, 22, 36, 0.14),
+        0 2px 6px rgba(26, 22, 36, 0.08);
+      animation: dockSlideUp 0.6s var(--ease-spring) 0.12s both;
+    }
+
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-width: 84px;
+      padding: 7px 12px 6px;
+      border-radius: 22px;
+      color: var(--md-sys-color-on-surface-variant);
+      text-decoration: none;
+      transition: background-color 0.24s var(--ease-m3), color 0.24s ease, transform 0.22s var(--ease-spring);
+    }
+
+    .dock-item:hover {
+      color: var(--md-sys-color-on-surface);
+      background: var(--md-sys-color-surface-container-high);
+      transform: translateY(-1px);
+    }
+
+    .dock-item:active {
+      transform: scale(0.94);
+    }
+
+    .dock-item .material-symbols-rounded {
+      font-size: 21px;
+    }
+
+    .dock-item-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .dock-active-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: transparent;
+      margin-top: 2px;
+      transform: scale(0);
+      transition: background-color 0.22s ease, transform 0.28s var(--ease-spring);
+    }
+
+    .dock-item.active {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+    }
+
+    .dock-item.active .material-symbols-rounded {
+      color: var(--md-sys-color-primary);
+      font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+      animation: iconPop 0.32s var(--ease-spring);
+    }
+
+    .dock-item.active .dock-active-dot {
+      background: var(--md-sys-color-primary);
+      transform: scale(1);
+    }
+
+    /* Snackbar / Toast */
+    .toast-pill {
+      position: fixed;
+      bottom: calc(96px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(16px) scale(0.96);
+      z-index: 1500;
+      padding: 11px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--md-sys-color-on-surface);
+      color: var(--md-sys-color-surface);
+      font-size: 0.84rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.24s ease, transform 0.3s var(--ease-spring);
+      max-width: calc(100vw - 32px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toast-pill.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    /* ==========================================================================
+       12. RESPONSIVE
+       ========================================================================== */
+    @media (max-width: 960px) {
+      .hero-bento,
+      .downloads-bento,
+      .translations-bento,
+      .updates-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screenshots-grid,
+      .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .bento-tile,
+      .download-main-card,
+      .verifier-card,
+      .lang-card,
+      .update-card {
+        padding: 20px;
+        border-radius: 26px;
+      }
+
+      .hero-brand-lockup {
+        align-items: flex-start;
+      }
+
+      .melo-logo-hero {
+        width: 60px;
+        height: 60px;
+      }
+
+      .hero-stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid,
+      .specs-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-meta-pill {
+        display: none;
+      }
+
+      .dock-nav-pill {
+        gap: 2px;
+        padding: 5px;
+        border-radius: 24px;
+      }
+
+      .dock-item {
+        min-width: 0;
+        padding: 6px 7px 5px;
+        border-radius: 18px;
+      }
+
+      .dock-item .material-symbols-rounded {
+        font-size: 20px;
+      }
+
+      .dock-item-label {
+        font-size: 0.61rem;
+        letter-spacing: -0.02em;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .dock-nav-pill {
+        overflow-x: auto;
+        justify-content: flex-start;
+        scrollbar-width: none;
+      }
+      .dock-nav-pill::-webkit-scrollbar {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="container topbar-inner">
-    <a href="#inicio" class="brand">
-      <span class="brand-logo"><img src="assets/melo_icon.png" alt=""></span>
-      <span class="brand-name">Melo</span>
-      <span class="brand-tag">Local Player</span>
-    </a>
-    <nav aria-label="Navegación principal">
-      <a href="#funciones">Funciones</a>
-      <a href="#showcase">Showcase</a>
-      <a href="#updates">Updates</a>
-      <a href="#descargas">Descargas</a>
-      <a href="#idiomas">Idiomas</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-    <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema" title="Claro / oscuro">
-      <span class="material-symbols-rounded">dark_mode</span>
-    </button>
-  </div>
-</header>
+  <!-- TOPBAR -->
+  <header class="topbar" id="topbar">
+    <div class="container topbar-inner">
+      <a href="#inicio" class="brand-mini" aria-label="Melo — Ir al inicio">
+        <span class="melo-logo-wrap melo-logo-header">
+          <img src="assets/melo_icon.png" alt="Logo oficial de Melo" />
+        </span>
+        <span class="brand-name">Melo</span>
+        <span class="brand-tag">v1.0</span>
+      </a>
 
-<main class="container">
+      <div class="topbar-actions">
+        <span class="topbar-meta-pill">
+          <span class="material-symbols-rounded" style="font-size:16px; color:var(--md-sys-color-primary);">inventory_2</span>
+          com.melo.player
+        </span>
+        <button
+          type="button"
+          class="theme-toggle-btn ripple-host"
+          id="themeToggleBtn"
+          aria-label="Cambiar entre tema claro y oscuro"
+          title="Alternar modo claro / oscuro"
+        >
+          <span class="material-symbols-rounded" id="themeToggleIcon">dark_mode</span>
+          <span id="themeToggleLabel">Oscuro</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-  <!-- HERO BENTO -->
-  <section id="inicio" class="hero" data-spy="inicio">
-    <div class="hero-bento">
-      <div class="bento bento-main">
-        <div>
-          <div class="badge-row">
-            <span class="pill lime"><span class="material-symbols-rounded">verified</span> 100 % local · sin trackers</span>
-            <span class="pill">Android 8.0+ · API 26</span>
-            <span class="pill">GPL-3.0-or-later</span>
+  <main class="container">
+
+    <!-- ======================================================================
+         SECCIÓN 1: INICIO
+         ====================================================================== -->
+    <section id="inicio" class="page-section" data-spy="inicio">
+      <div class="hero-bento">
+        <div class="bento-tile bento-hero-main hero-enter" style="--stagger:0;">
+          <div>
+            <div class="hero-badge-row">
+              <span class="pill-badge tertiary">
+                <span class="material-symbols-rounded icon-filled">hard_drive</span>
+                100 % local
+              </span>
+              <span class="pill-badge">
+                <span class="material-symbols-rounded">android</span>
+                Android 8+
+              </span>
+              <span class="pill-badge">
+                <span class="material-symbols-rounded">gavel</span>
+                GPL-3.0-or-later
+              </span>
+            </div>
+
+            <div class="hero-brand-lockup">
+              <div class="melo-logo-wrap melo-logo-hero">
+                <img src="assets/melo_icon.png" alt="Icono oficial de Melo" />
+              </div>
+              <div>
+                <h1 class="hero-title">Melo</h1>
+                <p class="hero-tagline">Tu música, tu Melo.</p>
+              </div>
+            </div>
+
+            <p class="hero-desc">
+              Reproductor de música 100 % local para Android con diseño Material 3 Expressive. Reproduce únicamente los archivos guardados en tu dispositivo: sin streaming, sin cuentas, sin Last.fm, sin scrobbling y sin Melo GO.
+            </p>
           </div>
-          <h1 class="hero-title">Tu música,<br><span>tu Melo.</span></h1>
-          <p class="hero-desc">Reproductor de música local con Material 3 Expressive, español completo y animaciones que también funcionan bien en móviles de gama baja.</p>
+
+          <div class="hero-cta-row">
+            <a href="#descargas" class="btn-m3-primary ripple-host">
+              <span class="material-symbols-rounded" style="font-size:19px;">download</span>
+              Descargar APK v1.0
+            </a>
+            <a href="#capturas" class="btn-m3-tonal ripple-host">
+              <span class="material-symbols-rounded" style="font-size:18px;">smartphone</span>
+              Ver capturas
+            </a>
+            <a href="https://github.com/angel-ssk/Melo" target="_blank" rel="noopener noreferrer" class="btn-m3-tonal ripple-host">
+              <span class="material-symbols-rounded" style="font-size:18px;">code</span>
+              Código fuente
+            </a>
+          </div>
         </div>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#descargas"><span class="material-symbols-rounded">download</span> Descargar v1.0</a>
-          <a class="btn btn-tonal" href="https://github.com/angel-ssk/Melo"><span class="material-symbols-rounded">code</span> Ver en GitHub</a>
+
+        <div class="hero-right-col">
+          <div class="bento-tile release-highlight-tile hero-enter" style="--stagger:1;">
+            <div class="release-highlight-top">
+              <span class="pill-badge">
+                <span class="material-symbols-rounded icon-filled">new_releases</span>
+                Release estable
+              </span>
+              <span class="pill-badge">27 nov 2026</span>
+            </div>
+
+            <div>
+              <div class="giant-metric">v1.0</div>
+              <div class="giant-metric-label">versionCode 1000000 • APK firmado</div>
+              <p style="font-size:0.88rem; margin-top:10px; opacity:0.92;">
+                Compilación inicial lista para instalación directa en Android 8 o superior con paquete <code>com.melo.player</code> y verificación SHA-256 local.
+              </p>
+            </div>
+
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <a href="https://github.com/angel-ssk/Melo/releases" target="_blank" rel="noopener noreferrer" class="btn-m3-primary ripple-host">
+                <span class="material-symbols-rounded" style="font-size:18px;">open_in_new</span>
+                GitHub Releases
+              </a>
+              <a href="#actualizaciones" class="btn-m3-tonal ripple-host">Ver estado v1.1</a>
+            </div>
+          </div>
+
+          <div class="hero-stats-grid">
+            <div class="mini-stat-tile hero-enter" style="--stagger:2;">
+              <span class="material-symbols-rounded icon-filled">tag</span>
+              <div>
+                <div class="mini-stat-num">v1.0</div>
+                <div class="mini-stat-lbl">Versión actual</div>
+              </div>
+            </div>
+
+            <div class="mini-stat-tile hero-enter" style="--stagger:3;">
+              <span class="material-symbols-rounded icon-filled">translate</span>
+              <div>
+                <div class="mini-stat-num"><span class="count-up" data-target="2944">2944</span>/2944</div>
+                <div class="mini-stat-lbl">Cadenas en español</div>
+              </div>
+            </div>
+
+            <div class="mini-stat-tile hero-enter" style="--stagger:4;">
+              <span class="material-symbols-rounded icon-filled">shield</span>
+              <div>
+                <div class="mini-stat-num">0</div>
+                <div class="mini-stat-lbl">Trackers o red</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="hero-side">
-        <div class="tile">
-          <span class="material-symbols-rounded">new_releases</span>
-          <div class="metric">v1.0</div>
-          <div class="metric-label">Release estable · 20 nov 2026</div>
-          <span class="pill lime">v1.1 en preparación</span>
+    <!-- ======================================================================
+         SECCIÓN 2: FUNCIONES
+         ====================================================================== -->
+    <section id="funciones" class="page-section" data-spy="funciones">
+      <div class="section-head reveal-item">
+        <div>
+          <div class="section-eyebrow">
+            <span class="material-symbols-rounded">tune</span>
+            Arquitectura &amp; Capacidades
+          </div>
+          <h2 class="section-title">Funciones de Melo</h2>
         </div>
-        <div class="tile horizontal">
-          <span class="material-symbols-rounded">translate</span>
-          <div><div class="metric">2944<span style="font-size:1.2rem">/2944</span></div><div class="metric-label">cadenas en español</div></div>
+        <p class="section-subtitle">
+          Diseñado para gestionar bibliotecas locales sin dependencias externas ni servicios en la nube.
+        </p>
+      </div>
+
+      <div class="chips-scroll reveal-item" id="featureChips" role="tablist" aria-label="Filtrar funciones de Melo"></div>
+
+      <div class="features-grid" id="featuresGrid"></div>
+    </section>
+
+    <!-- ======================================================================
+         SECCIÓN 3: CAPTURAS
+         ====================================================================== -->
+    <section id="capturas" class="page-section" data-spy="capturas">
+      <div class="section-head reveal-item">
+        <div>
+          <div class="section-eyebrow">
+            <span class="material-symbols-rounded">smartphone</span>
+            Interfaz Real en Teléfono
+          </div>
+          <h2 class="section-title">Capturas</h2>
         </div>
-        <div class="tile horizontal">
-          <span class="material-symbols-rounded">shield</span>
-          <div><div class="metric">0</div><div class="metric-label">anuncios, rastreadores o paywalls</div></div>
+        <p class="section-subtitle">
+          Toca cualquier pantalla para ampliarla. Capturas reales tomadas en dispositivo Android.
+        </p>
+      </div>
+
+      <div class="screenshots-grid">
+        <article class="screenshot-card reveal-item" style="--stagger:0;">
+          <button
+            type="button"
+            class="screenshot-frame"
+            data-lightbox-src="assets/ScreenShots/Phone/Home.png"
+            data-lightbox-title="Inicio (Home)"
+            aria-label="Ampliar captura de Inicio"
+          >
+            <img src="assets/ScreenShots/Phone/Home.png" alt="Captura de la pantalla de Inicio de Melo" loading="lazy" />
+          </button>
+          <div>
+            <div class="screenshot-caption-title">Inicio</div>
+            <div class="screenshot-caption-sub">Acceso rápido a biblioteca, recientes y resumen local.</div>
+          </div>
+        </article>
+
+        <article class="screenshot-card reveal-item" style="--stagger:1;">
+          <button
+            type="button"
+            class="screenshot-frame"
+            data-lightbox-src="assets/ScreenShots/Phone/Player_2.png"
+            data-lightbox-title="Reproductor (Player)"
+            aria-label="Ampliar captura del Reproductor"
+          >
+            <img src="assets/ScreenShots/Phone/Player_2.png" alt="Captura del reproductor de Melo" loading="lazy" />
+          </button>
+          <div>
+            <div class="screenshot-caption-title">Reproductor</div>
+            <div class="screenshot-caption-sub">Controles táctiles expresivos, carátula y cola local.</div>
+          </div>
+        </article>
+
+        <article class="screenshot-card reveal-item" style="--stagger:2;">
+          <button
+            type="button"
+            class="screenshot-frame"
+            data-lightbox-src="assets/ScreenShots/Phone/Player_Lyrics_View.png"
+            data-lightbox-title="Vista de Letras"
+            aria-label="Ampliar captura de Vista de Letras"
+          >
+            <img src="assets/ScreenShots/Phone/Player_Lyrics_View.png" alt="Captura de la vista de letras en Melo" loading="lazy" />
+          </button>
+          <div>
+            <div class="screenshot-caption-title">Letras con presets</div>
+            <div class="screenshot-caption-sub">Lectura sincronizada y estilos visuales ajustables.</div>
+          </div>
+        </article>
+
+        <article class="screenshot-card reveal-item" style="--stagger:3;">
+          <button
+            type="button"
+            class="screenshot-frame"
+            data-lightbox-src="assets/ScreenShots/Phone/Search.png"
+            data-lightbox-title="Búsqueda local"
+            aria-label="Ampliar captura de Búsqueda"
+          >
+            <img src="assets/ScreenShots/Phone/Search.png" alt="Captura del buscador local de Melo" loading="lazy" />
+          </button>
+          <div>
+            <div class="screenshot-caption-title">Búsqueda</div>
+            <div class="screenshot-caption-sub">Filtrado instantáneo por canciones, álbumes y artistas.</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECCIÓN 4: ACTUALIZACIONES
+         ====================================================================== -->
+    <section id="actualizaciones" class="page-section" data-spy="actualizaciones">
+      <div class="section-head reveal-item">
+        <div>
+          <div class="section-eyebrow">
+            <span class="material-symbols-rounded">update</span>
+            Historial &amp; Hoja de Ruta
+          </div>
+          <h2 class="section-title">Actualizaciones</h2>
+        </div>
+        <p class="section-subtitle">
+          Estado oficial de lanzamientos en el repositorio de GitHub.
+        </p>
+      </div>
+
+      <div class="updates-grid">
+        <article class="update-card stable reveal-item" style="--stagger:0;">
+          <div>
+            <div class="update-top">
+              <span class="pill-badge tonal">
+                <span class="material-symbols-rounded icon-filled">verified</span>
+                Estable
+              </span>
+              <span class="pill-badge">27 nov 2026</span>
+            </div>
+
+            <div style="display:flex; align-items:baseline; gap:12px; margin-top:14px;">
+              <span class="update-version">v1.0</span>
+              <span style="font-size:0.82rem; font-weight:700; color:var(--md-sys-color-on-surface-variant);">
+                versionCode 1000000
+              </span>
+            </div>
+
+            <h3 style="font-family:var(--font-display); font-size:1.18rem; font-weight:800; margin-top:8px;">
+              Lanzamiento inicial de Melo
+            </h3>
+
+            <ul class="update-list" style="margin-top:12px;">
+              <li>Reproductor 100 % local para Android 8+ bajo paquete <code>com.melo.player</code>.</li>
+              <li>Eliminación completa de streaming, Last.fm, scrobbling y Melo GO.</li>
+              <li>Traducción íntegra al español con 2944/2944 cadenas cubiertas.</li>
+              <li>Interfaz Material 3 Expressive, Modo básico, letras con presets y estadísticas Melo locales.</li>
+              <li>Animaciones pausadas en segundo plano, crossfade corregido y firma V2 verificada.</li>
+              <li>Baseline profile regenerado y macros de arranque, búsqueda y reproductor para gama baja.</li>
+            </ul>
+          </div>
+
+          <div class="update-footer">
+            <span style="font-size:0.78rem; font-weight:700; color:var(--md-sys-color-on-surface-variant);">
+              APK firmado • GPL-3.0-or-later
+            </span>
+            <a href="https://github.com/angel-ssk/Melo/releases" target="_blank" rel="noopener noreferrer" class="btn-m3-primary ripple-host" style="padding:9px 16px; font-size:0.82rem;">
+              <span class="material-symbols-rounded" style="font-size:17px;">open_in_new</span>
+              Ir a Releases
+            </a>
+          </div>
+        </article>
+
+        <article class="update-card reveal-item" style="--stagger:1;">
+          <div>
+            <div class="update-top">
+              <span class="pill-badge tertiary">
+                <span class="material-symbols-rounded">schedule</span>
+                En preparación / sin publicar
+              </span>
+              <span class="pill-badge">Próxima rama</span>
+            </div>
+
+            <div style="display:flex; align-items:baseline; gap:12px; margin-top:14px;">
+              <span class="update-version">v1.1</span>
+              <span style="font-size:0.82rem; font-weight:700; color:var(--md-sys-color-on-surface-variant);">
+                Sin APK publicado
+              </span>
+            </div>
+
+            <h3 style="font-family:var(--font-display); font-size:1.18rem; font-weight:800; margin-top:8px;">
+              Siguiente iteración de mantenimiento
+            </h3>
+
+            <ul class="update-list" style="margin-top:12px;">
+              <li>Estado actual: en preparación y pendiente de publicación en GitHub Releases.</li>
+              <li>Letras incrustadas por Uri, cola del explorador con subcarpetas y filtros de búsqueda persistentes.</li>
+              <li>Circuit breaker de letras, limpieza de pools de audio y estadísticas fuera del hilo principal.</li>
+              <li>Iconos de repeat corregidos, whitelist del explorador y scoping de búsqueda a los resultados.</li>
+            </ul>
+          </div>
+
+          <div class="update-footer">
+            <span style="font-size:0.78rem; font-weight:700; color:var(--md-sys-color-on-surface-variant);">
+              Canal oficial: GitHub
+            </span>
+            <a href="https://github.com/angel-ssk/Melo/releases" target="_blank" rel="noopener noreferrer" class="btn-m3-tonal ripple-host" style="padding:9px 16px; font-size:0.82rem;">
+              Consultar Releases
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECCIÓN 5: DESCARGAS & VERIFICADOR SHA-256
+         ====================================================================== -->
+    <section id="descargas" class="page-section" data-spy="descargas">
+      <div class="section-head reveal-item">
+        <div>
+          <div class="section-eyebrow">
+            <span class="material-symbols-rounded">download</span>
+            APK Firmado &amp; Verificación
+          </div>
+          <h2 class="section-title">Descargas</h2>
+        </div>
+        <p class="section-subtitle">
+          Descarga directa desde GitHub Releases y comprobación criptográfica local del archivo.
+        </p>
+      </div>
+
+      <div class="downloads-bento">
+        <!-- Tarjeta de descarga con el logo oficial de Melo -->
+        <div class="download-main-card reveal-item" style="--stagger:0;">
+          <div>
+            <div class="download-app-head">
+              <div class="melo-logo-wrap melo-logo-download">
+                <img src="assets/melo_icon.png" alt="Logo oficial de Melo" />
+              </div>
+              <div>
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <h3 style="font-family:var(--font-display); font-size:1.45rem; font-weight:800;">Melo v1.0</h3>
+                  <span class="pill-badge tonal" style="padding:3px 10px; font-size:0.72rem;">APK firmado</span>
+                </div>
+                <div style="font-size:0.84rem; color:var(--md-sys-color-on-surface-variant); margin-top:2px;">
+                  Reproductor local • 27 nov 2026 • GPL-3.0-or-later
+                </div>
+              </div>
+            </div>
+
+            <div class="specs-grid" style="margin-top:18px;">
+              <div class="spec-box">
+                <div class="spec-lbl">Paquete</div>
+                <div class="spec-val">com.melo.player</div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-lbl">Versión</div>
+                <div class="spec-val">v1.0 (1000000)</div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-lbl">Compatibilidad</div>
+                <div class="spec-val">Android 8+</div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-lbl">Idioma</div>
+                <div class="spec-val">Español (2944/2944)</div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-lbl">Archivo</div>
+                <div class="spec-val">Melo-1.0-githubRelease.apk</div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-lbl">Tamaño</div>
+                <div class="spec-val">31,9 MB</div>
+              </div>
+              <div class="spec-box">
+                <div class="spec-lbl">Firma V2</div>
+                <div class="spec-val">CN=Angel, OU=Melo, C=ES</div>
+              </div>
+            </div>
+
+            <div class="sha-box" style="margin-top:14px;">
+              <div style="min-width:0; flex:1;">
+                <div class="spec-lbl" style="margin-bottom:4px;">SHA-256 oficial del APK v1.0</div>
+                <div class="sha-text" id="officialShaText">4B536858D5E8248715372E30F3D64DB318367038BD50BEA783566AAFBF671537</div>
+              </div>
+              <button
+                type="button"
+                class="btn-m3-tonal ripple-host"
+                id="copyOfficialShaBtn"
+                style="padding:9px 14px; font-size:0.78rem; flex-shrink:0;"
+                aria-label="Copiar SHA-256 oficial de Melo v1.0"
+              >
+                <span class="material-symbols-rounded" style="font-size:16px;">content_copy</span>
+                Copiar
+              </button>
+            </div>
+
+            <details class="adb-details" style="margin-top:12px;">
+              <summary>
+                <span style="display:inline-flex; align-items:center; gap:8px;">
+                  <span class="material-symbols-rounded" style="font-size:18px; color:var(--md-sys-color-primary);">terminal</span>
+                  Instalar mediante ADB
+                </span>
+                <span class="material-symbols-rounded adb-chevron" style="font-size:18px;">expand_more</span>
+              </summary>
+              <div class="adb-code-row">
+                <code id="adbCmdText">adb install -r Melo-1.0-githubRelease.apk</code>
+                <button type="button" class="btn-m3-tonal ripple-host" id="copyAdbCmdBtn" style="padding:5px 10px; font-size:0.72rem; flex-shrink:0;">
+                  Copiar
+                </button>
+              </div>
+            </details>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <a
+              href="https://github.com/angel-ssk/Melo/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-m3-primary ripple-host"
+              style="flex:1; min-width:210px;"
+            >
+              <span class="material-symbols-rounded" style="font-size:19px;">download</span>
+              Descargar APK v1.0 en GitHub
+            </a>
+            <a
+              href="https://github.com/angel-ssk/Melo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-m3-tonal ripple-host"
+            >
+              <span class="material-symbols-rounded" style="font-size:18px;">folder_code</span>
+              Repositorio
+            </a>
+          </div>
+        </div>
+
+        <!-- Verificador SHA-256 Local con Web Crypto API -->
+        <div class="verifier-card reveal-item" id="shaVerifierSection" style="--stagger:1;">
+          <div>
+            <span class="pill-badge tonal" style="margin-bottom:10px;">
+              <span class="material-symbols-rounded icon-filled">verified_user</span>
+              Web Crypto API • 100 % en tu navegador
+            </span>
+            <h3 style="font-family:var(--font-display); font-size:1.32rem; font-weight:800;">
+              Verificador SHA-256 local
+            </h3>
+            <p style="font-size:0.88rem; color:var(--md-sys-color-on-surface-variant); margin-top:6px;">
+              Comprueba la integridad del archivo <code>.apk</code> antes de instalarlo. El archivo se procesa únicamente en la memoria de tu navegador y <strong>no se sube a ningún servidor</strong>.
+            </p>
+          </div>
+
+          <div>
+            <label for="expectedShaInput" class="spec-lbl" style="display:block; margin-bottom:6px;">
+              Hash SHA-256 esperado
+            </label>
+            <input
+              type="text"
+              id="expectedShaInput"
+              class="m3-field"
+              value="4B536858D5E8248715372E30F3D64DB318367038BD50BEA783566AAFBF671537"
+              aria-label="Hash SHA-256 esperado para verificación"
+            />
+          </div>
+
+          <div
+            class="dropzone"
+            id="apkDropzone"
+            tabindex="0"
+            role="button"
+            aria-label="Seleccionar o soltar archivo APK para verificar su SHA-256 localmente"
+          >
+            <span class="material-symbols-rounded dropzone-icon" style="font-size:38px; color:var(--md-sys-color-primary);">upload_file</span>
+            <div style="font-weight:800; font-size:0.95rem; margin-top:6px;">
+              Selecciona o suelta aquí el APK de Melo
+            </div>
+            <div style="font-size:0.78rem; color:var(--md-sys-color-on-surface-variant); margin-top:4px;">
+              Cálculo local instantáneo • Sin subida de archivos
+            </div>
+            <input type="file" id="apkFileInput" accept=".apk,*/*" style="display:none;" />
+          </div>
+
+          <div class="wavy-progress-box" id="wavyProgressBox">
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:800;">
+              <span id="wavyLabel">Calculando SHA-256 localmente...</span>
+              <span id="wavyPercent">0%</span>
+            </div>
+            <div class="wavy-svg-wrap">
+              <svg class="wavy-svg" viewBox="0 0 360 20" preserveAspectRatio="none">
+                <defs>
+                  <clipPath id="wavyProgressClip">
+                    <rect id="wavyClipRect" x="0" y="0" width="0" height="20" />
+                  </clipPath>
+                </defs>
+                <path class="wavy-track-path"
+                  d="M0 10 Q 10 3, 20 10 T 40 10 T 60 10 T 80 10 T 100 10 T 120 10 T 140 10 T 160 10 T 180 10 T 200 10 T 220 10 T 240 10 T 260 10 T 280 10 T 300 10 T 320 10 T 340 10 T 360 10" />
+                <g clip-path="url(#wavyProgressClip)">
+                  <g class="wavy-wave-group">
+                    <path class="wavy-active-path"
+                      d="M0 10 Q 10 3, 20 10 T 40 10 T 60 10 T 80 10 T 100 10 T 120 10 T 140 10 T 160 10 T 180 10 T 200 10 T 220 10 T 240 10 T 260 10 T 280 10 T 300 10 T 320 10 T 340 10 T 360 10 T 380 10 T 400 10" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="hash-result-pill" id="hashResultPill" role="status" aria-live="polite"></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FUNCIONES -->
-  <section id="funciones" class="page-section" data-spy="funciones">
-    <div class="section-head">
-      <div><div class="eyebrow"><span class="material-symbols-rounded">auto_awesome</span> Qué incluye Melo</div><h2>Hecho para escuchar</h2></div>
-      <p class="section-subtitle">Diseño propio, motor local y controles que responden igual en un gama alta que en un Tecno Spark Go.</p>
-    </div>
-    <div class="bento-grid">
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">graph_eq</span></div><h3>Audio local</h3><p>Media3 ExoPlayer, crossfade sin tirones, ecualizador de 10 bandas, Replay Gain y letras incrustadas en FLAC/Ogg/M4A.</p><span class="pill">Sin streaming</span></article>
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">palette</span></div><h3>M3 Expressive</h3><p>Paleta morada del logo, squircle, galleta de búsqueda, Melo Wave y motion de alta tasa de refresco.</p><span class="pill">Identidad propia</span></article>
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">bolt</span></div><h3>Modo básico</h3><p>Desactiva blur, Canvas animado y movimiento decorativo. Arranque diferido, cachés adaptativas y baseline profile.</p><span class="pill">Gama baja</span></article>
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">lyrics</span></div><h3>Letras a tu ritmo</h3><p>Presets de animación, desfase de sincronización persistente y vista completa con controles táctiles.</p><span class="pill">LRC + word-by-word</span></article>
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">library_music</span></div><h3>Biblioteca ordenada</h3><p>Artistas sin duplicados, álbumes multi-disco agrupados, favoritos, listas y explorador por carpetas sin bloqueos.</p><span class="pill">Local-first</span></article>
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">monitoring</span></div><h3>Estadísticas Melo</h3><p>Tiempo de escucha, artistas y canciones principales con vistas por día, semana, mes y año.</p><span class="pill">Perfil incluido</span></article>
-    </div>
-  </section>
-</main>
+    <!-- ======================================================================
+         SECCIÓN 6: TRADUCCIONES
+         ====================================================================== -->
+    <section id="traducciones" class="page-section" data-spy="traducciones">
+      <div class="section-head reveal-item">
+        <div>
+          <div class="section-eyebrow">
+            <span class="material-symbols-rounded">translate</span>
+            Localización
+          </div>
+          <h2 class="section-title">Traducciones</h2>
+        </div>
+        <p class="section-subtitle">
+          Cobertura completa en español sobre el árbol de recursos base de Android.
+        </p>
+      </div>
 
-<!-- SHOWCASE -->
-<section id="showcase" class="showcase-wrap" data-spy="showcase">
-  <div class="container page-section">
-    <div class="section-head">
-      <div><div class="eyebrow"><span class="material-symbols-rounded">grid_view</span> Showcase</div><h2>Una interfaz que se reconoce</h2></div>
-      <p class="section-subtitle">Capturas reales de la app en teléfono.</p>
-    </div>
-    <div class="shots">
-      <figure class="shot"><img src="assets/ScreenShots/Phone/Home.png" alt="Inicio"><b>Inicio</b></figure>
-      <figure class="shot"><img src="assets/ScreenShots/Phone/Player_2.png" alt="Reproductor"><b>Reproductor</b></figure>
-      <figure class="shot"><img src="assets/ScreenShots/Phone/Player_Lyrics_View.png" alt="Letras"><b>Letras</b></figure>
-      <figure class="shot"><img src="assets/ScreenShots/Phone/Search.png" alt="Búsqueda"><b>Búsqueda</b></figure>
+      <div class="translations-bento">
+        <div class="lang-card reveal-item" style="--stagger:0;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+            <div>
+              <h3 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800;">
+                Español completo
+              </h3>
+              <p style="font-size:0.84rem; color:var(--md-sys-color-on-surface-variant); margin-top:2px;">
+                Recurso <code>values-es</code> revisado para uso 100 % local
+              </p>
+            </div>
+            <span class="pill-badge tonal">2944 / 2944</span>
+          </div>
+
+          <div class="lang-progress-track" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="Cobertura de traducción al español">
+            <div class="lang-progress-fill"></div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:var(--md-sys-color-on-surface-variant);">
+            <span>100 % de cadenas traducidas</span>
+            <span>Inglés base (values)</span>
+          </div>
+
+          <p style="font-size:0.88rem; color:var(--md-sys-color-on-surface-variant);">
+            Toda la interfaz, ajustes, visor de letras, mensajes de error y estadísticas están traducidos al español sobre la referencia base en inglés.
+          </p>
+        </div>
+
+        <div class="lang-card reveal-item" style="--stagger:1;">
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800;">
+              Árbol de recursos Android
+            </h3>
+            <p style="font-size:0.84rem; color:var(--md-sys-color-on-surface-variant); margin-top:2px;">
+              Carpetas de idiomas disponibles en <code>app/src/main/res/</code>
+            </p>
+          </div>
+
+          <div class="resource-tree-pills">
+            <span class="resource-pill">Español <span class="resource-code">values-es</span></span>
+            <span class="resource-pill">Inglés (base) <span class="resource-code">values</span></span>
+            <span class="resource-pill">Alemán <span class="resource-code">values-de</span></span>
+            <span class="resource-pill">Francés <span class="resource-code">values-fr</span></span>
+            <span class="resource-pill">Italiano <span class="resource-code">values-it</span></span>
+            <span class="resource-pill">Portugués (BR) <span class="resource-code">values-pt-rBR</span></span>
+            <span class="resource-pill">Ruso <span class="resource-code">values-ru</span></span>
+            <span class="resource-pill">Japonés <span class="resource-code">values-ja</span></span>
+            <span class="resource-pill">Coreano <span class="resource-code">values-ko</span></span>
+            <span class="resource-pill">Chino simp. <span class="resource-code">values-zh-rCN</span></span>
+          </div>
+
+          <p style="font-size:0.84rem; color:var(--md-sys-color-on-surface-variant);">
+            Las correcciones o nuevas cadenas se gestionan directamente mediante pull requests o issues en el repositorio oficial de GitHub.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECCIÓN 7: CONTACTO
+         ====================================================================== -->
+    <section id="contacto" class="page-section" data-spy="contacto">
+      <div class="section-head reveal-item">
+        <div>
+          <div class="section-eyebrow">
+            <span class="material-symbols-rounded">code</span>
+            Repositorio Oficial
+          </div>
+          <h2 class="section-title">Contacto</h2>
+        </div>
+        <p class="section-subtitle">
+          Canales directos en GitHub para código, reportes de errores, documentación y perfil.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <a href="https://github.com/angel-ssk/Melo" target="_blank" rel="noopener noreferrer" class="contact-card ripple-host reveal-item" style="--stagger:0;">
+          <div class="contact-card-icon">
+            <span class="material-symbols-rounded icon-filled">folder_code</span>
+          </div>
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:800;">Repositorio</h3>
+            <p style="font-size:0.82rem; color:var(--md-sys-color-on-surface-variant); margin-top:4px;">
+              github.com/angel-ssk/Melo
+            </p>
+          </div>
+        </a>
+
+        <a href="https://github.com/angel-ssk/Melo/issues" target="_blank" rel="noopener noreferrer" class="contact-card ripple-host reveal-item" style="--stagger:1;">
+          <div class="contact-card-icon">
+            <span class="material-symbols-rounded icon-filled">bug_report</span>
+          </div>
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:800;">Issues</h3>
+            <p style="font-size:0.82rem; color:var(--md-sys-color-on-surface-variant); margin-top:4px;">
+              Reportar fallos y sugerencias
+            </p>
+          </div>
+        </a>
+
+        <a href="https://github.com/angel-ssk/Melo/wiki" target="_blank" rel="noopener noreferrer" class="contact-card ripple-host reveal-item" style="--stagger:2;">
+          <div class="contact-card-icon">
+            <span class="material-symbols-rounded icon-filled">menu_book</span>
+          </div>
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:800;">Wiki</h3>
+            <p style="font-size:0.82rem; color:var(--md-sys-color-on-surface-variant); margin-top:4px;">
+              Documentación técnica de Melo
+            </p>
+          </div>
+        </a>
+
+        <a href="https://github.com/angel-ssk" target="_blank" rel="noopener noreferrer" class="contact-card ripple-host reveal-item" style="--stagger:3;">
+          <div class="contact-card-icon">
+            <span class="material-symbols-rounded icon-filled">person</span>
+          </div>
+          <div>
+            <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:800;">Perfil de GitHub</h3>
+            <p style="font-size:0.82rem; color:var(--md-sys-color-on-surface-variant); margin-top:4px;">
+              github.com/angel-ssk
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer container reveal-item">
+    <p>
+      <strong>Melo</strong> — Tu música, tu Melo. Software libre bajo licencia <strong>GPL-3.0-or-later</strong>.
+    </p>
+    <p>
+      Crédito original del proyecto base a <strong>Anjishnu Nandi</strong>. Se conservan íntegramente los avisos de copyright y licenciamiento originales.
+    </p>
+    <p class="spdx-line">SPDX-License-Identifier: GPL-3.0-or-later</p>
+  </footer>
+
+  <!-- ========================================================================
+       DOCK FLOTANTE INFERIOR CENTRADO (5 ITEMS)
+       ======================================================================== -->
+  <div class="floating-dock-wrapper">
+    <nav class="dock-nav-pill" aria-label="Navegación principal de Melo">
+      <a href="#inicio" class="dock-item ripple-host active" data-nav="inicio">
+        <span class="material-symbols-rounded">home</span>
+        <span class="dock-item-label">Inicio</span>
+        <span class="dock-active-dot"></span>
+      </a>
+      <a href="#capturas" class="dock-item ripple-host" data-nav="capturas">
+        <span class="material-symbols-rounded">smartphone</span>
+        <span class="dock-item-label">Capturas</span>
+        <span class="dock-active-dot"></span>
+      </a>
+      <a href="#actualizaciones" class="dock-item ripple-host" data-nav="actualizaciones">
+        <span class="material-symbols-rounded">update</span>
+        <span class="dock-item-label">Actualizaciones</span>
+        <span class="dock-active-dot"></span>
+      </a>
+      <a href="#descargas" class="dock-item ripple-host" data-nav="descargas">
+        <span class="material-symbols-rounded">download</span>
+        <span class="dock-item-label">Descargas</span>
+        <span class="dock-active-dot"></span>
+      </a>
+      <a href="#contacto" class="dock-item ripple-host" data-nav="contacto">
+        <span class="material-symbols-rounded">alternate_email</span>
+        <span class="dock-item-label">Contacto</span>
+        <span class="dock-active-dot"></span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- LIGHTBOX DE CAPTURAS -->
+  <div class="lightbox-backdrop" id="lightboxBackdrop" aria-hidden="true">
+    <div class="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+      <div class="lightbox-header">
+        <h3 id="lightboxTitle" style="font-family:var(--font-display); font-size:1.1rem; font-weight:800;">Captura</h3>
+        <button type="button" class="icon-close-btn" id="closeLightboxBtn" aria-label="Cerrar vista ampliada">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+      <div class="lightbox-img-wrap">
+        <img id="lightboxImg" src="" alt="" />
+      </div>
     </div>
   </div>
-</section>
 
-<main class="container">
-
-  <!-- UPDATES -->
-  <section id="updates" class="page-section" data-spy="updates">
-    <div class="section-head">
-      <div><div class="eyebrow"><span class="material-symbols-rounded">new_releases</span> Updates</div><h2>Novedades de Melo</h2></div>
-      <a class="btn btn-outline" href="https://github.com/angel-ssk/Melo/releases"><span class="material-symbols-rounded">inventory_2</span> Todos los releases</a>
-    </div>
-    <div class="update-list">
-      <article class="update">
-        <div><span class="pill lime">v1.0 · Estable</span><div class="date">20 nov 2026</div></div>
-        <div><h3>Identidad propia y reproductor 100 % local</h3><p>Melo Wave, español completo, Modo básico, presets de letras, perfil, crossfade corregido y baseline profile regenerado.</p></div>
-        <a class="btn btn-tonal" href="https://github.com/angel-ssk/Melo/releases/tag/v1.0">Ver notas</a>
-      </article>
-      <article class="update">
-        <div><span class="pill">v1.1 · Próxima</span><div class="date">Sin publicar</div></div>
-        <div><h3>Biblioteca y rendimiento</h3><p>Letras incrustadas por Uri, cola del explorador con subcarpetas, filtros persistentes, circuit breaker de letras y limpieza de pools de audio.</p></div>
-        <span class="pill">En preparación</span>
-      </article>
-    </div>
-  </section>
-
-  <!-- DOWNLOAD + VERIFICADOR -->
-  <section id="descargas" class="page-section" data-spy="descargas">
-    <div class="section-head">
-      <div><div class="eyebrow"><span class="material-symbols-rounded">download</span> Descargas</div><h2>Descarga y verifica</h2></div>
-      <p class="section-subtitle">APK firmado. El hash se calcula en tu navegador; el archivo no se sube a ningún servidor.</p>
-    </div>
-    <div class="download-grid">
-      <div class="apk-card">
-        <div class="apk-top">
-          <div class="app-icon"><img src="assets/melo_icon.png" alt="Melo"></div>
-          <div><span class="pill lime">Recomendada</span><h3 style="margin-top:8px">Melo v1.0 · githubRelease</h3><p>Firmado con CN=Angel · SHA-256 verificado</p></div>
-        </div>
-        <p style="font-size:.88rem">Paquete <code>com.melo.player</code> · versionCode 1000000 · Android 8.0+ · universal.</p>
-        <input class="hash-field" id="expectedHash" value="4B536858D5E8248715372E30F3D64DB318367038BD50BEA783566AAFBF671537" aria-label="Hash esperado" readonly>
-        <div style="margin-top:18px"><a class="btn btn-primary" href="https://github.com/angel-ssk/Melo/releases/latest"><span class="material-symbols-rounded">download</span> Descargar APK</a></div>
-      </div>
-
-      <div class="verifier">
-        <div class="eyebrow"><span class="material-symbols-rounded">verified_user</span> Herramienta local</div>
-        <h3>Verificador de SHA-256</h3>
-        <p style="font-size:.88rem">Selecciona el APK descargado y compara su hash con el oficial de v1.0.</p>
-        <label class="dropzone" for="apkFile">
-          <span class="material-symbols-rounded">upload_file</span>
-          <div style="font-weight:800;margin-top:6px">Elegir archivo .apk</div>
-          <div style="font-size:.78rem;color:var(--on-surface-variant)">Cálculo en memoria · Web Crypto API</div>
-          <input type="file" id="apkFile" accept=".apk" hidden>
-        </label>
-        <div id="hashResult" class="hash-result" hidden></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- IDIOMAS -->
-  <section id="idiomas" class="page-section" data-spy="idiomas">
-    <div class="section-head">
-      <div><div class="eyebrow"><span class="material-symbols-rounded">translate</span> Traducciones</div><h2>Idiomas</h2></div>
-      <p class="section-subtitle">El español está completo; el resto de idiomas se mantienen en el árbol de recursos.</p>
-    </div>
-    <div class="chips">
-      <span class="lang ok">✓ Español · 2944/2944</span>
-      <span class="lang">English</span>
-      <span class="lang">Français</span>
-      <span class="lang">Deutsch</span>
-      <span class="lang">Português</span>
-      <span class="lang">Italiano</span>
-      <span class="lang">العربية</span>
-      <span class="lang">हिन्दी</span>
-      <span class="lang">中文</span>
-    </div>
-  </section>
-
-  <!-- CONTACTO -->
-  <section id="contacto" class="page-section" data-spy="contacto">
-    <div class="section-head">
-      <div><div class="eyebrow"><span class="material-symbols-rounded">contact_support</span> Contacto</div><h2>¿Ideas, bugs o feedback?</h2></div>
-      <p class="section-subtitle">Melo se mantiene en abierto. Cuéntame qué funciona y qué no.</p>
-    </div>
-    <div class="bento-grid">
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">code</span></div><h3>Repositorio</h3><p>Código, releases y wiki en GitHub.</p><a class="btn btn-tonal" href="https://github.com/angel-ssk/Melo">angel-ssk/Melo</a></article>
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">bug_report</span></div><h3>Reportar un bug</h3><p>Abre un issue con modelo, versión y pasos para reproducirlo.</p><a class="btn btn-tonal" href="https://github.com/angel-ssk/Melo/issues">Issues</a></article>
-      <article class="feature-card"><div class="icon-box"><span class="material-symbols-rounded">person</span></div><h3>Mantenedor</h3><p>Angel (@angel-ssk), desarrollador de Melo.</p><a class="btn btn-tonal" href="https://github.com/angel-ssk">Perfil GitHub</a></article>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <div class="container">
-    <div class="foot-grid">
-      <div><h3>Melo</h3><p>Tu música, tu Melo. Reproductor local para Android.</p></div>
-      <div><h3>Enlaces</h3><p><a href="https://github.com/angel-ssk/Melo/releases">Releases</a> · <a href="https://github.com/angel-ssk/Melo/wiki">Wiki</a> · <a href="https://github.com/angel-ssk/Melo/issues">Issues</a></p></div>
-      <div><h3>Licencia</h3><p>GPL-3.0-or-later. Crédito original a Anjishnu Nandi; avisos SPDX conservados.</p></div>
-    </div>
-    <div class="foot-bottom">© 2026 Angel · Melo no incluye streaming, Last.fm ni rastreadores.</div>
+  <!-- SNACKBAR / TOAST -->
+  <div class="toast-pill" id="toastPill" role="status" aria-live="polite">
+    <span class="material-symbols-rounded icon-filled" style="font-size:18px;">check_circle</span>
+    <span id="toastText">Acción completada</span>
   </div>
-</footer>
 
-<script>
-  // Tema claro / oscuro
-  const root = document.documentElement;
-  const themeBtn = document.getElementById('themeToggle');
-  const saved = localStorage.getItem('melo-theme');
-  if (saved) root.dataset.theme = saved;
-  themeBtn.addEventListener('click', () => {
-    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    localStorage.setItem('melo-theme', next);
-    themeBtn.querySelector('.material-symbols-rounded').textContent =
-      next === 'dark' ? 'light_mode' : 'dark_mode';
-  });
+  <!-- ========================================================================
+       JAVASCRIPT
+       ======================================================================== -->
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Verificador SHA-256 local
-  const fileInput = document.getElementById('apkFile');
-  const result = document.getElementById('hashResult');
-  fileInput.addEventListener('change', async () => {
-    const file = fileInput.files[0];
-    if (!file) return;
-    result.hidden = false;
-    result.className = 'hash-result';
-    result.textContent = 'Calculando hash…';
-    try {
-      const buffer = await file.arrayBuffer();
-      const digest = await crypto.subtle.digest('SHA-256', buffer);
-      const hex = Array.from(new Uint8Array(digest))
-        .map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
-      const expected = document.getElementById('expectedHash').value.trim().toUpperCase();
-      if (hex === expected) {
-        result.classList.add('ok');
-        result.textContent = '✓ Coincide con el SHA-256 oficial de Melo v1.0.';
-      } else {
-        result.classList.add('err');
-        result.textContent = '✗ No coincide. Hash obtenido: ' + hex;
-      }
-    } catch (e) {
-      result.classList.add('err');
-      result.textContent = 'No se pudo calcular el hash en este navegador.';
+    // 1. MATERIAL 3 RIPPLE EN BOTONES Y TARJETAS INTERACTIVAS
+    function attachRipple(el) {
+      el.addEventListener('pointerdown', e => {
+        if (prefersReducedMotion || e.button !== 0) return;
+        const rect = el.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const ripple = document.createElement('span');
+        ripple.className = 'm3-ripple-circle';
+        ripple.style.width = `${size}px`;
+        ripple.style.height = `${size}px`;
+        ripple.style.left = `${e.clientX - rect.left}px`;
+        ripple.style.top = `${e.clientY - rect.top}px`;
+        el.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+      });
     }
-  });
-</script>
+    document.querySelectorAll('.ripple-host').forEach(attachRipple);
+
+    // 2. TOPBAR SCROLL ELEVATION
+    const topbar = document.getElementById('topbar');
+    function syncTopbarScroll() {
+      topbar.classList.toggle('scrolled', window.scrollY > 12);
+    }
+    window.addEventListener('scroll', syncTopbarScroll, { passive: true });
+    syncTopbarScroll();
+
+    // 3. TEMA CLARO / OSCURO (prefers-color-scheme + localStorage)
+    const THEME_KEY = 'melo_theme';
+    const htmlEl = document.documentElement;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeToggleIcon = document.getElementById('themeToggleIcon');
+    const themeToggleLabel = document.getElementById('themeToggleLabel');
+
+    function isDarkActive() {
+      const explicit = htmlEl.getAttribute('data-theme');
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return explicit === 'dark' || (!explicit && systemDark);
+    }
+
+    function syncThemeUI() {
+      const dark = isDarkActive();
+      themeToggleIcon.textContent = dark ? 'light_mode' : 'dark_mode';
+      themeToggleLabel.textContent = dark ? 'Claro' : 'Oscuro';
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.setAttribute('content', dark ? '#121018' : '#ECE4FA');
+    }
+
+    try {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        htmlEl.setAttribute('data-theme', savedTheme);
+      }
+    } catch {}
+    syncThemeUI();
+
+    themeToggleBtn.addEventListener('click', () => {
+      const next = isDarkActive() ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      try { localStorage.setItem(THEME_KEY, next); } catch {}
+      syncThemeUI();
+      showToast(next === 'dark' ? 'Tema oscuro activado' : 'Tema claro activado');
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncThemeUI);
+
+    // 4. CONTADOR ANIMADO EN HERO (2944 cadenas)
+    function animateCountUp(el) {
+      const target = Number(el.dataset.target);
+      if (!target || prefersReducedMotion) return;
+      const start = performance.now();
+      const duration = 700;
+      function frame(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    document.querySelectorAll('.count-up').forEach(animateCountUp);
+
+    // 5. FUNCIONES DE MELO CON FILTRO POR CHIPS Y STAGGER
+    const FEATURES_DATA = [
+      {
+        title: 'Audio local',
+        group: 'Reproducción',
+        icon: 'music_note',
+        desc: 'Reproduce música almacenada directamente en tu dispositivo. Sin streaming, sin cuentas, sin Last.fm, sin scrobbling ni Melo GO.',
+        tags: ['100 % sin conexión', 'Cero rastreo', 'Media local']
+      },
+      {
+        title: 'M3 Expressive',
+        group: 'Interfaz',
+        icon: 'palette',
+        desc: 'Material 3 Expressive con paleta morada derivada del logo, Melo Wave, squircle, galleta de búsqueda, Geom + Nunito y motion de alta tasa de refresco.',
+        tags: ['Melo Wave', 'Jetpack Compose', 'Tema Claro/Oscuro']
+      },
+      {
+        title: 'Modo básico',
+        group: 'Interfaz',
+        icon: 'tune',
+        desc: 'Interruptor manual que desactiva blur, Canvas animado, carátulas online y movimiento decorativo para ahorrar batería y RAM en gama baja.',
+        tags: ['Baja RAM', 'Sin blur', 'Sin Canvas']
+      },
+      {
+        title: 'Letras con presets',
+        group: 'Reproducción',
+        icon: 'lyrics',
+        desc: 'Presets DEFAULT, BOUNCE, SLIDE, GLOW, KARAOKE y MINIMAL, con desfase de sincronización persistente y letras incrustadas en FLAC, Ogg y M4A.',
+        tags: ['6 presets', 'Sync offset', 'LRC incrustado']
+      },
+      {
+        title: 'Crossfade sin tirones',
+        group: 'Reproducción',
+        icon: 'graphic_eq',
+        desc: 'Motor de dos players con crossfade ajustable, cambio de pista sin doble sonido y fade manual limitado a 1,2 s.',
+        tags: ['Dos players', 'Saltos suaves', '1,2 s máx.']
+      },
+      {
+        title: 'Arranque y perfil',
+        group: 'Rendimiento',
+        icon: 'bolt',
+        desc: 'Arranque diferido, cachés de imágenes adaptativas, baseline profile regenerado y macrobenchmarks de arranque, búsqueda y reproductor.',
+        tags: ['Baseline profile', 'Low RAM', 'Macrobenchmark']
+      },
+      {
+        title: 'Biblioteca ordenada',
+        group: 'Biblioteca',
+        icon: 'library_music',
+        desc: 'Organización clara por canciones, álbumes, artistas, carpetas y listas locales con búsqueda instantánea en dispositivo.',
+        tags: ['Canciones', 'Álbumes', 'Carpetas', 'Búsqueda local']
+      },
+      {
+        title: 'Estadísticas Melo',
+        group: 'Biblioteca',
+        icon: 'bar_chart',
+        desc: 'Registro privado de canciones, artistas y tiempo escuchado almacenado exclusivamente en el teléfono, sin envíos externos.',
+        tags: ['Conteo local', 'Sin nube', 'Sin scrobbling']
+      }
+    ];
+
+    const FEATURE_GROUPS = [
+      { id: 'Todas', icon: 'grid_view' },
+      { id: 'Reproducción', icon: 'play_circle' },
+      { id: 'Interfaz', icon: 'palette' },
+      { id: 'Biblioteca', icon: 'library_music' },
+      { id: 'Rendimiento', icon: 'bolt' }
+    ];
+
+    let activeFeatureGroup = 'Todas';
+    const featureChipsEl = document.getElementById('featureChips');
+    const featuresGridEl = document.getElementById('featuresGrid');
+
+    function renderFeatureChips() {
+      featureChipsEl.innerHTML = FEATURE_GROUPS.map(g => {
+        const count = g.id === 'Todas'
+          ? FEATURES_DATA.length
+          : FEATURES_DATA.filter(f => f.group === g.id).length;
+        const active = activeFeatureGroup === g.id;
+        return `
+          <button type="button" class="filter-chip ripple-host ${active ? 'active' : ''}" data-group="${g.id}" role="tab" aria-selected="${active}">
+            <span class="material-symbols-rounded">${g.icon}</span>
+            <span>${g.id}</span>
+            <span class="chip-count">${count}</span>
+          </button>
+        `;
+      }).join('');
+
+      featureChipsEl.querySelectorAll('.filter-chip').forEach(btn => {
+        attachRipple(btn);
+        btn.addEventListener('click', () => {
+          if (activeFeatureGroup === btn.dataset.group) return;
+          activeFeatureGroup = btn.dataset.group;
+          renderFeatureChips();
+          renderFeatures(true);
+        });
+      });
+    }
+
+    function renderFeatures(fromFilter = false) {
+      const list = activeFeatureGroup === 'Todas'
+        ? FEATURES_DATA
+        : FEATURES_DATA.filter(f => f.group === activeFeatureGroup);
+
+      featuresGridEl.innerHTML = list.map((f, idx) => `
+        <article class="feature-card ${fromFilter ? 'filter-anim' : 'reveal-item'}" style="--stagger:${idx};">
+          <div>
+            <div class="feature-card-head">
+              <div class="feature-icon-box">
+                <span class="material-symbols-rounded icon-filled">${f.icon}</span>
+              </div>
+              <span class="pill-badge" style="padding:4px 10px; font-size:0.72rem;">${f.group}</span>
+            </div>
+            <h3 class="feature-title">${f.title}</h3>
+            <p class="feature-desc">${f.desc}</p>
+          </div>
+          <div class="tech-pills">
+            ${f.tags.map((tag, i) => `<span class="tech-pill ${i === 0 ? 'highlight' : ''}">${tag}</span>`).join('')}
+          </div>
+        </article>
+      `).join('');
+
+      if (!fromFilter) {
+        observeRevealElements(featuresGridEl.querySelectorAll('.reveal-item'));
+      }
+    }
+
+    // 6. REVEAL DE ELEMENTOS AL HACER SCROLL (IntersectionObserver)
+    const revealObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+    );
+
+    function observeRevealElements(nodes) {
+      if (prefersReducedMotion) {
+        nodes.forEach(n => n.classList.add('is-visible'));
+        return;
+      }
+      nodes.forEach(n => revealObserver.observe(n));
+    }
+
+    observeRevealElements(document.querySelectorAll('.reveal-item'));
+    renderFeatureChips();
+    renderFeatures(false);
+
+    // 7. LIGHTBOX PARA CAPTURAS DE PANTALLA
+    const lightboxBackdrop = document.getElementById('lightboxBackdrop');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+
+    document.querySelectorAll('[data-lightbox-src]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        lightboxImg.src = btn.dataset.lightboxSrc;
+        lightboxImg.alt = btn.dataset.lightboxTitle;
+        lightboxTitle.textContent = btn.dataset.lightboxTitle;
+        lightboxBackdrop.classList.add('open');
+        lightboxBackdrop.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeLightbox() {
+      lightboxBackdrop.classList.remove('open');
+      lightboxBackdrop.setAttribute('aria-hidden', 'true');
+    }
+
+    closeLightboxBtn.addEventListener('click', closeLightbox);
+    lightboxBackdrop.addEventListener('click', e => {
+      if (e.target === lightboxBackdrop) closeLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && lightboxBackdrop.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
+
+    // 8. VERIFICADOR SHA-256 LOCAL CON WAVY PROGRESS M3 (WEB CRYPTO API)
+    const apkDropzone = document.getElementById('apkDropzone');
+    const apkFileInput = document.getElementById('apkFileInput');
+    const expectedShaInput = document.getElementById('expectedShaInput');
+    const hashResultPill = document.getElementById('hashResultPill');
+    const wavyProgressBox = document.getElementById('wavyProgressBox');
+    const wavyClipRect = document.getElementById('wavyClipRect');
+    const wavyPercent = document.getElementById('wavyPercent');
+    const wavyLabel = document.getElementById('wavyLabel');
+
+    async function verifyApkFile(file) {
+      if (!file) return;
+      if (!window.crypto || !window.crypto.subtle) {
+        hashResultPill.className = 'hash-result-pill err';
+        hashResultPill.innerHTML = `
+          <span class="material-symbols-rounded icon-filled">error</span>
+          <span>Tu navegador no habilita Web Crypto API en este contexto.</span>
+        `;
+        return;
+      }
+
+      hashResultPill.className = 'hash-result-pill';
+      wavyProgressBox.classList.add('active', 'wavy-animating');
+      wavyLabel.textContent = `Leyendo ${file.name} (${(file.size / 1048576).toFixed(2)} MB)...`;
+      wavyClipRect.setAttribute('width', '80');
+      wavyPercent.textContent = '25%';
+
+      try {
+        const buffer = await file.arrayBuffer();
+        wavyClipRect.setAttribute('width', '220');
+        wavyPercent.textContent = '65%';
+        wavyLabel.textContent = 'Calculando resumen SHA-256 en memoria...';
+
+        const digest = await crypto.subtle.digest('SHA-256', buffer);
+        const hashHex = Array.from(new Uint8Array(digest))
+          .map(b => b.toString(16).padStart(2, '0'))
+          .join('')
+          .toUpperCase();
+
+        wavyClipRect.setAttribute('width', '360');
+        wavyPercent.textContent = '100%';
+        wavyProgressBox.classList.remove('wavy-animating');
+
+        setTimeout(() => {
+          wavyProgressBox.classList.remove('active');
+          const expected = expectedShaInput.value.trim().toUpperCase();
+
+          if (expected.length >= 16) {
+            const matches = hashHex === expected;
+            hashResultPill.className = `hash-result-pill ${matches ? 'ok' : 'err'}`;
+            hashResultPill.innerHTML = matches
+              ? `
+                <span class="material-symbols-rounded icon-filled">check_circle</span>
+                <div>
+                  <strong>Coincidencia exacta con la firma oficial.</strong><br />
+                  <code style="word-break:break-all; font-size:0.72rem;">${hashHex}</code>
+                </div>
+              `
+              : `
+                <span class="material-symbols-rounded icon-filled">error</span>
+                <div>
+                  <strong>El SHA-256 no coincide con el esperado.</strong><br />
+                  <code style="word-break:break-all; font-size:0.72rem;">Calculado: ${hashHex}</code>
+                </div>
+              `;
+          } else {
+            hashResultPill.className = 'hash-result-pill ok';
+            hashResultPill.innerHTML = `
+              <span class="material-symbols-rounded icon-filled">verified_user</span>
+              <div>
+                <strong>SHA-256 calculado localmente:</strong><br />
+                <code style="word-break:break-all; font-size:0.72rem;">${hashHex}</code>
+              </div>
+            `;
+          }
+        }, prefersReducedMotion ? 0 : 260);
+      } catch {
+        wavyProgressBox.classList.remove('active', 'wavy-animating');
+        hashResultPill.className = 'hash-result-pill err';
+        hashResultPill.innerHTML = `
+          <span class="material-symbols-rounded icon-filled">error</span>
+          <span>No se pudo leer el archivo seleccionado.</span>
+        `;
+      }
+    }
+
+    apkDropzone.addEventListener('click', () => apkFileInput.click());
+    apkDropzone.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        apkFileInput.click();
+      }
+    });
+    apkFileInput.addEventListener('change', e => verifyApkFile(e.target.files[0]));
+    apkDropzone.addEventListener('dragover', e => {
+      e.preventDefault();
+      apkDropzone.classList.add('dragover');
+    });
+    apkDropzone.addEventListener('dragleave', () => apkDropzone.classList.remove('dragover'));
+    apkDropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      apkDropzone.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) verifyApkFile(e.dataTransfer.files[0]);
+    });
+
+    // 9. COPIAR HASH Y COMANDO ADB
+    document.getElementById('copyOfficialShaBtn').addEventListener('click', () => {
+      copyText(document.getElementById('officialShaText').textContent.trim(), 'SHA-256 oficial copiado');
+    });
+
+    document.getElementById('copyAdbCmdBtn').addEventListener('click', () => {
+      copyText(document.getElementById('adbCmdText').textContent.trim(), 'Comando ADB copiado');
+    });
+
+    // 10. DOCK FLOTANTE + SCROLL SPY (IntersectionObserver)
+    const dockItems = document.querySelectorAll('.dock-item[data-nav]');
+    const spyMap = {
+      inicio: 'inicio',
+      funciones: 'inicio',
+      capturas: 'capturas',
+      actualizaciones: 'actualizaciones',
+      descargas: 'descargas',
+      traducciones: 'descargas',
+      contacto: 'contacto'
+    };
+
+    function setActiveDock(navId) {
+      dockItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.nav === navId);
+      });
+    }
+
+    const spyObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const mapped = spyMap[entry.target.dataset.spy];
+            if (mapped) setActiveDock(mapped);
+          }
+        });
+      },
+      { rootMargin: '-30% 0px -54% 0px', threshold: 0.01 }
+    );
+
+    document.querySelectorAll('section[data-spy]').forEach(sec => spyObserver.observe(sec));
+
+    dockItems.forEach(item => {
+      item.addEventListener('click', () => setActiveDock(item.dataset.nav));
+    });
+
+    // 11. HELPERS
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, m => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[m]));
+    }
+
+    const toastPill = document.getElementById('toastPill');
+    const toastText = document.getElementById('toastText');
+    let toastTimer = null;
+
+    function showToast(msg) {
+      toastText.textContent = msg;
+      toastPill.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastPill.classList.remove('show'), 2800);
+    }
+
+    async function copyText(text, msg) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(msg);
+      } catch {
+        showToast(msg);
+      }
+    }
+  </script>
 </body>
 </html>
