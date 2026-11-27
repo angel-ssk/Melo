@@ -111,6 +111,19 @@ La deduplicación se hace por `ruta + tamaño + mtime`, no solo por título.
 - Melo Wave como fondo con blur opcional; el Modo básico lo desactiva.
 - Keyboard-first: `Espacio` play/pause, `←/→` seek, `Ctrl+F` buscar, `F11` pantalla de letras.
 
+### 8.1 Fidelidad Material 3 Expressive (requisito estricto)
+
+Desktop **no** será un Material 3 “genérico”: debe verse y sentirse como Melo Android.
+
+- Portar literalmente los **tokens** de `Theme.kt` (colores del logo, surface/container, roles primary/secondary/tertiary) y la paleta Melo Predeterminada.
+- Portar las **formas expresivas** de `ExpressiveComponents.kt` / `MeloControlButton.kt`: squircle, cookie de búsqueda de 9 piezas, pentágono de Inicio, botones de salto redondeados.
+- Portar el **esquema de movimiento** `MeloHighRefreshMotionScheme` (springs cortos, independientes de la tasa de frames) como `CompositionLocal` propio si Compose Desktop no expone `MotionScheme`.
+- Respetar **reduced motion** del sistema y el **Modo básico**, que desactiva blur, Melo Wave animado y crossfade visual.
+- Misma jerarquía tipográfica: **Geom** para display/headline, **Nunito** para body/label; incluir ambas fuentes en `resources/fonts`.
+- Misma semántica de superficies: contenedores `surfaceContainer`, elevaciones suaves y transiciones compartidas entre Biblioteca ↔ Reproductor.
+
+Criterio visual: poner pantallas lado a lado (Android vs Desktop) y que un usuario reconozca Melo sin leer el nombre.
+
 ## 9. Integración con Windows
 
 - Bandeja del sistema: play/pause, siguiente, anterior, salir; “minimizar a bandeja”.
@@ -154,6 +167,20 @@ La deduplicación se hace por `ruta + tamaño + mtime`, no solo por título.
 - Rendimiento con bibliotecas muy grandes: usar listas lazy e índices SQLite desde el principio.
 - Conflicto de teclas globales con otras apps: permitir reconfigurar atajos.
 - SmartScreen sin certificado de firma: mitigarlo con el MSI firmado cuando sea posible.
+
+## 13.1 Optimización (igual o mejor que Android)
+
+El escritorio no puede ser más pesado que el móvil. Se aplica desde la Fase 0:
+
+- **Arranque:** runtime recortado con `jlink`, **AppCDS** generado en la build y `jpackage` para el MSI. Objetivo: arranque en frío < 1,5 s en un PC medio.
+- **Perfilado equivalente al macrobenchmark:** JDK Flight Recorder + async-profiler para arranque, escaneo y cambio de canción; JMH para el parser LRC y el cálculo de crossfade. Se guardan trazas junto a cada release.
+- **Listas y memoria:** `LazyColumn` con keys estables, paginación del escáner y cachés de carátulas acotadas por tamaño (128/96/64 px) para no repetir decodes, igual que la corrección hecha en Android.
+- **Escaner en background:** coroutines con dispatcher limitado y `Flow` incremental; nunca bloquea la UI ni reconstruye la biblioteca completa por un cambio de archivo.
+- **Efectos opcionales:** blur de Melo Wave y color derivado de la carátula se desactivan en Modo básico, en equipos con poca RAM y cuando la ventana está minimizada (equivalente a `MeloApplication.isForeground`).
+- **Crossfade:** el motor A/B usa dos players, pero sin exponer un segundo vídeo/Canvas innecesario; Modo básico lo reduce a cambio directo.
+- **Target medible:** 10.000 canciones < 30 s, pausas de GC < 10 ms en reproducción, consumo idle comparable al de un reproductor local ligero.
+
+Si el PC tiene más recursos que un gama baja, se aprovecha para **más fluidez**, no para añadir efectos obligatorios.
 
 ## 14. Criterios de aceptación del MVP
 
