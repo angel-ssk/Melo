@@ -43,7 +43,12 @@ object LyricsParser {
         "do", "does", "for", "from", "had", "has", "have", "he", "her", "him",
         "i", "if", "in", "is", "it", "me", "my", "no", "not", "of", "on", "or",
         "our", "out", "she", "so", "the", "to", "up", "we", "with", "you", "your",
-        "will", "would", "am", "are", "was", "were", "been", "being", "there", "here"
+        "will", "would", "am", "are", "was", "were", "been", "being", "there", "here",
+        "y", "e", "o", "de", "del", "la", "el", "los", "las", "mi", "tu", "su", "le",
+        "les", "nos", "se", "si", "en", "un", "una", "por", "para", "con", "al", "lo",
+        "me", "te", "os", "ni", "sin", "muy", "pasa", "tiempo", "complejos",
+        "valiente", "estable", "amor", "vida", "gusta", "gustan", "tiene",
+        "tienes", "apenas", "demonios", "importa", "alma", "precio"
     )
     
     /**
@@ -145,11 +150,12 @@ object LyricsParser {
         val hasUppercase = run.any { token -> token.any { it.isUpperCase() } && token != "I" }
         if (hasUppercase) return false
 
-        val hasShortToken = normalizedRun.any { it.length <= 4 }
         val totalLength = normalizedRun.sumOf { it.length }
 
-        return (hasShortToken && totalTokenCount >= 6 && totalLength <= 18) ||
-            (run.size >= 3 && totalLength <= 16)
+        // Global rule: only join real syllable fragments (all very short), never
+        // ordinary multi-word phrases like "ni pasa tiempo" or "sin complejos".
+        val allTiny = normalizedRun.all { it.length <= 3 }
+        return allTiny && totalLength in 4..12 && totalTokenCount >= 4
     }
     
     fun hasNonLatinScript(text: String): Boolean {
@@ -565,22 +571,9 @@ object LyricsParser {
                     val trimmedStart = word.charRange.first + leadingSpaces
                     val trimmedEnd = word.charRange.last - trailingSpaces
 
-                    val isPart = if (idx > 0 && trimmedText.isNotEmpty()) {
-                        val prevWord = mlWords[idx - 1]
-                        val prevRawText = mainLine.text.substring(prevWord.charRange)
-                        val prevTrimmedText = prevRawText.trim()
-                        if (prevTrimmedText.isNotEmpty()) {
-                            val prevTrailingSpaces = prevRawText.takeLastWhile { it.isWhitespace() }.length
-                            val prevTrimmedEnd = prevWord.charRange.last - prevTrailingSpaces
-                            
-                            val gap = mainLine.text.substring(prevTrimmedEnd + 1, trimmedStart)
-                            gap.isEmpty()
-                        } else {
-                            false
-                        }
-                    } else {
-                        false
-                    }
+                    // Each <mm:ss.xx> span in an enhanced LRC is a whole word, not a syllable.
+                    // Computing parts from char offsets loses spaces ("y yo" -> "yyo").
+                    val isPart = false
                     EnhancedWord(
                         text = trimmedText,
                         timestamp = word.begin.toLong(),

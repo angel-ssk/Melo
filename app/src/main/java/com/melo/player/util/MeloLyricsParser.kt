@@ -24,6 +24,36 @@ object MeloLyricsParser {
         java.util.regex.Pattern.CASE_INSENSITIVE
     )
 
+    /** Short Spanish connectors that are separate words even if a provider marks them as parts. */
+    private val LYRICS_CONNECTORS = setOf(
+        "y", "e", "o", "a", "de", "del", "la", "el", "los", "las", "mi", "tu", "su",
+        "no", "si", "en", "un", "una", "me", "te", "se", "lo", "al", "con", "por", "para"
+    )
+
+    private fun normalizeSyllableParts(words: List<WordByWordWord>): List<WordByWordWord> =
+        words.mapIndexed { index, word ->
+            val previous = words.getOrNull(index - 1)
+            if (word.isPart && previous != null &&
+                previous.text.lowercase(Locale.ROOT) in LYRICS_CONNECTORS
+            ) {
+                word.copy(isPart = false)
+            } else {
+                word
+            }
+        }
+
+    private fun normalizeNetworkSyllableParts(words: List<MeloLyricsWord>): List<MeloLyricsWord> =
+        words.mapIndexed { index, word ->
+            val previous = words.getOrNull(index - 1)
+            if (word.part == true && previous != null &&
+                previous.text.lowercase(Locale.ROOT) in LYRICS_CONNECTORS
+            ) {
+                word.copy(part = false)
+            } else {
+                word
+            }
+        }
+
     fun normalizeVoiceTag(rawTag: String?): String? {
         if (rawTag.isNullOrBlank()) return null
         val lower = rawTag.trim().lowercase()
@@ -76,7 +106,7 @@ object MeloLyricsParser {
                             word.copy(endtime = normalizedEnd)
                         }
                     
-                    words = sortedWords
+                    words = normalizeSyllableParts(sortedWords)
                 }
                 
                 // Check if first word contains voice tag and extract it
@@ -786,22 +816,9 @@ object MeloLyricsParser {
                     val trimmedStart = word.charRange.first + leadingSpaces
                     val trimmedEnd = word.charRange.last - trailingSpaces
 
-                    val isPart = if (idx > 0 && trimmedText.isNotEmpty()) {
-                        val prevWord = slWords[idx - 1]
-                        val prevRawText = semanticLine.text.substring(prevWord.charRange)
-                        val prevTrimmedText = prevRawText.trim()
-                        if (prevTrimmedText.isNotEmpty()) {
-                            val prevTrailingSpaces = prevRawText.takeLastWhile { it.isWhitespace() }.length
-                            val prevTrimmedEnd = prevWord.charRange.last - prevTrailingSpaces
-                            
-                            val gap = semanticLine.text.substring(prevTrimmedEnd + 1, trimmedStart)
-                            gap.isEmpty()
-                        } else {
-                            false
-                        }
-                    } else {
-                        false
-                    }
+                    // Semantic/TTML spans are whole words where these offsets are unreliable;
+                    // treating them as parts drops spaces. Keep every span independent.
+                    val isPart = false
                     MeloLyricsWord(
                         text = trimmedText,
                         part = isPart,
@@ -895,7 +912,7 @@ object MeloLyricsParser {
 
                 // Check for spans inside <p>
                 val spans = if (!isLineOrNoneTiming) spanRegex.findAll(innerContent).toList() else emptyList()
-                val words = mutableListOf<MeloLyricsWord>()
+                var words = mutableListOf<MeloLyricsWord>()
 
                 if (spans.isNotEmpty()) {
                     for ((spanIdx, spanMatch) in spans.withIndex()) {
@@ -922,6 +939,8 @@ object MeloLyricsParser {
                         )
                     }
                 }
+
+                words = normalizeNetworkSyllableParts(words).toMutableList()
 
                 val cleanText = innerContent.replace(Regex("<[^>]*>"), "").trim()
                 if (cleanText.isEmpty() && words.isEmpty()) continue
