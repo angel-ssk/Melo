@@ -1,9 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/icon.png">
-  <source media="(prefers-color-scheme: light)" srcset="assets/icon.png">
-  <img src="assets/icon_full.png" alt="Melo" width="220" style="border-radius: 32px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/melo_icon.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/melo_icon.png">
+  <img src="assets/melo_icon.png" alt="Melo" width="220" style="border-radius: 32px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
 </picture>
 
 # Melo
