@@ -71,11 +71,12 @@ class LowEndJourneyBenchmarks {
             ?: device.findObject(By.descContains("search"))
             ?: device.findObject(By.descContains("Buscar"))
             ?: return@measureRepeated
-        search.click()
+        try { search.click() } catch (_: Exception) { /* recomposed between find and click */ }
         device.waitForIdle(800)
 
         device.findObject(By.clazz("android.widget.EditText"))?.click()
-        device.findObject(By.clazz("android.widget.EditText"))?.text = "a"
+        device.waitForIdle(300)
+        device.executeShellCommand("input text a")
         device.waitForIdle(1_000)
 
         repeat(2) {
@@ -100,7 +101,7 @@ class LowEndJourneyBenchmarks {
         device.waitForIdle(2_000)
 
         val song = device.findObject(By.clickable(true)) ?: return@measureRepeated
-        song.click()
+        try { song.click() } catch (_: Exception) { /* recomposed between find and click */ }
         device.waitForIdle(1_500)
 
         val player = device.findObject(By.descContains("mini"))

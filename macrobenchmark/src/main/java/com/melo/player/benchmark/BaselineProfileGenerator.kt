@@ -142,14 +142,15 @@ class BaselineProfileGenerator {
             ?: device.findObject(By.descContains("search"))
             ?: device.findObject(By.descContains("Buscar"))
             ?: return
-        searchButton.click()
+        try { searchButton.click() } catch (_: Exception) { /* recomposed between find and click */ }
         device.waitForIdle(1_500)
         // Type a short query to warm the search results list.
         val field = device.findObject(By.clazz("android.widget.EditText"))
             ?: device.findObject(By.focusable(true))
         field?.click()
         device.waitForIdle(500)
-        device.findObject(By.clazz("android.widget.EditText"))?.text = "a"
+        // Shell input avoids StaleObjectException when Compose recomposes the field.
+        device.executeShellCommand("input text a")
         device.waitForIdle(1_500)
         navigateToHome()
     }
@@ -157,7 +158,7 @@ class BaselineProfileGenerator {
     private fun MacrobenchmarkScope.openPlayer() {
         // Tap the first playable item to load the mini-player and full player.
         val candidate = device.findObject(By.clickable(true)) ?: return
-        candidate.click()
+        try { candidate.click() } catch (_: Exception) { /* recomposed between find and click */ }
         device.waitForIdle(2_000)
         val miniPlayer = device.findObject(By.descContains("mini"))
             ?: device.findObject(By.descContains("reproductor"))
