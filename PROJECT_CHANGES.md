@@ -59,4 +59,9 @@
 - **Arranque diferido**: tras la primera frame se inicializan CrashReporter, NetworkClient, LeakCanary/ANR y el recorte de caché; el tema se aplica antes para evitar parpadeos.
 - **Melo GO eliminado de la experiencia**: el onboarding ya no ofrece modo streaming ni pasos de servicio; el interruptor de Go Mode desapareció de Funciones experimentales y `setAppMode()` fuerza siempre `LOCAL`. La app es exclusivamente reproductor local.
 - **Baseline profile**: el generador cubre ahora inicio, Inicio, Biblioteca, búsqueda y reproductor, con selectores en español e inglés. Nuevos benchmarks `LowEndJourneyBenchmarks` (startup / búsqueda / reproductor) para ejecutar en los flavors `github` y `fdroid`.
-- **Pendiente de ejecutar con dispositivo**: regenerar el perfil y medir en gama baja (`connectedGithubBenchmarkAndroidTest` / `connectedFdroidBenchmarkAndroidTest`). Requiere MuMu abierto o un móvil conectado por ADB.
+- **Perfil regenerado y benchmarks ejecutados en MuMu (API 35)**, sin fallos:
+  - `BaselineProfileGenerator` con 6 recorridos (inicio, Inicio, Biblioteca, búsqueda, reproductor y vuelta). Perfil resultante: 15.197 reglas, copiado a `app/src/main/baseline-prof/baseline-prof.txt`.
+  - `LowEndJourneyBenchmarks` en `github`: TTID mediano **731 ms** (713–763); P95 de frame: búsqueda **61,6 ms**, reproductor **43,0 ms**.
+  - `LowEndJourneyBenchmarks` en `fdroid`: TTID mediano **790 ms**; P95 de frame: búsqueda **51,9 ms**, reproductor **48,2 ms**.
+  - Nota: MuMu emula x86; los valores sirven como referencia comparativa, no como medida de un Tecno Spark Go real.
+- **Corrección verificada en MuMu**: con Modo básico activo, una canción con Canvas animado descargado online (Moonlight) muestra carátula estática; no se crea el ExoPlayer ni se consulta el proveedor.
