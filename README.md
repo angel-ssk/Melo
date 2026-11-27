@@ -1,16 +1,16 @@
-
 <div align="center">
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/icon.png">
   <source media="(prefers-color-scheme: light)" srcset="assets/icon.png">
-  <img src="assets/icon_full.png" alt="Melo Music Player" width="220" style="border-radius: 32px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+  <img src="assets/icon_full.png" alt="Melo" width="220" style="border-radius: 32px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
 </picture>
 
-# Project Melo
-**Your Music, Your Melo.**
+# Melo
 
-<a href="https://trendshift.io/repositories/15217" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15217" alt="angel-ssk%2FMelo | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+**Tu música, tu Melo.**
+
+🎵 Reproductor de música **local** para Android, con **Material 3 Expressive**, español completo y optimizaciones para gama baja.
 
 [![Platform](https://img.shields.io/badge/Android-34A853?style=flat-square&logo=android&logoColor=white)](https://android.com)
 [![API Level](https://img.shields.io/badge/API-26%2B-4285f4?style=flat-square&logo=android&logoColor=white)](https://android-arsenal.com/api?level=26)
@@ -20,94 +20,73 @@
 [![Release](https://img.shields.io/github/v/release/angel-ssk/Melo?style=flat-square&logo=github&color=673ab7&logoColor=white)](https://github.com/angel-ssk/Melo/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/angel-ssk/Melo/total?style=flat-square&logo=download&color=00bcd4&logoColor=white)](https://github.com/angel-ssk/Melo/releases)
 [![Stars](https://img.shields.io/github/stars/angel-ssk/Melo?style=flat-square&logo=star&color=ffc107&logoColor=white)](https://github.com/angel-ssk/Melo/stargazers)
-[<img src="https://shields.rbtlog.dev/simple/com.melo.player?style=flat-square" alt="RB shield">](https://shields.rbtlog.dev/com.melo.player)
-[![Translation status](https://hosted.weblate.org/widget/melo/strings/svg-badge.svg)](https://hosted.weblate.org/engage/melo/)
 
-### [🌐 Website](https://meloweb.vercel.app/) • [▶️ Google Play](https://play.google.com/store/apps/details?id=com.melo.play) • [📥 Download](https://github.com/angel-ssk/Melo/releases/latest) • [🎧 Discord](https://discord.gg/XjPyUYPQYc) • [💬 Telegram](https://t.me/MeloSupport) • [📖 Wiki](https://github.com/angel-ssk/Melo/wiki)
+### [🌐 Web](https://melo-player-ten.vercel.app/) • [📥 Descargar](https://github.com/angel-ssk/Melo/releases/latest) • [📖 Wiki](https://github.com/angel-ssk/Melo/wiki)
 
 </div>
 
 ---
 
-## 💖 Support the Developer
+## ✨ Qué es Melo
 
-Building and maintaining **Melo** is a massive labor of love, provided completely free and open-source. If you love using this app, please consider supporting development!
+Melo es un reproductor de música **local**: lee tu biblioteca del dispositivo y no depende de servicios de streaming. Prioriza una identidad visual propia, el rendimiento en móviles modestos y una experiencia en español completa.
 
-<div align="center">
+| 🎨 **Diseño** | 🎵 **Reproducción** |
+| :--- | :--- |
+| **Melo Wave:** paleta morada derivada del logo, formas squircle y galleta de búsqueda. | **Media3 ExoPlayer:** cola, crossfade ajustable y saltos sin tirones. |
+| **Material 3 Expressive:** motion de alta tasa de refresco y superficies adaptativas. | **10 bandas EQ:** ecualizador con perfiles AutoEQ. |
+| **Geom + Nunito:** tipografías propias para títulos y texto. | **Replay Gain:** normalización de volumen por pista/álbum. |
+| **Tablets y plegables:** diseño adaptable. | **Modo básico:** desactiva blur, Canvas animado y movimiento decorativo. |
 
-| ☕ **One-Time Support** | 🤝 **Ongoing Sponsorship** |
-| :---: | :---: |
-| [![Ko-Fi](https://img.shields.io/badge/Buy_Me_A_Coffee-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/anjishnunandi)<br><br>[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](http://paypal.me/AnjishnuNandi) | [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://patreon.com/AnjishnuNandi)<br><br>[![GitHub Sponsor](https://img.shields.io/badge/GitHub_Sponsors-EA4AAA?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sponsors/angel-ssk) |
+| 📚 **Biblioteca y letras** | 🔒 **Privacidad y rendimiento** |
+| :--- | :--- |
+| **Letras sincronizadas:** palabra por palabra, LRC incrustado y presets de animación. | **100 % local:** sin Last.fm, scrobbling ni servicios de streaming. |
+| **Artistas y álbumes:** cuadrícula deduplicada, carátulas opcionales online. | **Español completo:** 2944 de 2944 cadenas traducidas. |
+| **Favoritos y listas:** gestiona tu biblioteca sin filtrar tu música. | **Gama baja:** cachés adaptativas, arranque diferido y baseline profile. |
+| **Melo Estadísticas:** tiempo de escucha, artistas y canciones principales. | **Widgets:** layouts adaptables sin recortes en pantallas compactas. |
 
-</div>
+> **Requisitos:** Android 8.0+ (API 26) • 2 GB RAM • 50 MB de almacenamiento.
 
 ---
 
-## ✨ Why Choose Melo?
-
-Melo is a modern, open-source music player built with **Material 3 Expressive** design. It delivers professional-grade audio with High-Resolution playback, EAC3-JOC/Dolby Atmos via FFmpeg, and completely respects your privacy.
-
-| 🎨 **Design & UI** | 🎵 **Audio Engine** |
-| :--- | :--- |
-| **Material You:** Dynamic theming with wallpaper colors (Android 12+). | **Pro Audio:** Media3 ExoPlayer with gapless playback & High-Res mode. |
-| **Expressive UI:** Refined adaptive shapes and Material 3 design. | **10-Band EQ:** Professional equalizer with 6032+ AutoEQ device presets. |
-| **Tablet UI:** Optimized multi-pane layout for tablets. | **Replay Gain:** Track/album loudness normalization. |
-| **Material Symbols:** Crisp, scalable variable-weight icons. | **Crossfade:** Smooth transitions with adjustable duration. |
-
-| 🎤 **Features & Tools** | 🔒 **Privacy & Data** |
-| :--- | :--- |
-| **Synced Lyrics:** LRCLib integration with word-by-word highlighting + full-screen view. | **100% FOSS:** Completely open-source with zero tracking. |
-| **Smart Library:** A–Z scroll bar, multi-select batch operations, Album Artists & Dates tabs. | **Offline Capable:** Designed to work flawlessly without the internet. |
-| **Melo Stats 2.0:** Comprehensive stats with Overview, Songs, Albums, Artists, History. | **Local First:** Your data and habits stay securely on your device. |
-| **Go Mode (Streaming):** Local + server playback (Subsonic, Navidrome, Jellyfin) with nearby-server discovery. | |
-| **Melo Go Downloads:** Download streaming tracks for offline playback. | |
-| **Melo Guard:** Integrated hearing safety and volume protection. | |
-| **Mono Audio:** Downmix to mono for single-earpiece listening. | |
-| **Foldable Ready:** Posture-aware player layouts that adapt to tabletop, book, and separated-screen postures. | |
-| **Home Screen Widgets:** Multiple layouts including a dedicated Lyrics widget. | |
-
-> **System Requirements:** Android 8.0+ (API 26) • 2GB RAM • 50MB Storage
-
----
-
-## 📱 Screenshots
+## 📱 Capturas
 
 <div align="center">
 <table>
 <tr>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Phone/Home.png" alt="Home" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>🏠 Smart Home</b>
+<img src="assets/ScreenShots/Phone/Home.png" alt="Inicio" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>🏠 Inicio</b>
 </td>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Phone/Player_2.png" alt="Player" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>▶️ Beautiful Player</b>
+<img src="assets/ScreenShots/Phone/Player_2.png" alt="Reproductor" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>▶️ Reproductor</b>
 </td>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Phone/Player_Lyrics_View.png" alt="Lyrics" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>🎤 Synced Lyrics</b>
+<img src="assets/ScreenShots/Phone/Player_Lyrics_View.png" alt="Letras" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>🎤 Letras</b>
 </td>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Phone/Playlist.png" alt="Library" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>📚 Rich Library</b>
+<img src="assets/ScreenShots/Phone/Playlist.png" alt="Biblioteca" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>📚 Biblioteca</b>
 </td>
 </tr>
 <tr>
 <td align="center">
-<img src="assets/ScreenShots/Phone/Queue.png" alt="Queue" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>📋 Smart Queue</b>
+<img src="assets/ScreenShots/Phone/Queue.png" alt="Cola" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>📋 Cola</b>
 </td>
 <td align="center">
-<img src="assets/ScreenShots/Phone/Search.png" alt="Search" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>🔍 Instant Search</b>
+<img src="assets/ScreenShots/Phone/Search.png" alt="Búsqueda" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>🔍 Búsqueda</b>
 </td>
 <td align="center">
-<img src="assets/ScreenShots/Phone/Settings.png" alt="Settings" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>⚙️ Deep Settings</b>
+<img src="assets/ScreenShots/Phone/Settings.png" alt="Ajustes" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>⚙️ Ajustes</b>
 </td>
 <td align="center">
-<img src="assets/ScreenShots/Phone/Artist.png" alt="Artist" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>🎤 Artist Pages</b>
+<img src="assets/ScreenShots/Phone/Artist.png" alt="Artista" width="180" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>🎤 Artistas</b>
 </td>
 </tr>
 </table>
@@ -119,38 +98,38 @@ Melo is a modern, open-source music player built with **Material 3 Expressive** 
 <table>
 <tr>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Tablet/Player.png" alt="Player" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>▶️ Now Playing</b>
+<img src="assets/ScreenShots/Tablet/Player.png" alt="Reproductor" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>▶️ Reproductor</b>
 </td>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Tablet/Library.png" alt="Library" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>📚 Library</b>
+<img src="assets/ScreenShots/Tablet/Library.png" alt="Biblioteca" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>📚 Biblioteca</b>
 </td>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Tablet/Lyrics_View.png" alt="Lyrics" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>🎤 Synced Lyrics</b>
+<img src="assets/ScreenShots/Tablet/Lyrics_View.png" alt="Letras" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>🎤 Letras</b>
 </td>
 <td align="center" width="25%">
-<img src="assets/ScreenShots/Tablet/Album.png" alt="Album" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>💿 Album Detail</b>
+<img src="assets/ScreenShots/Tablet/Album.png" alt="Álbum" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>💿 Álbum</b>
 </td>
 </tr>
 <tr>
 <td align="center">
-<img src="assets/ScreenShots/Tablet/Search.png" alt="Search" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>🔍 Search</b>
+<img src="assets/ScreenShots/Tablet/Search.png" alt="Búsqueda" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>🔍 Búsqueda</b>
 </td>
 <td align="center">
-<img src="assets/ScreenShots/Tablet/Melo_Stats.png" alt="Stats" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>📊 Playback Stats</b>
+<img src="assets/ScreenShots/Tablet/Melo_Stats.png" alt="Estadísticas" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>📊 Estadísticas</b>
 </td>
 <td align="center">
-<img src="assets/ScreenShots/Tablet/Settings.png" alt="Settings" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>⚙️ Settings</b>
+<img src="assets/ScreenShots/Tablet/Settings.png" alt="Ajustes" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>⚙️ Ajustes</b>
 </td>
 <td align="center">
-<img src="assets/ScreenShots/Tablet/About.png" alt="About" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
-<br/><b>ℹ️ About</b>
+<img src="assets/ScreenShots/Tablet/About.png" alt="Acerca de" width="240" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"/>
+<br/><b>ℹ️ Acerca de</b>
 </td>
 </tr>
 </table>
@@ -158,100 +137,61 @@ Melo is a modern, open-source music player built with **Material 3 Expressive** 
 
 ---
 
-## 📥 Download & Install
+## 📥 Descarga e instalación
 
-Choose your preferred platform to download the latest version of Melo:
-
-<div align="center">
-
-| Source | Badge | Details |
-| :--- | :---: | :--- |
-| **Google Play** | [<img src="assets/badge-googleplay.png" alt="Get it on Google Play" height="35">](https://play.google.com/store/apps/details?id=com.melo.play) | [Install on Android](https://play.google.com/store/apps/details?id=com.melo.play) • [Join from Web (Open Testing)](https://play.google.com/apps/testing/com.melo.play) |
-| **GitHub** | [<img src="assets/badge-github.png" alt="Download APK" height="35">](https://github.com/angel-ssk/Melo/releases/latest) | Direct APK download (Full Features) |
-| **F-Droid** | [<img src="assets/badge-fdroid.png" alt="F-Droid" height="35">](https://f-droid.org/packages/com.melo.player) | Official repository (Full Features) |
-| **IzzyOnDroid** | [<img src="assets/badge-izzyondroid.png" alt="IzzyOnDroid" height="35">](https://apt.izzysoft.de/fdroid/index/apk/com.melo.player) | Privacy-focused repo (Full Features) |
-| **Obtainium** | [<img src="assets/badge-obtainium.png" alt="Obtainium" height="35">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/angel-ssk/Melo/) | Auto-updates straight from GitHub |
-| **OpenAPK** | [<img src="assets/badge-openapk.png" alt="OpenAPK" height="35">](https://www.openapk.net/melo/com.melo.player/) | Alternative APK source |
-
-</div>
-
-> 💡 **Note:** F-Droid, IzzyOnDroid, and GitHub releases include all features, including Deezer & YouTube Music artwork, LRCLib lyrics, and YouTube Music artwork. See [Build Variants](docs/BUILD_VARIANTS.md) or the [Wiki Build Instructions](https://github.com/angel-ssk/Melo/wiki/Build-Instructions) for details. Need help? Check out the [Installation Guide](https://github.com/angel-ssk/Melo/wiki/Installation-Guide).
-
----
-
-## 🛠 Technology Stack
-
-Built with modern tools and clean architecture:
-
-* **UI & Design:** Jetpack Compose, Material 3, Glance Widgets, Coil, AndroidX Palette.
-* **Audio Engine:** Media3 ExoPlayer, FFmpeg Decoder, JAudioTagger.
-* **Architecture:** MVVM + Clean Architecture, 100% Kotlin, Kotlin Coroutines + Flow.
-* **Data & Network:** Room + SQLite, Retrofit, OkHttp, Gson.
-* **Build & Management:** AGP, Kotlin, WorkManager, LeakCanary.
-
-📖 **Full tech stack:** Read more in the [Wiki](https://github.com/angel-ssk/Melo/wiki/Technology-Stack).
-
----
-
-## 🌍 Translations
-
-Melo is translated into **28+ languages** by the community via **Weblate**. You don't need to write code to contribute — just visit the link below and start translating!
-
-<div align="center">
-
-[![Translation status](https://hosted.weblate.org/widget/melo/strings/multi-auto.svg)](https://hosted.weblate.org/engage/melo/)
-
-</div>
-
-| Language | Status |
+| Fuente | Descripción |
 | :--- | :--- |
-| 🇬🇧 English | Source (always 100%) |
-| 🌐 28+ others | [View all on Weblate](https://hosted.weblate.org/projects/melo/#languages) |
+| **GitHub** | [APK firmado de la última versión](https://github.com/angel-ssk/Melo/releases/latest). Incluye el flavor `github` con actualizaciones integradas. |
+| **F-Droid / IzzyOnDroid** | Variante `fdroid` del mismo proyecto, sin dependencias de servicios propietarios. |
 
-**How to help translate:**
-1. Go to [hosted.weblate.org/engage/melo/](https://hosted.weblate.org/engage/melo/)
-2. Register a free account
-3. Pick your language and start translating
+Si instalas desde el APK, habilita “Instalar aplicaciones desconocidas” para la fuente. La app se actualiza desde los releases de este repositorio.
 
-> ⚠️ Please do **not** submit PRs that edit `values-*/strings.xml` files directly — translations are managed exclusively through Weblate, which syncs back automatically.
+> Consulta [Build Variants](docs/BUILD_VARIANTS.md) y las [instrucciones de compilación](https://github.com/angel-ssk/Melo/wiki/Build-Instructions) para más detalles.
 
 ---
 
-## 🤝 Contributing & Community
+## 🛠 Tecnología
 
-We welcome contributions! See our [CONTRIBUTING.md](https://github.com/angel-ssk/Melo/blob/main/docs/CONTRIBUTING.md) for guidelines.
-
-* 🐛 **Found a bug?** [Open an issue](https://github.com/angel-ssk/Melo/issues)
-* 💡 **Have an idea?** [Request a feature](https://github.com/angel-ssk/Melo/issues)
-* 💬 **Want to chat?** [Join Discord](https://discord.gg/XjPyUYPQYc), [Telegram](https://t.me/MeloSupport) or [GitHub Discussions](https://github.com/angel-ssk/Melo/discussions)
-* 📖 **Need help?** [Read the Wiki](https://github.com/angel-ssk/Melo/wiki)
-* 🌍 **Want to translate?** [Translate on Weblate](https://hosted.weblate.org/engage/melo/)
+* **Interfaz:** Jetpack Compose, Material 3 Expressive, Glance Widgets, Coil.
+* **Audio:** Media3 ExoPlayer, motor de crossfade de dos players, ecualizador y Replay Gain.
+* **Arquitectura:** MVVM + Clean Architecture, Kotlin, Coroutines + Flow.
+* **Datos:** Room + SQLite, DataStore, Gson.
+* **Rendimiento:** cachés adaptativas, arranque diferido, baseline profile y macrobenchmarks de gama baja.
 
 ---
 
-## 🏆 Credits
+## 🌍 Idiomas
+
+* **Español:** completo (2944/2944 cadenas).
+* **Inglés:** idioma base.
+* **Otros idiomas:** disponibles en el árbol de recursos del proyecto.
+
+---
+
+## 🤝 Contribuir
+
+* 🐛 ¿Encontraste un error? [Abre un issue](https://github.com/angel-ssk/Melo/issues).
+* 💡 ¿Tienes una idea? [Propón una función](https://github.com/angel-ssk/Melo/issues).
+* 📖 ¿Necesitas ayuda? Lee la [Wiki](https://github.com/angel-ssk/Melo/wiki).
+
+---
+
+## 🏆 Créditos
 
 **Mantenedor:** [Angel (@angel-ssk)](https://github.com/angel-ssk)
 
-**Crédito original:** proyecto derivado del trabajo de Anjishnu Nandi, cuyos avisos SPDX se conservan según exige la licencia GPL-3.0-or-later.
+**Crédito original:** proyecto derivado del trabajo de Anjishnu Nandi. Se conservan los avisos SPDX originales según exige la licencia GPL-3.0-or-later.
 
-**Huge Thanks To:**
-* [Izzy](https://github.com/IzzySoft) - IzzyOnDroid repository management
-* [linsui](https://github.com/linsui) & [Licaon_Kter](https://github.com/licaon-kter) - F-Droid repository management
-* [theovilardo](https://github.com/theovilardo) - Guide & PixelPlayer's Lead Dev
-* [Nick](https://github.com/nift4) - Guide & Gramophone's Maintainer
-* [Alex](https://github.com/Paxsenix0) - Lyrically API's Lead Dev
-* [vivi](https://github.com/vivizzz007) - Guide & Lead Developer of Vivi Music
-* The **Google Material Design Team**, **AOSP**, **JetBrains**, and the fantastic **Open Source Community**.
+Gracias también al equipo de Material Design de Google, AOSP, JetBrains y a la comunidad de software libre.
 
 ---
 
 <div align="center">
 
-### ✨ Made with ❤️ by Team ChromaHub
+### ✨ Hecho con ❤️ para quienes escuchan su propia música
 
-<sub>**License:** [GNU General Public License v3.0](docs/LICENSE)</sub><br>
-<sub>© 2026 Team ChromaHub. All rights reserved.</sub><br>
-<sub>⭐ If Melo improved your daily listening, don't forget to star the repository! ⭐</sub>
+<sub>**Licencia:** [GNU General Public License v3.0](docs/LICENSE)</sub><br>
+<sub>© 2026 Angel. Todos los derechos reservados.</sub><br>
+<sub>⭐ Si Melo mejora tu escucha diaria, no olvides darle una estrella al repositorio. ⭐</sub>
 
 </div>
