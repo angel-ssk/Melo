@@ -15,6 +15,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +48,14 @@ fun CanvasArtworkPlayer(
     alwaysPlay: Boolean = false
 ) {
     val context = LocalContext.current
+    val basicMode by com.melo.player.shared.data.model.AppSettings
+        .getInstance(context.applicationContext).basicMode.collectAsState()
+    val foreground by com.melo.player.MeloApplication.foregroundFlow.collectAsState()
+
+    // Lite mode / low-RAM / background: never create an ExoPlayer for Canvas art.
+    // This also covers callers that pass alwaysPlay = true.
+    if (basicMode || com.melo.player.MeloApplication.isLowRam || !foreground) return
+
     val primary = primaryUrl?.takeIf { it.isNotBlank() }
     val fallback = fallbackUrl?.takeIf { it.isNotBlank() }
     val initial = primary ?: fallback ?: return

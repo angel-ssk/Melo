@@ -321,6 +321,7 @@ fun MaterialPlayerScreen(
 
     // Get AppSettings for volume control setting
     val appSettingsInstance = appSettings
+    val basicMode by appSettingsInstance.basicMode.collectAsState()
     val useSystemVolume by appSettingsInstance.useSystemVolume.collectAsState()
     val stopPlaybackOnZeroVolume by appSettingsInstance.stopPlaybackOnZeroVolume.collectAsState()
     val appMode by appSettingsInstance.appMode.collectAsState()
@@ -1775,7 +1776,7 @@ fun MaterialPlayerScreen(
                                                     .clip(playerArtworkShape)
                                             )
 
-                                            if (canvasArtwork?.preferredAnimationUrl != null) {
+                                            if (canvasArtwork?.preferredAnimationUrl != null && !basicMode && !com.melo.player.MeloApplication.isLowRam) {
                                                 CanvasArtworkPlayer(
                                                     primaryUrl = canvasArtwork.animated,
                                                     fallbackUrl = canvasArtwork.videoUrl,

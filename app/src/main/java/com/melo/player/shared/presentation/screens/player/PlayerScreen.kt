@@ -191,15 +191,16 @@ fun PlayerScreen(
     val appleCanvasEnabled by appSettings.appleCanvasEnabled.collectAsState()
     val appleCanvasActive = appleCanvasEnabled && integrationsEnabled
     val appleCanvasNetworkMode by appSettings.appleCanvasNetworkMode.collectAsState()
+    val basicMode by appSettings.basicMode.collectAsState()
     var canvasArtwork by remember(song?.id) { mutableStateOf<CanvasArtwork?>(null) }
     var canvasLoading by remember(song?.id) { mutableStateOf(false) }
 
-    LaunchedEffect(song?.id, appleCanvasActive, appleCanvasNetworkMode) {
+    LaunchedEffect(song?.id, appleCanvasActive, appleCanvasNetworkMode, basicMode) {
         // Reset immediately so stale canvas from previous track is gone
         canvasArtwork = null
         canvasLoading = false
 
-        if (song != null && appleCanvasActive) {
+        if (song != null && appleCanvasActive && !basicMode && !com.melo.player.MeloApplication.isLowRam) {
             val hasNetwork = if (appleCanvasNetworkMode == CanvasNetworkMode.WIFI_ONLY) {
                 NetworkUtils.isWifiConnected(context)
             } else {

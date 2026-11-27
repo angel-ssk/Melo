@@ -355,15 +355,16 @@ fun AlbumDetailScreen(
     }
 
     val appleCanvasNetworkMode by appSettings.appleCanvasNetworkMode.collectAsState()
+    val basicMode by appSettings.basicMode.collectAsState()
     var canvasArtwork by remember(albumId) { mutableStateOf<CanvasArtwork?>(null) }
     var canvasLoading by remember(albumId) { mutableStateOf(false) }
 
-    LaunchedEffect(albumId, albumName, album?.artist, allDisplaySongs, appleCanvasActive, appleCanvasNetworkMode) {
+    LaunchedEffect(albumId, albumName, album?.artist, allDisplaySongs, appleCanvasActive, appleCanvasNetworkMode, basicMode) {
         canvasArtwork = null
         canvasLoading = false
 
         val artistName = album?.artist ?: allDisplaySongs.firstOrNull()?.artist
-        if (albumName.isNotBlank() && artistName != null && appleCanvasActive) {
+        if (albumName.isNotBlank() && artistName != null && appleCanvasActive && !basicMode && !com.melo.player.MeloApplication.isLowRam) {
             val hasNetwork = if (appleCanvasNetworkMode == CanvasNetworkMode.WIFI_ONLY) {
                 NetworkUtils.isWifiConnected(context)
             } else {

@@ -125,6 +125,7 @@ class ExternalPlaybackActivity : ComponentActivity() {
             val expressiveColors by appSettings.expressiveColors.collectAsState()
             val themeIntensity by appSettings.themeIntensity.collectAsState()
             val highRefreshMotion by appSettings.highRefreshMotion.collectAsState()
+            val basicMode by appSettings.basicMode.collectAsState()
             val uiScaleMode by appSettings.uiScaleMode.collectAsState()
             val uiScale = when (uiScaleMode) {
                 "COMPACT" -> 0.88f
@@ -145,7 +146,7 @@ class ExternalPlaybackActivity : ComponentActivity() {
                 extractedAlbumColorsJson = extractedAlbumColors,
                 expressiveColors = expressiveColors,
                 themeIntensity = themeIntensity,
-                highRefreshMotion = highRefreshMotion,
+                highRefreshMotion = highRefreshMotion && !basicMode,
                 uiScale = uiScale
             ) {
                 ExternalPlaybackBottomSheet(

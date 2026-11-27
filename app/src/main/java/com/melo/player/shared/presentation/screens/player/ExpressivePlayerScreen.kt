@@ -677,7 +677,8 @@ fun ExpressivePlayerScreen(
     }
     // When an animated Canvas exists, derive the palette from it so the blur,
     // buttons and title match the artwork that is actually on screen.
-    val canvasColor = produceState<Color?>(null, canvasArtwork?.preferredAnimationUrl) {
+    val canvasColor = produceState<Color?>(null, canvasArtwork?.preferredAnimationUrl, basicMode) {
+        if (basicMode || MeloApplication.isLowRam) return@produceState
         val url = canvasArtwork?.preferredAnimationUrl ?: return@produceState
         value = withContext(Dispatchers.IO) {
             try {
@@ -1081,7 +1082,7 @@ fun ExpressivePlayerScreen(
                             contentDescription = null, contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .then(if (MeloApplication.isLowRam) Modifier else Modifier.blur(96.dp))
+                                .then(if (MeloApplication.isLowRam || basicMode) Modifier else Modifier.blur(96.dp))
                         )
                         if (canvasArtwork?.preferredAnimationUrl != null && !MeloApplication.isLowRam && !basicMode) {
                             CanvasArtworkPlayer(
@@ -1120,7 +1121,7 @@ fun ExpressivePlayerScreen(
                                 .memoryCacheKey(artworkUri.toString()).diskCacheKey(artworkUri.toString()).build(),
                                 contentDescription = null, contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize())
-                            if (canvasArtwork?.preferredAnimationUrl != null) {
+                            if (canvasArtwork?.preferredAnimationUrl != null && !basicMode && !MeloApplication.isLowRam) {
                                 CanvasArtworkPlayer(primaryUrl = canvasArtwork.animated, fallbackUrl = canvasArtwork.videoUrl, isPlaying = isPlaying && MeloApplication.isForeground, alwaysPlay = true, modifier = Modifier.fillMaxSize())
                             }
                         }
@@ -1316,7 +1317,7 @@ fun ExpressivePlayerScreen(
                                 }
                             }
 
-                            if (canvasArtwork?.preferredAnimationUrl != null) {
+                            if (canvasArtwork?.preferredAnimationUrl != null && !basicMode && !MeloApplication.isLowRam) {
                                 CanvasArtworkPlayer(
                                     primaryUrl = canvasArtwork.animated,
                                     fallbackUrl = canvasArtwork.videoUrl,
